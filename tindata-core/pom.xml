@@ -8,14 +8,15 @@
 	<artifactId>tindata-core</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
-	<name>tinData Events. No Elephants. Simple as that.</name>
-
+	<name>tinData Events.</name>
+	<description>Events - no Elephants. Simple as that.</description>
+	
 	<url>http://www.micwin.net</url>
 
 	<scm>
 		<!--connection>scm:svn:http://somerepository.com/svn_repo/trunk</connection  -->
 		<developerConnection>scm:git:git@github.com:micwin/tinData.git</developerConnection>
-		<url>http://github.com/micwin/tinData</url>
+		<url>http://github.com/micwin/tinData/tindata-core</url>
 	</scm>
 
 	<build>
