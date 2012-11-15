@@ -8,8 +8,15 @@
 	<artifactId>tindata-core</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
-	<name>tinData Events.</name>
+	<name>tinData Events</name>
 	<description>Events - no Elephants. Simple as that.</description>
+	<licenses>
+		<license>
+			<name>Ad-Hoc-License</name>
+			<url>https://raw.github.com/micwin/tinData/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<url>http://www.micwin.net</url>
 
