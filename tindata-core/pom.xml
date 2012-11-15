@@ -10,13 +10,13 @@
 	<version>0.1-SNAPSHOT</version>
 	<name>tinData Events.</name>
 	<description>Events - no Elephants. Simple as that.</description>
-	
+
 	<url>http://www.micwin.net</url>
 
 	<scm>
-		<!--connection>scm:svn:http://somerepository.com/svn_repo/trunk</connection  -->
+		<!--connection>scm:svn:http://somerepository.com/svn_repo/trunk</connection -->
 		<developerConnection>scm:git:git@github.com:micwin/tinData.git</developerConnection>
-		<url>http://github.com/micwin/tinData/tindata-core</url>
+		<url>http://github.com/micwin/tinData</url>
 	</scm>
 
 	<build>
@@ -32,6 +32,7 @@
 					<debug>true</debug>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -41,5 +42,25 @@
 			</plugin>
 
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<!-- http://maven.apache.org/plugins/maven-site-plugin/ -->
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.2</version>
+					<dependencies>
+						<dependency><!-- add support for ssh/scp -->
+							<groupId>org.apache.maven.wagon</groupId>
+							<artifactId>wagon-ssh</artifactId>
+							<version>1.0</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+
+
 	</build>
 </project>
