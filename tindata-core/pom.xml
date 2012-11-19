@@ -36,6 +36,7 @@
 
 	<build>
 		<plugins>
+		<!-- also need that: https://github.com/github/maven-plugins -->
 			<plugin>
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
