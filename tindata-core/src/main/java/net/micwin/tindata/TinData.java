@@ -29,7 +29,7 @@ public class TinData {
 	 * @param receiver
 	 *            The receiver to get the event.
 	 */
-	public static void register(Class<?> eventClass, Object receiver) {
+	public synchronized static void register(Class<?> eventClass, Object receiver) {
 		Method method = detectReceiverMethod(receiver, eventClass);
 		registerInternal(receiver, method, eventClass);
 	}
@@ -92,7 +92,7 @@ public class TinData {
 	 * @param event
 	 *            The event object to dispatch.
 	 */
-	public static void dispatch(Object event) {
+	public static synchronized void dispatch(Object event) {
 
 		List<ReceiverDescriptor> receivers = receiverMap.get(event.getClass());
 		// no receivers registered, so bye-bye
