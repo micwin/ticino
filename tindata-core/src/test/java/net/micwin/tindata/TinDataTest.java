@@ -89,5 +89,7 @@ public class TinDataTest {
 		assertEquals((Integer) 4, payload.get(0));
 		assertEquals((Integer) 42, payload.get(1));
 
+		TinData.register(String.class, new Object() { public void yaho(String s) { System.out.println(s); } });
+		TinData.dispatch("hello, world!");
 	}
 }

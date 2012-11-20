@@ -1,5 +1,6 @@
 package net.micwin.tindata;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class TinData {
 
 	private static class ReceiverDescriptor {
-		Object receiver;
+		WeakReference<Object> receiverReference;
 		Method method;
 	}
 
@@ -49,7 +50,7 @@ public class TinData {
 		}
 
 		ReceiverDescriptor rd = new ReceiverDescriptor();
-		rd.receiver = receiver;
+		rd.receiverReference = new WeakReference<Object>(receiver);
 		rd.method = method;
 
 		receivers.add(rd);
@@ -100,12 +101,23 @@ public class TinData {
 			return;
 		}
 
+		// when finding a garbage collected receiver, store here
+		List<ReceiverDescriptor> defunct = new LinkedList<ReceiverDescriptor>();
+
 		for (ReceiverDescriptor receiverDescriptor : receivers) {
+			Object receiver = receiverDescriptor.receiverReference.get();
+			if (receiver == null) {
+				defunct.add(receiverDescriptor);
+				continue;
+			}
 			try {
-				receiverDescriptor.method.invoke(receiverDescriptor.receiver, event);
+				receiverDescriptor.method.invoke(receiver, event);
 			} catch (Exception e) {
-				throw new DispatchException(receiverDescriptor.receiver, event, e);
+				throw new DispatchException(receiver, event, e);
 			}
 		}
+		
+		// throw away gc'ed items
+		receivers.removeAll(defunct);
 	}
 }

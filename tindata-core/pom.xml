@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" standalone="no"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -8,12 +9,13 @@
 	<artifactId>tindata-core</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
-	<name>tinData Events</name>
-	<description>events - not elephants. simple as that.</description>
+	<name>tinData events - no elephants</name>
+		
+	<url>http://micwin.github.com/tinData/index.html</url>
 	<licenses>
 		<license>
 			<name>Ad-Hoc-License</name>
-			<url>https://raw.github.com/micwin/tinData/master/LICENSE</url>
+			<url>https://www.github.com/micwin/tinData/master/LICENSE</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
@@ -24,16 +26,17 @@
 			<name>Michael Winkler</name>
 			<organization>micwin.net</organization>
 			<organizationUrl>http://www.micwin.net</organizationUrl>
-			<timezone>CET+1</timezone>
-			<email>michael.winkler @t micwin.net</email>
+			<timezone>+1</timezone>
+			<email>michael.winkler @7 micwin.net</email>
+			<url>@micwin</url>
 		</developer>
 	</developers>
+
 	<properties>
 		<github.global.server>github</github.global.server>
 
 	</properties>
 
-	<url>http://www.micwin.net</url>
 
 	<scm>
 		<!--connection>scm:svn:http://somerepository.com/svn_repo/trunk</connection -->
