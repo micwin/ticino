@@ -18,6 +18,16 @@
 		</license>
 	</licenses>
 
+	<developers>
+		<developer>
+			<id>micwin</id>
+			<name>Michael Winkler</name>
+			<organization>micwin.net</organization>
+			<organizationUrl>http://www.micwin.net</organizationUrl>
+			<timezone>CET+1</timezone>
+			<email>michael.winkler @t micwin.net</email>
+		</developer>
+	</developers>
 	<properties>
 		<github.global.server>github</github.global.server>
 
@@ -69,13 +79,14 @@
 				<configuration>
 					<message>Creating site for ${project.version}</message>
 					<!-- dryRun>true</dryRun -->
-					<path>site</path>
+					<!-- path>site</path -->
 				</configuration>
 				<executions>
 					<execution>
 						<goals>
 							<goal>site</goal>
 						</goals>
+						<!-- rather link to deploy as soon this is configured -->
 						<phase>install</phase>
 					</execution>
 				</executions>
