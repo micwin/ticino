@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
 	<name>tinData Events</name>
-	<description>Events - no Elephants. Simple as that.</description>
+	<description>events - not elephants. simple as that.</description>
 	<licenses>
 		<license>
 			<name>Ad-Hoc-License</name>
@@ -17,6 +17,11 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
+	<properties>
+		<github.global.server>github</github.global.server>
+
+	</properties>
 
 	<url>http://www.micwin.net</url>
 
@@ -36,7 +41,6 @@
 
 	<build>
 		<plugins>
-		<!-- also need that: https://github.com/github/maven-plugins -->
 			<plugin>
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -57,7 +61,28 @@
 				</configuration>
 			</plugin>
 
+			<!-- https://github.com/github/maven-plugins -->
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.7</version>
+				<configuration>
+					<message>Creating site for ${project.version}</message>
+					<!-- dryRun>true</dryRun -->
+					<path>site</path>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>install</phase>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+
+
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -72,11 +97,17 @@
 							<version>1.0</version>
 						</dependency>
 					</dependencies>
+					<executions>
+						<execution>
+							<goals>
+								<goal>site</goal>
+							</goals>
+							<phase>compile</phase>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
-
-
-
 	</build>
+
 </project>
