@@ -111,12 +111,13 @@ public class TinData {
 				continue;
 			}
 			try {
+				receiverDescriptor.method.setAccessible(true);
 				receiverDescriptor.method.invoke(receiver, event);
 			} catch (Exception e) {
 				throw new DispatchException(receiver, event, e);
 			}
 		}
-		
+
 		// throw away gc'ed items
 		receivers.removeAll(defunct);
 	}
