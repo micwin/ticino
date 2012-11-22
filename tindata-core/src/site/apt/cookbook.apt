@@ -34,6 +34,6 @@ public class NoSink {
 
 +--------------------------------
 
-Note that you dont have to unregister - tinData does this for you if the receiver gets gc'ed.   
+    Note that you dont have to unregister - tinData does this for you if the receiver gets gc'ed.   
   
   

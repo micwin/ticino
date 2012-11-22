@@ -9,8 +9,8 @@
 	<artifactId>tindata-core</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1-SNAPSHOT</version>
-	<name>tinData events - no elephants</name>
-		
+	<name>tinData events - not elephants</name>
+
 	<url>http://micwin.github.com/tinData/index.html</url>
 	<licenses>
 		<license>
@@ -74,6 +74,7 @@
 				</configuration>
 			</plugin>
 
+			<!-- to copy the site to github pages -->
 			<!-- https://github.com/github/maven-plugins -->
 			<plugin>
 				<groupId>com.github.github</groupId>
@@ -89,8 +90,7 @@
 						<goals>
 							<goal>site</goal>
 						</goals>
-						<!-- rather link to deploy as soon this is configured -->
-						<phase>install</phase>
+						<phase>site</phase>
 					</execution>
 				</executions>
 			</plugin>
@@ -111,17 +111,23 @@
 							<version>1.0</version>
 						</dependency>
 					</dependencies>
-					<executions>
-						<execution>
-							<goals>
-								<goal>site</goal>
-							</goals>
-							<phase>compile</phase>
-						</execution>
-					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<distributionManagement>
+		<site>
+			<!-- since we use github site plugin, we dont need to have the pinaries 
+				somewhere. -->
+			<id>vincinity</id>
+			<url>file://${user.home}/.trash</url>
+		</site>
+		<repository>
+			<!-- for now, put download into the site directory -->
+			<id>in-site</id>
+			<url>file://${basedir}/target/site/repository</url>
+		</repository>
+	</distributionManagement>
 
 </project>

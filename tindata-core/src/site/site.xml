@@ -11,6 +11,8 @@
 		<menu>
 			<item name="Welcome!" href="index.html" />
 			<item name="Cookbook" href="cookbook.html" />
+			<item name="Download" href="download.html" />
+
 		</menu>
 		<menu ref="reports" />
 		<footer>
