@@ -30,7 +30,8 @@ public class TinData {
 	 * @param receiver
 	 *            The receiver to get the event.
 	 */
-	public synchronized static void register(Class<?> eventClass, Object receiver) {
+	public synchronized static void register(Class<?> eventClass,
+			Object receiver) {
 		Method method = detectReceiverMethod(receiver, eventClass);
 		registerInternal(receiver, method, eventClass);
 	}
@@ -42,7 +43,8 @@ public class TinData {
 	 * @param method
 	 * @param eventClass
 	 */
-	private static void registerInternal(Object receiver, Method method, Class<?> eventClass) {
+	private static void registerInternal(Object receiver, Method method,
+			Class<?> eventClass) {
 		List<ReceiverDescriptor> receivers = receiverMap.get(eventClass);
 		if (receivers == null) {
 			receivers = new LinkedList<ReceiverDescriptor>();
@@ -64,24 +66,42 @@ public class TinData {
 	 * @param eventClass
 	 * @return
 	 */
-	private static Method detectReceiverMethod(Object receiver, Class<?> eventClass) {
+	private static Method detectReceiverMethod(Object receiver,
+			Class<?> eventClass) {
 		Method[] methods = receiver.getClass().getMethods();
+		List<Method> results = new LinkedList<Method>();
+
 		for (Method method : methods) {
 
-			if (method.getParameterTypes() == null || method.getParameterTypes().length != 1) {
+			if (method.getParameterTypes() == null
+					|| method.getParameterTypes().length != 1) {
 				// wrong amount of parameters -> try next
 				continue;
 			}
 
-			if (method.getParameterTypes()[0].isAssignableFrom(eventClass)) {
+			if (method.getParameterTypes()[0].isAssignableFrom(eventClass) && !"equals".equals(method.getName())) {
 				// hit!
-				return method;
+				results.add(method) ;
 			}
-
+		}
+		
+		if (results.size() == 1) {
+			// only one hit - perfect
+			return results.get(0) ; 
+		}
+		
+		if (results.size() > 1) {
+			throw new IllegalArgumentException(
+					"receiver '"
+							+ receiver
+							+ "' has more that one accessible method with a single parameter of type '"
+							+ eventClass.getName() + "' : "+results.toString());
 		}
 
 		// no hit _> exception
-		throw new IllegalArgumentException("receiver '" + receiver
+		throw new IllegalArgumentException(
+				"receiver '"
+						+ receiver
 						+ "' does not have an accessible method with a single parameter of type '"
 						+ eventClass.getName() + "'");
 

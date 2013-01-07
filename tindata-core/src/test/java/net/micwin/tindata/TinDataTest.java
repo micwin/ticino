@@ -1,9 +1,12 @@
 package net.micwin.tindata;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import junit.framework.Assert;
 
 import org.junit.Test;
 
@@ -89,7 +92,37 @@ public class TinDataTest {
 		assertEquals((Integer) 4, payload.get(0));
 		assertEquals((Integer) 42, payload.get(1));
 
-		TinData.register(String.class, new Object() { public void yaho(String s) { System.out.println(s); } });
+		TinData.register(String.class, new Object() {
+			public void yaho(String s) {
+				System.out.println(s);
+			}
+		});
 		TinData.dispatch("hello, world!");
+	}
+
+	@Test
+	public void testIllegalClass() {
+
+		try {
+			TinData.register(String.class, new Object() {
+
+				// receiver that has two methods that possibly could catch the
+				// event
+				@SuppressWarnings("unused")
+				public void receive1(String evt) {
+
+				}
+
+				@SuppressWarnings("unused")
+				public void receive2(String evt) {
+				}
+			});
+
+			fail("illegal receiver accepted");
+
+		} catch (IllegalArgumentException iae) {
+			// w^5
+
+		}
 	}
 }
