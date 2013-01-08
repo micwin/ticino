@@ -1,0 +1,34 @@
+Downloading tinData
+
+    * in your settings.xml or your pom.xml, declare a repository
+
++--------------------------------
+<repositories>
+	...
+	<repository>
+		<id>sonatype-snapshots</id>
+		<name>sonatype snapshot repository</name>
+		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+	</repository>	
+	...
+</repositories>
++--------------------------------
+
+    I'm working hard on getting tinData to maven central.  Sonatype is a step between.
+
+    * then, declare a dependency 
+  
++--------------------------------
+<dependencies>
+    ...
+	<dependency>
+		<groupId>${project.groupId}</groupId>
+		<artifactId>${project.artifactId}</artifactId>
+		<version>${project.version}</version>
+	</dependency>
+	...
+</dependencies>
++--------------------------------
+  
+    * program some code, get your fingers dirty
+  
