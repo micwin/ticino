@@ -136,14 +136,15 @@
                 
         <div id="bodyColumn"  class="span9" >
                                   
-            <div class="section"><h2>Downloading tinData<a name="Downloading_tinData"></a></h2><ul><li>in your pom.xml, declare a repository<div class="source"><pre class="prettyprint linenums">&lt;repositories&gt;
+            <div class="section"><h2>Downloading tinData<a name="Downloading_tinData"></a></h2><ul><li>in your settings.xml or your pom.xml, declare a repository<div class="source"><pre class="prettyprint linenums">&lt;repositories&gt;
         ...
         &lt;repository&gt;
-                &lt;id&gt;tindata&lt;/id&gt;
-                &lt;url&gt;http://micwin.github.com/tinData/repository&lt;/url&gt;
-        &lt;/repository&gt;
+                &lt;id&gt;sonatype-snapshots&lt;/id&gt;
+                &lt;name&gt;sonatype snapshot repository&lt;/name&gt;
+                &lt;url&gt;https://oss.sonatype.org/content/repositories/snapshots&lt;/url&gt;
+        &lt;/repository&gt;   
         ...
-&lt;/repositories&gt;</pre></div><p>I'm working hard on getting tinData to maven central. </p></li><li>then, declare a dependency <div class="source"><pre class="prettyprint linenums">&lt;dependencies&gt;
+&lt;/repositories&gt;</pre></div><p>I'm working hard on getting tinData to maven central. Sonatype is a step between.</p></li><li>then, declare a dependency <div class="source"><pre class="prettyprint linenums">&lt;dependencies&gt;
     ...
         &lt;dependency&gt;
                 &lt;groupId&gt;net.micwin.tindata&lt;/groupId&gt;
