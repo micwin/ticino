@@ -21,9 +21,9 @@ Downloading tinData
 <dependencies>
     ...
 	<dependency>
-		<groupId>tindata</groupId>
+		<groupId>net.micwin.tindata</groupId>
 		<artifactId>tindata-core</artifactId>
-		<version>0.1-SNAPSHOT</version>
+		<version>0.2-SNAPSHOT</version>
 	</dependency>
 	...
 </dependencies>
