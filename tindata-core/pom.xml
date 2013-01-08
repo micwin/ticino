@@ -118,13 +118,15 @@
 
 	<distributionManagement>
 		<site>
-			<!-- since we use github site plugin, we dont need to have the binaries 
-				somewhere. -->
+			<!-- since we use github site plugin, we dont need to have the generated 
+				site binaries somewhere else. -->
 			<id>vincinity</id>
 			<url>file://${user.home}/.trash</url>
 		</site>
 		<repository>
-			<!-- for now, put download into the site directory -->
+			<!-- for now, put download into the site directory. This is needed for 
+				the github site plugin to automatically create a micro repository for this 
+				version. This is temporary and will be obsolete if we go to maven central. -->
 			<id>in-site</id>
 			<url>file://${basedir}/target/site/repository</url>
 		</repository>
