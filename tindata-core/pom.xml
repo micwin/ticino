@@ -5,6 +5,12 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
 	<groupId>net.micwin.tindata</groupId>
 	<artifactId>tindata-core</artifactId>
 	<packaging>jar</packaging>
@@ -45,9 +51,9 @@
 
 
 	<scm>
-		<!--connection>scm:svn:http://somerepository.com/svn_repo/trunk</connection -->
+		<connection>scm:git:git@github.com:micwin/tinData.git</connection>
 		<developerConnection>scm:git:git@github.com:micwin/tinData.git</developerConnection>
-		<url>http://github.com/micwin/tinData</url>
+		<url>git@github.com:micwin/tinData.git</url>
 	</scm>
 
 	<dependencies>
