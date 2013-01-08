@@ -5,17 +5,17 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>tindata</groupId>
+	<groupId>net.micwin.tindata</groupId>
 	<artifactId>tindata-core</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1-SNAPSHOT</version>
-	<name>tinData events - not elephants</name>
+	<version>0.2-SNAPSHOT</version>
+	<name>tinData - events, not elephants</name>
 
 	<url>http://micwin.github.com/tinData/index.html</url>
 	<licenses>
 		<license>
 			<name>Ad-Hoc-License</name>
-			<url>https://www.github.com/micwin/tinData/master/LICENSE</url>
+			<url>https://raw.github.com/micwin/tinData/master/LICENSE</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
