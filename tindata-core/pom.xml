@@ -93,8 +93,8 @@
 				<artifactId>site-maven-plugin</artifactId>
 				<version>0.7</version>
 				<configuration>
-					<message>NOT publishing site on github!</message>
-					<dryRun>true</dryRun>
+					<message>publishing site on github!</message>
+					<!-- <dryRun>true</dryRun> -->
 					<!-- path>site</path -->
 				</configuration>
 				<executions>
