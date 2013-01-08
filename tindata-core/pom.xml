@@ -46,6 +46,7 @@
 
 	<properties>
 		<github.global.server>github</github.global.server>
+		<maven.site.deploy.skip>true</maven.site.deploy.skip>
 	</properties>
 
 
@@ -67,8 +68,8 @@
 		<url>https://github.com/micwin/tinData/issues</url>
 	</issueManagement>
 
-
 	<build>
+
 		<plugins>
 			<plugin>
 				<inherited>true</inherited>
@@ -106,11 +107,12 @@
 						<goals>
 							<goal>site</goal>
 						</goals>
-						<phase>deploy</phase>
+						<phase>site-deploy</phase>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
+
 
 
 		<pluginManagement>
@@ -127,9 +129,12 @@
 							<version>1.0</version>
 						</dependency>
 					</dependencies>
+					<configuration>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
 	</build>
 
 </project>
