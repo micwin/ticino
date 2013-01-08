@@ -53,7 +53,7 @@
 	<scm>
 		<connection>scm:git:git@github.com:micwin/tinData.git</connection>
 		<developerConnection>scm:git:git@github.com:micwin/tinData.git</developerConnection>
-		<url>git@github.com:micwin/tinData.git</url>
+		<url>http://github.com/micwin/tinData</url>
 	</scm>
 
 	<dependencies>
