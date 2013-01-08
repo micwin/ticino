@@ -15,6 +15,14 @@ import java.util.Map;
  */
 public class TinData {
 
+	/**
+	 * Holds a weak reference to a receiver. This will not prevent the receiver
+	 * to get garbage collected, so make sure to store the receiver elsewhere.
+	 * This is obsolete when receiver is a singleton like in spring.
+	 * 
+	 * @author MicWin
+	 * 
+	 */
 	private static class ReceiverDescriptor {
 		WeakReference<Object> receiverReference;
 		Method method;
@@ -79,23 +87,25 @@ public class TinData {
 				continue;
 			}
 
-			if (method.getParameterTypes()[0].isAssignableFrom(eventClass) && !"equals".equals(method.getName())) {
+			if (method.getParameterTypes()[0].isAssignableFrom(eventClass)
+					&& !"equals".equals(method.getName())) {
 				// hit!
-				results.add(method) ;
+				results.add(method);
 			}
 		}
-		
+
 		if (results.size() == 1) {
 			// only one hit - perfect
-			return results.get(0) ; 
+			return results.get(0);
 		}
-		
+
 		if (results.size() > 1) {
 			throw new IllegalArgumentException(
 					"receiver '"
 							+ receiver
 							+ "' has more that one accessible method with a single parameter of type '"
-							+ eventClass.getName() + "' : "+results.toString());
+							+ eventClass.getName() + "' : "
+							+ results.toString());
 		}
 
 		// no hit _> exception
@@ -127,6 +137,7 @@ public class TinData {
 		for (ReceiverDescriptor receiverDescriptor : receivers) {
 			Object receiver = receiverDescriptor.receiverReference.get();
 			if (receiver == null) {
+
 				defunct.add(receiverDescriptor);
 				continue;
 			}

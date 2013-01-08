@@ -118,7 +118,7 @@
 
 	<distributionManagement>
 		<site>
-			<!-- since we use github site plugin, we dont need to have the pinaries 
+			<!-- since we use github site plugin, we dont need to have the binaries 
 				somewhere. -->
 			<id>vincinity</id>
 			<url>file://${user.home}/.trash</url>
