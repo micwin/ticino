@@ -1,17 +1,24 @@
 package net.micwin.tindata;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
+import java.io.IOException;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import junit.framework.Assert;
-
+import org.junit.Before;
 import org.junit.Test;
 
 // Tests the tindata core
 public class TinDataTest {
+
+	@Before
+	public void before() {
+		TinData.receiverMap.clear();
+	}
 
 	/**
 	 * A mock dummy event.
@@ -88,7 +95,8 @@ public class TinDataTest {
 		TinData.dispatch(4);
 		TinData.dispatch(42);
 
-		// check that both integers have been put into the list.
+		// check that both integers have been put into the list (and hence rthe
+		// receivers have been processed).
 		assertEquals((Integer) 4, payload.get(0));
 		assertEquals((Integer) 42, payload.get(1));
 
@@ -123,6 +131,67 @@ public class TinDataTest {
 		} catch (IllegalArgumentException iae) {
 			// w^5
 
+		}
+	}
+
+	/**
+	 * Test empty receiver list
+	 */
+	@Test
+	public void testEmpty() {
+
+		// empty map working?
+		TinData.dispatch("Hello, World!");
+
+		// empty receiver list working? (although this normally shouldnt happen)
+		Object receiver = new Object() {
+			@SuppressWarnings("unused")
+			public void receive(String msg) {
+				throw new AssertionError("receiver called");
+			}
+		};
+
+		// register a dummy receiver
+		TinData.register(String.class, receiver);
+
+		// then clear recieiver list of this type
+		TinData.receiverMap.get(String.class).clear();
+
+		// fire dummy event
+		TinData.dispatch("hello, World 2!");
+	}
+
+	@Test
+	public void testReceiverThrowingException() {
+		final Collection<String> c = new LinkedList<String>();
+		try {
+
+			// register first receiver, throwing an exception.
+			TinData.register(String.class, new Object() {
+				@SuppressWarnings("unused")
+				public void receive(String message) throws IOException {
+					throw new IOException();
+				}
+			});
+			// register second receiver, expecting work to do (but not reached)
+			TinData.register(String.class, new Object() {
+				@SuppressWarnings("unused")
+				public void receive(String message) {
+					c.add(message);
+				}
+			});
+
+			// firing dummy event
+			TinData.dispatch("Hello, receivers!");
+
+			// exception not thrown
+			fail();
+		} catch (Exception ise) {
+
+			assertSame(DispatchException.class, ise.getClass());
+
+			// assert that the second receiver has not been called
+			assertEquals(0, c.size());
 		}
 	}
 }

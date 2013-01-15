@@ -28,7 +28,7 @@ public class TinData {
 		Method method;
 	}
 
-	private static Map<Class<?>, List<ReceiverDescriptor>> receiverMap = new HashMap<Class<?>, List<ReceiverDescriptor>>();
+	static Map<Class<?>, List<ReceiverDescriptor>> receiverMap = new HashMap<Class<?>, List<ReceiverDescriptor>>();
 
 	/**
 	 * The public method to register a new event receiver.
@@ -145,6 +145,7 @@ public class TinData {
 				receiverDescriptor.method.setAccessible(true);
 				receiverDescriptor.method.invoke(receiver, event);
 			} catch (Exception e) {
+				// wrap non runtime exception
 				throw new DispatchException(receiver, event, e);
 			}
 		}
