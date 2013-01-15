@@ -8,7 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The core tinData event manager.
+ * The TinData core class. To register a receiver, call <code>register</code>
+ * with an event class and a receiver providing an accessible public method that
+ * has the event class as sole parameter:
+ * 
+ * <pre>
+ * TinData.register(MyEvent.class, new Object() {
+ * 	public void myReceiverMethod(MyEvent evt) {
+ * 		// do something meaningful
+ * 	}
+ * });
+ * </pre>
  * 
  * @author MicWin
  * 
@@ -17,8 +27,8 @@ public class TinData {
 
 	/**
 	 * Holds a weak reference to a receiver. This will not prevent the receiver
-	 * to get garbage collected, so make sure to store the receiver elsewhere.
-	 * This is obsolete when receiver is a singleton like in spring.
+	 * to get garbage collected, so make sure to store the receiver elsewhere,
+	 * for example you could pass in a spring bean.
 	 * 
 	 * @author MicWin
 	 * 
