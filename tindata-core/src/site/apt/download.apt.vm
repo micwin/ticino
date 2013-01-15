@@ -6,8 +6,8 @@ Downloading tinData
 <repositories>
 	...
 	<repository>
-		<id>sonatype-snapshots</id>
-		<name>sonatype snapshot repository</name>
+		<id>sonatype-public-repository</id>
+		<name>sonatype public repository</name>
 		<url>https://oss.sonatype.org/content/groups/public/</url>
 	</repository>	
 	...
