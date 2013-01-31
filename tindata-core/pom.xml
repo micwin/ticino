@@ -12,7 +12,7 @@
 	<groupId>net.micwin.tindata</groupId>
 	<artifactId>tindata-core</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2</version>
+	<version>0.2.1</version>
 	<name>tinData - events, not elephants</name>
 
 	<url>http://micwin.github.com/tinData/index.html</url>
