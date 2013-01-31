@@ -12,11 +12,11 @@
 			<item name="Welcome!" href="index.html" />
 			<item name="Cookbook" href="cookbook.html" />
 			<item name="Download" href="download.html" />
-
+			<item name="Changelog" href="changelog.html" />
 		</menu>
 		<menu ref="reports" />
 		<footer>
-			(C) 2012 micwin.net, Munich. All rights reerved.
+			(C) 2013 micwin.net, Munich. All rights reerved.
 		</footer>
 	</body>
 
@@ -38,7 +38,7 @@
 			<gitHub>
 				<projectId>micwin/tinData</projectId>
 			</gitHub>
-			<profile>release</profile>
+			<profile>pre-release</profile>
 			<facebookLike />
 			<googlePlusOne />
 		</fluidoSkin>
