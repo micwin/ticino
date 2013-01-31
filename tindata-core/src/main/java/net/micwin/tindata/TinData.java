@@ -2,10 +2,13 @@ package net.micwin.tindata;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 /**
  * The TinData core class. To register a receiver, call <code>register</code>
@@ -36,6 +39,7 @@ public class TinData {
 	private static class ReceiverDescriptor {
 		WeakReference<Object> receiverReference;
 		Method method;
+		long creationTime = System.currentTimeMillis();
 	}
 
 	static Map<Class<?>, List<ReceiverDescriptor>> receiverMap = new HashMap<Class<?>, List<ReceiverDescriptor>>();
@@ -135,7 +139,26 @@ public class TinData {
 	 */
 	public static synchronized void dispatch(Object event) {
 
-		List<ReceiverDescriptor> receivers = receiverMap.get(event.getClass());
+		Collection<ReceiverDescriptor> receivers = new TreeSet<TinData.ReceiverDescriptor>(
+				new Comparator<ReceiverDescriptor>() {
+
+					@Override
+					public int compare(ReceiverDescriptor o1,
+							ReceiverDescriptor o2) {
+						if (o1 == o2
+								|| o1.receiverReference == o2.receiverReference) {
+							return 0;
+						}
+
+						if (o1.creationTime < o2.creationTime) {
+							return -1;
+						}
+						return 1;
+					}
+				});
+
+		collectReceiver(event.getClass(), receivers);
+
 		// no receivers registered, so bye-bye
 		if (receivers == null || receivers.size() < 1) {
 			return;
@@ -165,5 +188,26 @@ public class TinData {
 			receivers.removeAll(defunct);
 		}
 
+	}
+
+	/**
+	 * collects receiver descriptors of super classes and interfaces.
+	 * 
+	 * @param eventClass
+	 * @param receiverCollection
+	 *            the collection receivers are put in.
+	 */
+	private static void collectReceiver(Class<?> eventClass,
+			Collection<ReceiverDescriptor> receiverCollection) {
+		if (receiverMap.get(eventClass) != null) {
+			receiverCollection.addAll(receiverMap.get(eventClass));
+		}
+		if (!eventClass.isInterface()
+				&& eventClass.getSuperclass() != Object.class) {
+			collectReceiver(eventClass.getSuperclass(), receiverCollection);
+		}
+		for (Class interfaceClass : eventClass.getInterfaces()) {
+			collectReceiver(interfaceClass, receiverCollection);
+		}
 	}
 }
