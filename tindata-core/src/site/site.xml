@@ -38,7 +38,7 @@
 			<gitHub>
 				<projectId>micwin/tinData</projectId>
 			</gitHub>
-			<profile>pre-release</profile>
+			<profile>release</profile>
 			<facebookLike />
 			<googlePlusOne />
 		</fluidoSkin>

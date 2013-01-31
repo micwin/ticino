@@ -1,22 +1,4 @@
-Downloading tinData
-
-    * in your settings.xml or your pom.xml, declare a repository
-
-+--------------------------------
-<repositories>
-	...
-	<repository>
-		<id>sonatype-snapshots</id>
-		<name>sonatype snapshot repository</name>
-		<url>https://oss.sonatype.org/content/groups/public/</url>
-	</repository>	
-	...
-</repositories>
-+--------------------------------
-
-    I'm working hard on getting tinData to maven central.  Sonatype is a step between.
-
-    * then, declare a dependency 
+Downloading tinData with maven
   
 +--------------------------------
 <dependencies>
@@ -29,6 +11,18 @@ Downloading tinData
 	...
 </dependencies>
 +--------------------------------
-  
-    * program some code, get your fingers dirty
-  
+
+Download manually
+
+  * current binaries jar is located at 
+      {{http://repo1.maven.org/maven2/net/micwin/tindata/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}.jar}}
+      
+  * current sources jar is located at 
+      {{http://repo1.maven.org/maven2/net/micwin/tindata/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}-sources.jar}}
+
+  * current javadoc jar is located at 
+      {{http://repo1.maven.org/maven2/net/micwin/tindata/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}-javadoc.jar}}
+
+Downloading with other build tools
+
+  * see Project Information -> Dependency Information  
