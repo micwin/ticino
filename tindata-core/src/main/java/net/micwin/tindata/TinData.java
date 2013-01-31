@@ -144,23 +144,26 @@ public class TinData {
 		// when finding a garbage collected receiver, store here
 		List<ReceiverDescriptor> defunct = new LinkedList<ReceiverDescriptor>();
 
-		for (ReceiverDescriptor receiverDescriptor : receivers) {
-			Object receiver = receiverDescriptor.receiverReference.get();
-			if (receiver == null) {
+		try {
+			for (ReceiverDescriptor receiverDescriptor : receivers) {
+				Object receiver = receiverDescriptor.receiverReference.get();
+				if (receiver == null) {
 
-				defunct.add(receiverDescriptor);
-				continue;
+					defunct.add(receiverDescriptor);
+					continue;
+				}
+				try {
+					receiverDescriptor.method.setAccessible(true);
+					receiverDescriptor.method.invoke(receiver, event);
+				} catch (Exception e) {
+					// wrap non runtime exception
+					throw new DispatchException(receiver, event, e);
+				}
 			}
-			try {
-				receiverDescriptor.method.setAccessible(true);
-				receiverDescriptor.method.invoke(receiver, event);
-			} catch (Exception e) {
-				// wrap non runtime exception
-				throw new DispatchException(receiver, event, e);
-			}
+		} finally {
+			// throw away gc'ed items
+			receivers.removeAll(defunct);
 		}
 
-		// throw away gc'ed items
-		receivers.removeAll(defunct);
 	}
 }

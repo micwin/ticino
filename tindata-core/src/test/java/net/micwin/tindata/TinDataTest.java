@@ -21,12 +21,22 @@ public class TinDataTest {
 	}
 
 	/**
+	 * An interface for a dummy event
+	 * 
+	 * @author MicWin
+	 * 
+	 */
+	interface IDummyEvent {
+
+	}
+
+	/**
 	 * A mock dummy event.
 	 * 
 	 * @author MicWin
 	 * 
 	 */
-	class DummyEvent {
+	class DummyEventImpl implements IDummyEvent {
 
 	}
 
@@ -57,9 +67,9 @@ public class TinDataTest {
 	public void testWorkflow() {
 
 		DummyReceiver receiver = new DummyReceiver();
-		TinData.register(DummyEvent.class, receiver);
+		TinData.register(DummyEventImpl.class, receiver);
 
-		TinData.dispatch(new DummyEvent());
+		TinData.dispatch(new DummyEventImpl());
 		assertEquals(1, receiver.received);
 	}
 
@@ -194,6 +204,36 @@ public class TinDataTest {
 			assertEquals(0, c.size());
 		}
 	}
-	
-	
+
+	@Test
+	public void testSuperClassRegistration() {
+
+		// register a receiver upon the interface
+		DummyReceiver interfaceReceiver = new DummyReceiver();
+		TinData.register(IDummyEvent.class, interfaceReceiver);
+
+		// register a receiver upon the implementation
+		DummyReceiver implReceiver = new DummyReceiver();
+		TinData.register(DummyEventImpl.class, implReceiver);
+
+		//
+		// dispatch an impl event
+		TinData.dispatch(new DummyEventImpl());
+
+		// assert impl calls
+		// expected: both receivers received the event once
+		assertEquals(1, implReceiver.received);
+		assertEquals(1, interfaceReceiver.received);
+
+		//
+		// dispatch an abstract adaptor event
+		TinData.dispatch(new IDummyEvent() {
+		});
+
+		// expectation: only the interface receiver received the event.
+		assertEquals(2, interfaceReceiver.received);
+		assertEquals(1, implReceiver.received);
+
+	}
+
 }
