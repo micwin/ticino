@@ -1,0 +1,95 @@
+migration : general approach 
+
+  being reflection based instead of subclassing and annotating, there is a big migration path from or to tinData.
+  Lets demonstrate the migration in case of wicket - which runs nearly out-of-the-box:
+  
++--------------------------------
+public class WicketApplication extends WebApplication {
+
+  @Override
+  public void onEvent(IEvent<?> event) {
+	// keep the wicket way functioning
+	super.onEvent(event);
+	
+	// but also support strict typed tinData event handling
+	TinData.dispatch (event.getPayload()) ;
+  }
+}
++--------------------------------
+   
+   Somewhere else...
+   
++--------------------------------
+public class NoSink {
+   
+   public NoSink () {
+     TinData.register (MyPayLoad.class , this) ; 
+   }
+   
+   public void blablah (MyPayLoad payload) {
+     // doSomething meaningful
+   }
+   
+}
+
++--------------------------------
+
+    Note that you dont have to unregister - tinData does this for you if the receiver gets gc'ed.   
+  
+Spring integration
+   
+   To integrate tinData with spring, use the following dependency : 
+   
+   
+   
++--------------------------------
+<dependencies>
+  <dependency>
+    <groupId>${project.groupId}</groupId>
+	  <artifactId>tindata-spring</artifactId>
+	  <version>${project.version}</version>
+  </dependency>
+</dependencies>
++--------------------------------
+
+   You can remove the dependency to tindata-core, this comes along with tindata-spring.
+   
+   Then, configure your listeners similar to the following snippet in the spring context:
+
++--------------------------------
+
+	<!-- create the configurator as bean -->
+	<bean class="net.micwin.tindata.spring.Configurator">
+		<constructor-arg>
+			<map>
+				<entry>
+					<!-- the event class to register to -->
+					<key>
+						<value>net.micwin.tindata.test.spring.SpringEvent1</value>
+					</key>
+					
+					<!-- a list of listener beans to this event. -->
+					<list>
+						<ref bean="listener1" />
+					</list>
+				</entry>
+				<entry>
+					<key>
+						<value>net.micwin.tindata.test.spring.SpringEvent2</value>
+					</key>
+					
+					<!-- you also can register multiple listeners to one event class -->
+					<list>
+						<ref bean="listener2" />
+						<ref bean="listener3" />
+					</list>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+
++--------------------------------
+   
+  
+    
+  

@@ -13,7 +13,7 @@
 	<groupId>net.micwin.tindata</groupId>
 	<artifactId>tindata-core</artifactId>
 	<packaging>jar</packaging>
-	<version>0.3-SNAPSHOT</version>
+	<version>0.3</version>
 	<name>tinData - events, not elephants</name>
 	<description>a lightweight, straight forward event framework</description>
 
