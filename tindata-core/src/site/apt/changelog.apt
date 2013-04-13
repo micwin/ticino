@@ -1,0 +1,10 @@
+Changelog
+
+Version 0.3
+
+  * event hierarchy registration: now it is possible to register to a specific superclass of an 
+  event. When an event of a derived type gets fired, receivers of a supertype also get notified.
+  
+Version 0.2.1
+
+  * finally going to maven central repository

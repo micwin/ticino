@@ -73,7 +73,7 @@ public class XmlCaster {
     
     This is drop-in. POJO-Events.
         
-tinData - the weird example
+tinData - the weird example 2
  
      Lets make a contest. Please pick your favorite event framework and program the shortest version of configuring, creatng, 
      dispatching and receiving an event of your choice. Then count the lines.
