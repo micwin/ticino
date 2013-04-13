@@ -1,0 +1,106 @@
+<?xml version="1.0" standalone="no"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<groupId>net.micwin.tindata</groupId>
+	<artifactId>tindata-spring</artifactId>
+	<packaging>jar</packaging>
+	<version>0.3-SNAPSHOT</version>
+	<name>tinData spring integration</name>
+
+	<url>http://micwin.github.com/tinData/index.html</url>
+	<licenses>
+		<license>
+			<name>Ad-Hoc-License</name>
+			<url>https://raw.github.com/micwin/tinData/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<mailingLists>
+		<mailingList>
+			<name>dev-support</name>
+			<post>tindata-dev@micwin.net</post>
+		</mailingList>
+	</mailingLists>
+
+	<developers>
+		<developer>
+			<id>micwin</id>
+			<name>Michael Winkler</name>
+			<organization>micwin.net</organization>
+			<organizationUrl>http://www.micwin.net</organizationUrl>
+			<timezone>+1</timezone>
+			<email>michael.winkler @7 micwin.net</email>
+			<url>@micwin</url>
+		</developer>
+	</developers>
+
+	<properties>
+		<github.global.server>github</github.global.server>
+		<maven.site.deploy.skip>true</maven.site.deploy.skip>
+	</properties>
+
+
+	<scm>
+		<connection>scm:git:git@github.com:micwin/tinData.git</connection>
+		<developerConnection>scm:git:git@github.com:micwin/tinData.git</developerConnection>
+		<url>http://github.com/micwin/tinData</url>
+	</scm>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.micwin.tindata</groupId>
+			<artifactId>tindata-core</artifactId>
+			<version>0.3-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+
+	<issueManagement>
+		<system>github issues</system>
+		<url>https://github.com/micwin/tinData/issues</url>
+	</issueManagement>
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<optimize>true</optimize>
+					<debug>true</debug>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>true</downloadSources>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+
+</project>
