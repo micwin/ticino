@@ -18,7 +18,7 @@ About Events
 	Unfortunately, most known event frameworks either come with a real heavy load of dependencies and "additional features", 
 	or are embedded in other frameworks, and hence are not usable stand alone. 
 
-tinData Example 1
+tinData example 1
 
 	Lets say you already have a piece of data you have to send around to an unknown number of receivrs :
 
@@ -73,7 +73,7 @@ public class XmlCaster {
     
     This is drop-in. POJO-Events.
         
-tinData - the weird example 2
+tinData example 2 - the weird one
  
      Lets make a contest. Please pick your favorite event framework and program the shortest version of configuring, creatng, 
      dispatching and receiving an event of your choice. Then count the lines.
