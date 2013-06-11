@@ -12,6 +12,7 @@
 			<item name="Welcome!" href="index.html" />
 			<item name="Cookbook" href="cookbook.html" />
 			<item name="Download" href="download.html" />
+			<item name="Best Practices" href="bestpractices.html" />
 			<item name="Changelog" href="changelog.html" />
 		</menu>
 		<menu ref="reports" />
@@ -38,7 +39,7 @@
 			<gitHub>
 				<projectId>micwin/ticino</projectId>
 			</gitHub>
-			<profile>release</profile>
+<!-- 			<profile>release</profile> -->
 			<facebookLike />
 			<googlePlusOne />
 		</fluidoSkin>

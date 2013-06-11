@@ -1,0 +1,45 @@
++---------
+Ticino best practices
++---------
+
+Dont use basic types as events
+
+    Althougt Ticino allows to use ie java.lang.String or java.lang.Integer as event types, 
+    we strongly discourage this approach. In general, use event whose names describe the 
+    purpose of the event, or its inner structure. This said, what's the purpose of dispatching a String?
+    
+Name your events according to their domain purpose
+
+    Since it is a technical driven naming, IncomingXmlEvent from Example 1 is a discouraged 
+    naming for an event. If possible, give more insight into the data provided with this event.
+    In case of the given IncomingXmlEvent you probably might say ie UpdateFlightDataXmlEvent instead.
+    
+Be careful what you dispatch
+
+    Since ticino senders have no meanings to control who catches their events, you probably 
+    shoud avoid including such secret things like passwords etc in your events.
+    Also, since they mostly come along with a whole bunch of references, you should think twice including 
+	database entities, transaction managers, EJBs, session data et al in your events. It probably might be most 
+	useful and of a specific charm throwing a NewRequestEvent, a CreateUserEvent or a LoadMandateEvent 
+	as long the drawbacks are well considered.
+	
+Use Spring
+
+	Using spring to connect dispatcher and receiver enforces the loose end characteristics of ticino and 
+	hence is highly recommended. Of course you might use another DI or IOC framework as well.
+	
+xxxEvent vs <not>
+
+    Sometimes, its useful to make explicit the fact that a data structure is an event, sometimes not. I most
+    time love short code but only in a context where all participants exactly know the technical 
+    background of the software. With above example, instead of UpdateFlightDataXmlEvent, I most likely 
+    would prefer IncomingFlightUpdate (and even hide the xml characteristics of the data), but imho 
+    that really is a matter of taste. AND, in the case you might reuse a class for multiple purposes,...
+    
+Dont play Crusader
+
+	I fought many battles concerning junit and unit testing. I heard much speach about why this will not
+	work in exactly this company for a vast variety of reasons (my favorite: "our code is not testable"). 
+	The question you should ask yourself: is *your*  energy worth a long lasting crusade? Probably its 
+	simply not the time for ticino, but time's are changing so - be patient; in our business good programming 
+	concepts sooner or later become accepted.

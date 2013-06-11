@@ -7,7 +7,7 @@ migration : general approach
 public class WicketApplication extends WebApplication {
 
   @Override
-  public void onEvent(IEvent<?> event) {
+  public void onEvent(IEvent<MyPayLoad> event) {
 	// keep the wicket way functioning
 	super.onEvent(event);
 	
@@ -82,6 +82,9 @@ Spring integration
 					<list>
 						<ref bean="listener2" />
 						<ref bean="listener3" />
+						
+						<!-- provided listener1 has an appropriate receiver method, you of course can reuse it as well -->
+						<ref bean="listener1" />
 					</list>
 				</entry>
 			</map>
@@ -89,7 +92,3 @@ Spring integration
 	</bean>
 
 +--------------------------------
-   
-  
-    
-  
