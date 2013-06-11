@@ -1,6 +1,6 @@
 migration : general approach 
 
-  being reflection based instead of subclassing and annotating, there is a big migration path from or to tinData.
+  being reflection based instead of subclassing and annotating, there is a big migration path from or to ticino.
   Lets demonstrate the migration in case of wicket - which runs nearly out-of-the-box:
   
 +--------------------------------
@@ -11,8 +11,8 @@ public class WicketApplication extends WebApplication {
 	// keep the wicket way functioning
 	super.onEvent(event);
 	
-	// but also support strict typed tinData event handling
-	TinData.dispatch (event.getPayload()) ;
+	// but also support strict typed ticino event handling
+	Ticino.dispatch (event.getPayload()) ;
   }
 }
 +--------------------------------
@@ -23,7 +23,7 @@ public class WicketApplication extends WebApplication {
 public class NoSink {
    
    public NoSink () {
-     TinData.register (MyPayLoad.class , this) ; 
+     Ticino.register (MyPayLoad.class , this) ; 
    }
    
    public void blablah (MyPayLoad payload) {
@@ -34,11 +34,11 @@ public class NoSink {
 
 +--------------------------------
 
-    Note that you dont have to unregister - tinData does this for you if the receiver gets gc'ed.   
+    Note that you dont have to unregister - ticino does this for you if the receiver gets gc'ed.   
   
 Spring integration
    
-   To integrate tinData with spring, use the following dependency : 
+   To integrate ticino with spring, use the following dependency : 
    
    
    
@@ -46,26 +46,26 @@ Spring integration
 <dependencies>
   <dependency>
     <groupId>${project.groupId}</groupId>
-	  <artifactId>tindata-spring</artifactId>
+	  <artifactId>ticino-spring</artifactId>
 	  <version>${project.version}</version>
   </dependency>
 </dependencies>
 +--------------------------------
 
-   You can remove the dependency to tindata-core, this comes along with tindata-spring.
+   You can remove the dependency to ticino-core, this comes along with ticino-spring.
    
    Then, configure your listeners similar to the following snippet in the spring context:
 
 +--------------------------------
 
 	<!-- create the configurator as bean -->
-	<bean class="net.micwin.tindata.spring.Configurator">
+	<bean class="net.micwin.ticino.spring.Configurator">
 		<constructor-arg>
 			<map>
 				<entry>
 					<!-- the event class to register to -->
 					<key>
-						<value>net.micwin.tindata.test.spring.SpringEvent1</value>
+						<value>net.micwin.ticino.test.spring.SpringEvent1</value>
 					</key>
 					
 					<!-- a list of listener beans to this event. -->
@@ -75,7 +75,7 @@ Spring integration
 				</entry>
 				<entry>
 					<key>
-						<value>net.micwin.tindata.test.spring.SpringEvent2</value>
+						<value>net.micwin.ticino.test.spring.SpringEvent2</value>
 					</key>
 					
 					<!-- you also can register multiple listeners to one event class -->

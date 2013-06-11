@@ -1,4 +1,4 @@
-Downloading tinData with maven
+Downloading ticino with maven
   
 +--------------------------------
 <dependencies>
@@ -15,13 +15,13 @@ Downloading tinData with maven
 Download manually
 
   * current binaries jar is located at 
-      {{http://repo1.maven.org/maven2/net/micwin/tindata/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}.jar}}
+      {{http://repo1.maven.org/maven2/net/micwin/ticino/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}.jar}}
       
   * current sources jar is located at 
-      {{http://repo1.maven.org/maven2/net/micwin/tindata/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}-sources.jar}}
+      {{http://repo1.maven.org/maven2/net/micwin/ticino/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}-sources.jar}}
 
   * current javadoc jar is located at 
-      {{http://repo1.maven.org/maven2/net/micwin/tindata/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}-javadoc.jar}}
+      {{http://repo1.maven.org/maven2/net/micwin/ticino/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}-javadoc.jar}}
 
 Downloading with other build tools
 

@@ -1,10 +1,10 @@
-package net.micwin.tindata.spring;
+package net.micwin.ticino.spring;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.micwin.tindata.TinData;
+import net.micwin.ticino.Ticino;
 
 /**
  * Configurator class to knot some events to receivers.
@@ -21,7 +21,7 @@ public class Configurator {
 			Class<?> evtClass = entry.getKey();
 			List<?> value = entry.getValue();
 			for (Object listener : value) {
-				TinData.register(evtClass, listener);
+				Ticino.register(evtClass, listener);
 			}
 		}
 	}

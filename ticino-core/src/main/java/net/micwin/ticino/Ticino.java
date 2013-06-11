@@ -1,4 +1,4 @@
-package net.micwin.tindata;
+package net.micwin.ticino;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.TreeSet;
 
 /**
- * The TinData core class. To register a receiver, call <code>register</code>
+ * The Ticino core class. To register a receiver, call <code>register</code>
  * with an event class and a receiver providing an accessible public method that
  * has the event class as sole parameter:
  * 
  * <pre>
- * TinData.register(MyEvent.class, new Object() {
+ * Ticino.register(MyEvent.class, new Object() {
  * 	public void myReceiverMethod(MyEvent evt) {
  * 		// do something meaningful
  * 	}
@@ -26,7 +26,7 @@ import java.util.TreeSet;
  * @author MicWin
  * 
  */
-public class TinData {
+public class Ticino {
 
 	/**
 	 * Holds a weak reference to a receiver. This will not prevent the receiver
@@ -139,7 +139,7 @@ public class TinData {
 	 */
 	public static synchronized void dispatch(Object event) {
 
-		Collection<ReceiverDescriptor> receivers = new TreeSet<TinData.ReceiverDescriptor>(
+		Collection<ReceiverDescriptor> receivers = new TreeSet<Ticino.ReceiverDescriptor>(
 				new Comparator<ReceiverDescriptor>() {
 
 					@Override

@@ -10,18 +10,18 @@
 		<version>7</version>
 	</parent>
 
-	<groupId>net.micwin.tindata</groupId>
-	<artifactId>tindata-core</artifactId>
+	<groupId>net.micwin.ticino</groupId>
+	<artifactId>ticino-core</artifactId>
 	<packaging>jar</packaging>
 	<version>0.4-SNAPSHOT</version>
-	<name>tinData - events, not elephants</name>
+	<name>ticino - events, not elephants</name>
 	<description>a lightweight, straight forward event framework</description>
 
-	<url>http://micwin.github.com/tinData/index.html</url>
+	<url>http://micwin.github.com/ticino/index.html</url>
 	<licenses>
 		<license>
 			<name>Ad-Hoc-License</name>
-			<url>https://raw.github.com/micwin/tinData/master/LICENSE</url>
+			<url>https://raw.github.com/micwin/ticino/master/LICENSE</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>

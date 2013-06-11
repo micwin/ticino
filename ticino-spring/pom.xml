@@ -10,11 +10,11 @@
 		<version>7</version>
 	</parent>
 
-	<groupId>net.micwin.tindata</groupId>
-	<artifactId>tindata-spring</artifactId>
+	<groupId>net.micwin.ticino</groupId>
+	<artifactId>ticino-spring</artifactId>
 	<packaging>jar</packaging>
 	<version>0.4-SNAPSHOT</version>
-	<name>tinData spring integration</name>
+	<name>ticino spring integration</name>
 
 	<url>http://micwin.github.com/tinData/index.html</url>
 	<licenses>
@@ -65,8 +65,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.micwin.tindata</groupId>
-			<artifactId>tindata-core</artifactId>
+			<groupId>net.micwin.ticino</groupId>
+			<artifactId>ticino-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

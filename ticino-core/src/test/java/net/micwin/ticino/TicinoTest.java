@@ -1,4 +1,4 @@
-package net.micwin.tindata;
+package net.micwin.ticino;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -9,15 +9,18 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.micwin.ticino.DispatchException;
+import net.micwin.ticino.Ticino;
+
 import org.junit.Before;
 import org.junit.Test;
 
-// Tests the tindata core
-public class TinDataTest {
+// Tests the ticino core
+public class TicinoTest {
 
 	@Before
 	public void before() {
-		TinData.receiverMap.clear();
+		Ticino.receiverMap.clear();
 	}
 
 	/**
@@ -67,15 +70,15 @@ public class TinDataTest {
 	public void testWorkflow() {
 
 		DummyReceiver receiver = new DummyReceiver();
-		TinData.register(DummyEventImpl.class, receiver);
+		Ticino.register(DummyEventImpl.class, receiver);
 
-		TinData.dispatch(new DummyEventImpl());
+		Ticino.dispatch(new DummyEventImpl());
 		assertEquals(1, receiver.received);
 	}
 
 	/**
 	 * This is an absurd test that perfectly demonstrates the absolute
-	 * flexibility of tinData. In fact, this is absolute pojo; you dont have to
+	 * flexibility of ticino. In fact, this is absolute pojo; you dont have to
 	 * create event or payload classes if there already is something like an
 	 * already programmed event or payload class around, like in wicket, or JMS.
 	 * <p />
@@ -93,7 +96,7 @@ public class TinDataTest {
 
 		// register an anonymous adapter as receiver, that puts the received
 		// "event" (i.e. the Integer) into the list above.
-		TinData.register(Integer.class, new Object() {
+		Ticino.register(Integer.class, new Object() {
 			@SuppressWarnings("unused")
 			public void receive(Integer i) {
 				// this is the receiver method.
@@ -102,8 +105,8 @@ public class TinDataTest {
 		});
 
 		// trigger receiver twice
-		TinData.dispatch(4);
-		TinData.dispatch(42);
+		Ticino.dispatch(4);
+		Ticino.dispatch(42);
 
 		// check that both integers have been put into the list (and hence rthe
 		// receivers have been processed).
@@ -115,7 +118,7 @@ public class TinDataTest {
 	public void testIllegalClass() {
 
 		try {
-			TinData.register(String.class, new Object() {
+			Ticino.register(String.class, new Object() {
 
 				// receiver that has two methods that possibly could catch the
 				// event
@@ -144,7 +147,7 @@ public class TinDataTest {
 	public void testEmpty() {
 
 		// empty map working?
-		TinData.dispatch("Hello, World!");
+		Ticino.dispatch("Hello, World!");
 
 		// empty receiver list working? (although this normally shouldnt happen)
 		Object receiver = new Object() {
@@ -155,13 +158,13 @@ public class TinDataTest {
 		};
 
 		// register a dummy receiver
-		TinData.register(String.class, receiver);
+		Ticino.register(String.class, receiver);
 
-		// then clear recieiver list of this type
-		TinData.receiverMap.get(String.class).clear();
+		// then clear receiver list of this type
+		Ticino.receiverMap.get(String.class).clear();
 
 		// fire dummy event
-		TinData.dispatch("hello, World 2!");
+		Ticino.dispatch("hello, World 2!");
 	}
 
 	@Test
@@ -170,14 +173,14 @@ public class TinDataTest {
 		try {
 
 			// register first receiver, throwing an exception.
-			TinData.register(String.class, new Object() {
+			Ticino.register(String.class, new Object() {
 				@SuppressWarnings("unused")
 				public void receive(String message) throws IOException {
 					throw new IOException();
 				}
 			});
 			// register second receiver, expecting work to do (but not reached)
-			TinData.register(String.class, new Object() {
+			Ticino.register(String.class, new Object() {
 				@SuppressWarnings("unused")
 				public void receive(String message) {
 					c.add(message);
@@ -185,7 +188,7 @@ public class TinDataTest {
 			});
 
 			// firing dummy event
-			TinData.dispatch("Hello, receivers!");
+			Ticino.dispatch("Hello, receivers!");
 
 			// exception not thrown
 			fail();
@@ -203,15 +206,15 @@ public class TinDataTest {
 
 		// register a receiver upon the interface
 		DummyReceiver interfaceReceiver = new DummyReceiver();
-		TinData.register(IDummyEvent.class, interfaceReceiver);
+		Ticino.register(IDummyEvent.class, interfaceReceiver);
 
 		// register a receiver upon the implementation
 		DummyReceiver implReceiver = new DummyReceiver();
-		TinData.register(DummyEventImpl.class, implReceiver);
+		Ticino.register(DummyEventImpl.class, implReceiver);
 
 		//
 		// dispatch an impl event
-		TinData.dispatch(new DummyEventImpl());
+		Ticino.dispatch(new DummyEventImpl());
 
 		// assert impl calls
 		// expected: both receivers received the event once
@@ -220,7 +223,7 @@ public class TinDataTest {
 
 		//
 		// dispatch an abstract adaptor event
-		TinData.dispatch(new IDummyEvent() {
+		Ticino.dispatch(new IDummyEvent() {
 		});
 
 		// expectation: only the interface receiver received the event.

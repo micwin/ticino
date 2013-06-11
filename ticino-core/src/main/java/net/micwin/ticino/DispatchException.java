@@ -1,4 +1,4 @@
-package net.micwin.tindata;
+package net.micwin.ticino;
 
 /**
  * Thrown when something goes wrong while dispatching an event.
