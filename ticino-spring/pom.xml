@@ -5,55 +5,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
+		<groupId>net.micwin.ticino</groupId>
+		<artifactId>parent-pom</artifactId>
+		<version>0.4-SNAPSHOT</version>
 	</parent>
 
-	<groupId>net.micwin.ticino</groupId>
+	<groupId>${parent.groupId}</groupId>
 	<artifactId>ticino-spring</artifactId>
 	<packaging>jar</packaging>
-	<version>0.4-SNAPSHOT</version>
+	<version>${parent.version}</version>
 	<name>ticino spring integration</name>
-
-	<url>http://micwin.github.com/tinData/index.html</url>
-	<licenses>
-		<license>
-			<name>Ad-Hoc-License</name>
-			<url>https://raw.github.com/micwin/tinData/master/LICENSE</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	<mailingLists>
-		<mailingList>
-			<name>dev-support</name>
-			<post>ticino-dev@micwin.net</post>
-		</mailingList>
-	</mailingLists>
-
-	<developers>
-		<developer>
-			<id>micwin</id>
-			<name>Michael Winkler</name>
-			<organization>micwin.net</organization>
-			<organizationUrl>http://www.micwin.net</organizationUrl>
-			<timezone>+1</timezone>
-			<email>michael.winkler @7 micwin.net</email>
-			<url>@micwin</url>
-		</developer>
-	</developers>
-
-	<properties>
-		<github.global.server>github</github.global.server>
-		<maven.site.deploy.skip>true</maven.site.deploy.skip>
-	</properties>
-
-
-	<scm>
-		<connection>scm:git:git@github.com:micwin/tinData.git</connection>
-		<developerConnection>scm:git:git@github.com:micwin/tinData.git</developerConnection>
-		<url>http://github.com/micwin/tinData</url>
-	</scm>
 
 	<dependencies>
 
@@ -72,35 +33,5 @@
 
 	</dependencies>
 
-	<issueManagement>
-		<system>github issues</system>
-		<url>https://github.com/micwin/tinData/issues</url>
-	</issueManagement>
-
-	<build>
-
-		<plugins>
-			<plugin>
-				<inherited>true</inherited>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<optimize>true</optimize>
-					<debug>true</debug>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<configuration>
-					<downloadSources>true</downloadSources>
-				</configuration>
-			</plugin>
-		</plugins>
-
-	</build>
 
 </project>

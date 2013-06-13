@@ -1,0 +1,92 @@
+<?xml version="1.0" standalone="no"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<groupId>net.micwin.ticino</groupId>
+	<artifactId>parent-pom</artifactId>
+	<packaging>pom</packaging>
+	<version>0.4-SNAPSHOT</version>
+	<name>ticino - events, not elephants</name>
+	<description>a lightweight, straight forward event framework</description>
+
+	<url>http://micwin.github.com/ticino/index.html</url>
+	<licenses>
+		<license>
+			<name>Ad-Hoc-License</name>
+			<url>https://raw.github.com/micwin/ticino/master/LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<mailingLists>
+		<mailingList>
+			<name>dev-support</name>
+			<post>ticino-dev@micwin.net</post>
+		</mailingList>
+	</mailingLists>
+
+	<developers>
+		<developer>
+			<id>micwin</id>
+			<name>Michael Winkler</name>
+			<organization>micwin.net</organization>
+			<organizationUrl>http://www.micwin.net</organizationUrl>
+			<timezone>+1</timezone>
+			<email>michael.winkler @7 micwin.net</email>
+			<url>@micwin</url>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git@github.com:micwin/ticino.git</connection>
+		<developerConnection>scm:git:git@github.com:micwin/ticino.git</developerConnection>
+		<url>http://github.com/micwin/ticino</url>
+	</scm>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+	<issueManagement>
+		<system>github issues</system>
+		<url>https://github.com/micwin/ticino/issues</url>
+	</issueManagement>
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<optimize>true</optimize>
+					<debug>true</debug>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>true</downloadSources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
