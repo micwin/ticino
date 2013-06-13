@@ -1,10 +1,8 @@
-+---------
-Ticino best practices
-+---------
+ticino best practices
 
 Dont use basic types as events
 
-    Althougt Ticino allows to use ie java.lang.String or java.lang.Integer as event types, 
+    Althougt ticino allows to use ie java.lang.String or java.lang.Integer as event types, 
     we strongly discourage this approach. In general, use event whose names describe the 
     purpose of the event, or its inner structure. This said, what's the purpose of dispatching a String?
     
