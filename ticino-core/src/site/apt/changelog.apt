@@ -1,13 +1,12 @@
 Changelog
 
-Version 0.4
+Version 0.3.1
 
   * renamed to ticino
 
 Version 0.3
 
-  * event hierarchy registration: now it is possible to register to a specific superclass of an 
-  event. When an event of a derived type gets fired, receivers of a supertype also get notified.
+  * event inheritance
   
   * spring support
   

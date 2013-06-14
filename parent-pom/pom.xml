@@ -13,7 +13,7 @@
 	<groupId>net.micwin.ticino</groupId>
 	<artifactId>parent-pom</artifactId>
 	<packaging>pom</packaging>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.3.1-SNAPSHOT</version>
 	<name>ticino - events, not elephants</name>
 	<description>a lightweight, straight forward event framework</description>
 
