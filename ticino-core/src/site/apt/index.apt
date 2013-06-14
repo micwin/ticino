@@ -25,13 +25,14 @@ ticino example 1
 +--------------------------------
 public class IncomingXmlEvent {
 
-	private String xml ; 
-	public IncomingXml (String xml) {
-	  this.xml = xml ; 
+	private String xml;
+
+	public IncomingXmlEvent(String xml) {
+		this.xml = xml;
 	}
 
 	public String getXml() {
-	  return xml ; 
+		return xml;
 	}
 }
 +--------------------------------
@@ -40,22 +41,21 @@ public class IncomingXmlEvent {
  
 +--------------------------------
 public class Receiver {
-  public void doSomethingWithThisEvent (IncomingXmlEvent incomingXml) {
-  // ... 
-  }
+	public void doSomethingWithThisEvent(IncomingXmlEvent incomingXml) {
+		System.out.println("incoming xml : " + incomingXml.getXml());
+	}
 }
 +--------------------------------
  
  	Then there somewhere is a piece of code that initializes all this
  	
 +--------------------------------
-public clas Main {
-  public static void main (String [] args) {
-    Receiver rec = new Receiver () ; 
-    Ticino.register (IncomingXmlEvent.class, rec);
-    // yes, there *is* spring support
-  }  
-
+public class Main {
+	public static void main(String[] args) {
+		Receiver rec = new Receiver();
+		Ticino.register(IncomingXmlEvent.class, rec);
+		// yes, there *is* spring support
+	}
 }
 +--------------------------------
 
@@ -63,9 +63,9 @@ public clas Main {
 
 +--------------------------------
 public class XmlCaster {
-  public void yep (String newXml) {
-    Ticino.dispatch (new IncomingXmlEvent (newXml)) ; 
-  }
+	public void yep(String newXml) {
+		Ticino.dispatch(new IncomingXmlEvent(newXml));
+	}
 }
 +--------------------------------
 
