@@ -16,11 +16,10 @@ import java.util.TreeSet;
  * @author MicWin
  * 
  */
-public class EventScope {
+public class EventScope<T> {
 
 	private String name;
-	@SuppressWarnings("rawtypes")
-	Map<Class<?>, List<ReceiverDescriptor>> receiverMap = new HashMap<Class<?>, List<ReceiverDescriptor>>();
+	Map<Class<? extends T>, List<ReceiverDescriptor>> receiverMap = new HashMap<Class<? extends T>, List<ReceiverDescriptor>>();
 
 	/**
 	 * Creates a eventScope with given name.
@@ -43,7 +42,7 @@ public class EventScope {
 	 * @author MicWin
 	 * 
 	 */
-	private static class ReceiverDescriptor {
+	private class ReceiverDescriptor {
 		WeakReference<Object> receiverReference;
 		Method method;
 		long creationTime = System.currentTimeMillis();
@@ -57,7 +56,8 @@ public class EventScope {
 	 * @param receiver
 	 *            The receiver to get the event.
 	 */
-	public synchronized void register(Class<?> eventClass, Object receiver) {
+	public synchronized void register(Class<? extends T> eventClass,
+			Object receiver) {
 		Method method = detectReceiverMethod(receiver, eventClass);
 		registerInternal(receiver, method, eventClass);
 	}
@@ -70,7 +70,7 @@ public class EventScope {
 	 * @param eventClass
 	 */
 	private void registerInternal(Object receiver, Method method,
-			Class<?> eventClass) {
+			Class<? extends T> eventClass) {
 		List<ReceiverDescriptor> receivers = receiverMap.get(eventClass);
 		if (receivers == null) {
 			receivers = new LinkedList<ReceiverDescriptor>();
@@ -92,7 +92,8 @@ public class EventScope {
 	 * @param eventClass
 	 * @return
 	 */
-	private Method detectReceiverMethod(Object receiver, Class<?> eventClass) {
+	private Method detectReceiverMethod(Object receiver,
+			Class<? extends T> eventClass) {
 		Method[] methods = receiver.getClass().getMethods();
 		List<Method> results = new LinkedList<Method>();
 
@@ -140,7 +141,7 @@ public class EventScope {
 	 * @param event
 	 *            The event object to dispatch.
 	 */
-	public synchronized void dispatch(Object event) {
+	public synchronized void dispatch(T event) {
 
 		Collection<ReceiverDescriptor> receivers = new TreeSet<ReceiverDescriptor>(
 				new Comparator<ReceiverDescriptor>() {

@@ -9,15 +9,14 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import org.junit.Before;
 import org.junit.Test;
+
+@SuppressWarnings({"unchecked", "rawtypes"})
 
 public class EventScopeTest {
 
 	private EventScope eventScope;
-
-	
 
 	/**
 	 * An interface for a dummy event
@@ -47,8 +46,9 @@ public class EventScopeTest {
 		private int received;
 
 		/**
-		 * Dont do this (using Object as event type) in real life since the method then might get shadowed by
-		 * other methods not associated with event handling.
+		 * Dont do this (using Object as event type) in real life since the
+		 * method then might get shadowed by other methods not associated with
+		 * event handling.
 		 * 
 		 * @param evt
 		 */
@@ -56,10 +56,10 @@ public class EventScopeTest {
 			received++;
 		}
 	}
-	
+
 	@Before
 	public void before() {
-		eventScope = new EventScope("unitTest") ; 
+		eventScope = new EventScope ("unitTest");
 	}
 
 	@Test
@@ -67,7 +67,6 @@ public class EventScopeTest {
 		assertEquals("unitTest", eventScope.getScopeName());
 		assertEquals(0, eventScope.receiverMap.size());
 	}
-
 
 	/**
 	 * This is a simple test with a mock event and mock receiver. It
@@ -147,7 +146,6 @@ public class EventScopeTest {
 
 		}
 	}
-
 
 	@Test
 	public void testReceiverThrowingException() {
