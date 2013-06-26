@@ -31,12 +31,11 @@ public class NoSink {
    }
    
 }
-
 +--------------------------------
 
     Note that you dont have to unregister - ticino does this for you if the receiver gets gc'ed.   
   
-Spring integration
+Spring integration - static aproach
    
    To integrate ticino with spring, use the following dependency : 
    
@@ -57,7 +56,6 @@ Spring integration
    Then, configure your listeners similar to the following snippet in the spring context:
 
 +--------------------------------
-
 	<!-- create the configurator as bean -->
 	<bean class="net.micwin.ticino.spring.Configurator">
 		<constructor-arg>
@@ -93,6 +91,53 @@ Spring integration
 
 +--------------------------------
 
+Spring integration - default bean aproach
+    
+    In the spring context, create a event scope bean
+    
++--------------------------------
+    <bean class="net.micwin.ticino.EventScope" />
++--------------------------------
+
+    Autowire that in a receiver
+
++--------------------------------
+public class Receiver {
+    
+    @Autowired
+    EventScope eventScope ;
+    
+    private void init () {
+        eventScope.register (Payload.class, this) ;
+    }
+    
+    public void receive (Payload payload) {
+        // do something meaningful with the received event
+    }
+}   
++--------------------------------
+    
+    and in a caller
+    
++--------------------------------
+public class Caller {
+    
+    @Autowired
+    EventScope eventScope ;
+    
+    public void doSomething (Payload payload) {
+        eventScope.dispatch (payload) ;
+    }
+}
++--------------------------------    
+
+    Some Notes here
+    
+    * of course you can use multiple event scopes at once. They will have a disjunct set of event registrations, that is, receivers.
+    
+    * this approach does not interfere with the static aproach above; so you could use the static aproach for common/global events
+    and use private event scopes for more security related things not every class should be able to register to.
+
 event inheritance
 
     say we have a general event containing logic and data common to all of your events, ...
@@ -111,7 +156,7 @@ class SpecificEvent extends GeneralEvent {
 }
 +--------------------------------
 
-    ... a receiver triggering to the general event, ...
+    ... a receiver triggered by the general event, ...
     
 +--------------------------------
 class Receiver {
@@ -121,7 +166,7 @@ class Receiver {
 }
 +--------------------------------
 
-    ... some main method bringing event and receiver together (normally you would do that with spring) ...
+    ... some main method bringing event and receiver together (normally you would do that in a spring context) ...
     
 +--------------------------------
 public static void main(String[] args) {

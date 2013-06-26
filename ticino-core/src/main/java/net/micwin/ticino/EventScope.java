@@ -30,6 +30,15 @@ public class EventScope<T> {
 		this.name = name;
 	}
 
+	/**
+	 * Creates a eventScope with name "&lt;none&gt;".
+	 * 
+	 * @param name
+	 */
+	public EventScope() {
+		this("<none>");
+	}
+
 	public String getScopeName() {
 		return name;
 	}
