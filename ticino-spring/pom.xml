@@ -7,13 +7,13 @@
 	<parent>
 		<groupId>net.micwin.ticino</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>0.3.1</version>
+		<version>0.3.2-SNAPSHOT</version>
 	</parent>
 
 	<groupId>net.micwin.ticino</groupId>
 	<artifactId>ticino-spring</artifactId>
 	<packaging>jar</packaging>
-	<version>0.3.1</version>
+	<version>0.3.2-SNAPSHOT</version>
 	<name>ticino spring integration</name>
 
 	<dependencies>
@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>net.micwin.ticino</groupId>
 			<artifactId>ticino-core</artifactId>
-			<version>${project.version}</version>
+			<version>0.3.2-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>
