@@ -10,7 +10,6 @@
 		<version>0.3.2-SNAPSHOT</version>
 	</parent>
 
-	<groupId>net.micwin.ticino</groupId>
 	<artifactId>ticino-core</artifactId>
 	<packaging>jar</packaging>
 	<version>0.3.2-SNAPSHOT</version>
@@ -19,6 +18,14 @@
 		<github.global.server>github</github.global.server>
 		<maven.site.deploy.skip>true</maven.site.deploy.skip>
 	</properties>
+
+	<scm>
+		<connection>scm:git:git@github.com:micwin/ticino.git</connection>
+		<developerConnection>scm:git:git@github.com:micwin/ticino.git</developerConnection>
+		<url>http://github.com/micwin/ticino</url>
+	</scm>
+
+	<url>http://micwin.github.io/ticino</url>
 
 	<build>
 
