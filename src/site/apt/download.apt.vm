@@ -1,0 +1,28 @@
+Downloading ticino with maven
+  
++--------------------------------
+<dependencies>
+    ...
+	<dependency>
+		<groupId>${project.groupId}</groupId>
+		<artifactId>${project.artifactId}</artifactId>
+		<version>${project.version}</version>
+	</dependency>
+	...
+</dependencies>
++--------------------------------
+
+Download manually
+
+  * current binaries jar is located at 
+      {{http://repo1.maven.org/maven2/net/micwin/ticino/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}.jar}}
+      
+  * current sources jar is located at 
+      {{http://repo1.maven.org/maven2/net/micwin/ticino/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}-sources.jar}}
+
+  * current javadoc jar is located at 
+      {{http://repo1.maven.org/maven2/net/micwin/ticino/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}-javadoc.jar}}
+
+Downloading with other build tools
+
+  * see Project Information -> Dependency Information  
