@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.micwin.ticino.Ticino;
+import net.micwin.ticino.EventScope;
 
 /**
  * Configurator class to knot some events to receivers.
@@ -12,16 +12,17 @@ import net.micwin.ticino.Ticino;
  * @author MicWin
  * 
  */
-public class Configurator {
+public class Configurator <T> {
 
-	public Configurator(Map<Class<?>, List<?>> registrations) {
+	public Configurator(Map<Class<? extends T>, List<?>> registrations,
+			EventScope<Object> eventScope) {
 
 		// register listener
-		for (Entry<Class<?>, List<?>> entry : registrations.entrySet()) {
+		for (Entry<Class<?extends T>, List<?>> entry : registrations.entrySet()) {
 			Class<?> evtClass = entry.getKey();
 			List<?> value = entry.getValue();
 			for (Object listener : value) {
-				Ticino.register(evtClass, listener);
+				eventScope.register(evtClass, listener);
 			}
 		}
 	}

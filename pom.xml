@@ -125,5 +125,6 @@
 	<modules>
 		<module>ticino-core</module>
 		<module>ticino-spring</module>
+		<module>ticino-static</module>
 	</modules>
 </project>
