@@ -1,5 +1,6 @@
 package net.micwin.ticino;
 
+import net.micwin.ticino.EventScope;
 /**
  * The static Ticino context. To register a receiver, call <code>register</code>
  * with an event class and a receiver providing an accessible public method that
@@ -43,7 +44,7 @@ public class Ticino {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void dispatch(Object event) {
+	public static  void dispatch(Object event) {
 		getScope().dispatch(event);
 	}
 }

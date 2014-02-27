@@ -65,11 +65,13 @@ public class EventScope<T> {
 	 *            the class of event to be received.
 	 * @param receiver
 	 *            The receiver to get the event.
+	 * @return this to enable chaining.
 	 */
-	public synchronized void register(Class<? extends T> eventClass,
+	public synchronized EventScope<T> register(Class<? extends T> eventClass,
 			Object receiver) {
 		Method method = detectReceiverMethod(receiver, eventClass);
 		registerInternal(receiver, method, eventClass);
+		return this;
 	}
 
 	/**
