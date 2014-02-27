@@ -1,5 +1,9 @@
 Changelog
 
+Version 0.3.2
+
+  * enabled chaining when dispatching an event
+
 Version 0.3.1
 
   * Introduced EventScope
