@@ -11,7 +11,7 @@ public class DispatchException extends RuntimeException {
 	private static final long serialVersionUID = -8048734860684723856L;
 
 	public DispatchException(Object receiver, Object event, Exception e) {
-		super("cannot dispatch event '" + event + "'", e);
+		super("cannot dispatch event '" + event + "':" + e.getMessage(), e);
 	}
 
 }
