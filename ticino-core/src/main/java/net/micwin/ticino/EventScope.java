@@ -11,7 +11,8 @@ import java.util.Map;
 import java.util.TreeSet;
 
 /**
- * A eventScope in which an event should get dispatched and received.
+ * A eventScope in which an event should get dispatched and receivers should
+ * register to their specified events..
  * 
  * @author MicWin
  * 

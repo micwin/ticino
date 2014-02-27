@@ -10,14 +10,8 @@
 		<version>0.3.2-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
-
-	<artifactId>ticino-core</artifactId>
-	<packaging>jar</packaging>
-
-	<properties>
-		<github.global.server>github</github.global.server>
-		<maven.site.deploy.skip>true</maven.site.deploy.skip>
-	</properties>
+	
+	<url>http://ticino.micwin.net</url>
 
 	<scm>
 		<connection>scm:git:git@github.com:micwin/ticino.git</connection>
@@ -25,35 +19,11 @@
 		<url>http://github.com/micwin/ticino</url>
 	</scm>
 
-	<url>http://micwin.github.io/ticino</url>
+	<artifactId>ticino-core</artifactId>
+	<packaging>jar</packaging>
 
-	<build>
+	<name>ticino core library</name>
+		
+	<description>contains core classes EventScope and DispatchException</description>
 
-		<plugins>
-
-			<!-- to copy the site to github pages -->
-			<!-- https://github.com/github/maven-plugins -->
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
-				<version>0.8</version>
-				<configuration>
-					<message>publishing site on github!</message>
-					<!-- <dryRun>true</dryRun> -->
-					<!-- path>site</path -->
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>site</goal>
-						</goals>
-						<phase>site-deploy</phase>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-
-	</build>
-
-	<name>ticino core libraries</name>
 </project>

@@ -8,7 +8,9 @@
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>ticino-static</artifactId>
-	<name>ticino static Ticino class</name>
+	<name>ticino static event scope</name>
+
+	<description>contains public static event scope net.micwin.ticino.Ticino</description>
 
 	<dependencies>
 		<dependency>

@@ -15,6 +15,7 @@
 	<artifactId>ticino-spring</artifactId>
 	<packaging>jar</packaging>
 	<name>ticino spring integration</name>
+	<description>contains spring integration class net.micwin.ticino.spring.Configurator</description>
 
 	<dependencies>
 
