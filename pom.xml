@@ -17,11 +17,20 @@
 	<name>ticino - events, not elephants</name>
 	<description>a lightweight, straight forward event framework</description>
 
+	<modules>
+		<module>ticino-core</module>
+		<module>ticino-spring</module>
+		<module>ticino-static</module>
+	</modules>
+
+
 	<scm>
 		<connection>scm:git:git@github.com:micwin/ticino.git</connection>
 		<developerConnection>scm:git:git@github.com:micwin/ticino.git</developerConnection>
 		<url>http://github.com/micwin/ticino</url>
 	</scm>
+
+
 
 	<properties>
 		<github.global.server>github</github.global.server>
@@ -152,9 +161,13 @@
 			</plugin>
 		</plugins>
 	</build>
-	<modules>
-		<module>ticino-core</module>
-		<module>ticino-spring</module>
-		<module>ticino-static</module>
-	</modules>
+
+	<distributionManagement>
+		<site>
+			<id>github</id>
+			<name>github site</name>
+			<url>http://github.com/micwin/ticino</url>
+		</site>
+	</distributionManagement>
+
 </project>

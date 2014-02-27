@@ -12,6 +12,12 @@
 
 	<description>contains public static event scope net.micwin.ticino.Ticino</description>
 
+	<scm>
+		<connection>scm:git:git@github.com:micwin/ticino.git</connection>
+		<developerConnection>scm:git:git@github.com:micwin/ticino.git</developerConnection>
+		<url>http://github.com/micwin/ticino</url>
+	</scm>
+
 	<dependencies>
 		<dependency>
 			<groupId>net.micwin.ticino</groupId>

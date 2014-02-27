@@ -3,23 +3,17 @@
 <project xmlns="http://maven.apache.org/DECORATION/1.4.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd"
-	name="ticino">
-
-	<!-- see http://maven.apache.org/doxia/doxia-sitetools/doxia-decoration-model/decoration.html -->
+	name="ticino static context">
 
 	<body>
 		<menu>
-			<item name="Welcome!" href="index.html" />
-			<item name="Cookbook" href="cookbook.html" />
-			<item name="Best Practices" href="bestpractices.html" />
-			<item name="Changelog" href="changelog.html" />
+			<item name="About" href="index.html" />
+			<item name="Download" href="dependency-info.html" />
+			<item name="Sources" href="source-repository.html" />
+			<item name="Dependencies" href="dependencies.html" />
+			<item name="Project Information" href="project-info.html" />
+			<item name="ticino homepage" href="../index.html" />
 		</menu>
-		<menu name="Modules">
-			<item name="core library" href="ticino-core/index.html" />
-			<item name="spring integration" href="ticino-spring/index.html" />
-			<item name="static context" href="ticino-static/index.html" />
-		</menu>
-	
 		<footer />
 	</body>
 
@@ -39,8 +33,6 @@
 				<projectId>micwin/ticino</projectId>
 			</gitHub>
 			<!-- <profile>release</profile> -->
-			<facebookLike />
-			<googlePlusOne />
 		</fluidoSkin>
 	</custom>
 

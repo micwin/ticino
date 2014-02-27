@@ -35,7 +35,7 @@ public class Ticino {
 	}
 
 	@SuppressWarnings("rawtypes")
-	static EventScope getScope() {
+	public static EventScope getScope() {
 		if (eventScope == null) {
 			eventScope = new EventScope("classloader");
 		}
