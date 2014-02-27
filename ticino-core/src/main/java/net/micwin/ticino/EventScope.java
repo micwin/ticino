@@ -150,7 +150,7 @@ public class EventScope<T> {
 	 * @param event
 	 *            The event object to dispatch.
 	 */
-	public synchronized void dispatch(T event) {
+	public synchronized <Q extends T> Q dispatch(Q event) {
 
 		Collection<ReceiverDescriptor> receivers = new TreeSet<ReceiverDescriptor>(
 				new Comparator<ReceiverDescriptor>() {
@@ -174,7 +174,7 @@ public class EventScope<T> {
 
 		// no receivers registered, so bye-bye
 		if (receivers == null || receivers.size() < 1) {
-			return;
+			return event;
 		}
 
 		// when finding a garbage collected receiver, store here
@@ -200,6 +200,7 @@ public class EventScope<T> {
 			// throw away gc'ed items
 			receivers.removeAll(defunct);
 		}
+		return event;
 
 	}
 
