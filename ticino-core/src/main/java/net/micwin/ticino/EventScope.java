@@ -1,6 +1,6 @@
 package net.micwin.ticino;
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.SoftReference;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Comparator;
@@ -45,7 +45,7 @@ public class EventScope<T> {
 	}
 
 	/**
-	 * Holds a weak reference to a receiver. This will not prevent the receiver
+	 * Holds a soft reference to a receiver. This will not prevent the receiver
 	 * to get garbage collected, so make sure to store the receiver elsewhere,
 	 * for example you could pass in a spring bean.
 	 * 
@@ -53,7 +53,7 @@ public class EventScope<T> {
 	 * 
 	 */
 	private class ReceiverDescriptor {
-		WeakReference<Object> receiverReference;
+		SoftReference<Object> receiverReference;
 		Method method;
 		long creationTime = System.currentTimeMillis();
 	}
@@ -90,7 +90,7 @@ public class EventScope<T> {
 		}
 
 		ReceiverDescriptor rd = new ReceiverDescriptor();
-		rd.receiverReference = new WeakReference<Object>(receiver);
+		rd.receiverReference = new SoftReference<Object>(receiver);
 		rd.method = method;
 
 		receivers.add(rd);
@@ -133,7 +133,7 @@ public class EventScope<T> {
 			throw new IllegalArgumentException(
 					"receiver '"
 							+ receiver
-							+ "' has more that one accessible method with a single parameter of type '"
+							+ "' has more than one accessible method with a single parameter of type '"
 							+ eventClass.getName() + "' : "
 							+ results.toString());
 		}
@@ -161,15 +161,91 @@ public class EventScope<T> {
 					@Override
 					public int compare(ReceiverDescriptor o1,
 							ReceiverDescriptor o2) {
-						if (o1 == o2
-								|| o1.receiverReference == o2.receiverReference) {
+
+						// direct check descriptor
+						if (o1 == o2) {
 							return 0;
 						}
 
-						if (o1.creationTime < o2.creationTime) {
+						boolean o1IsNull = o1 == null
+								|| o1.receiverReference == null
+								|| o1.receiverReference.get() == null;
+						boolean o2IsNull = o2 == null
+								|| o2.receiverReference == null
+								|| o2.receiverReference.get() == null;
+
+						if (o1IsNull && o2IsNull) {
+							return 0;
+						}
+
+						if (o1IsNull) {
+							return 1;
+						}
+
+						if (o2IsNull) {
 							return -1;
 						}
-						return 1;
+
+						// direct check receiverReference
+						if (o1.receiverReference == o2.receiverReference) {
+							return 0;
+						}
+
+						// direct check object
+						if (o1.receiverReference.get() == o2.receiverReference
+								.get()) {
+							return 0;
+						}
+
+						// check creationDate
+						if (o1.creationTime < o2.creationTime) {
+							return -1;
+						} else if (o1.creationTime > o2.creationTime) {
+							return 1;
+						}
+
+						// when coming to this point, we really have a problem
+						// to *order* the calls by registration.
+						// so we assume: if two registration happen in the same
+						// millisecond, then they are anonymous adapters
+
+						int classComparison = o1.receiverReference
+								.get()
+								.getClass()
+								.getName()
+								.compareTo(
+										o2.receiverReference.get().getClass()
+												.getName());
+
+						if (classComparison != 0) {
+							return classComparison;
+						}
+
+						// same class
+
+						// check wether we can use Comparable
+
+						try {
+
+							Comparable c1 = (Comparable) o1.receiverReference
+									.get();
+							Comparable c2 = (Comparable) o2.receiverReference
+									.get();
+							int comparison = c1.compareTo(c2);
+							if (comparison != 0) {
+								return comparison;
+							}
+
+						} catch (ClassCastException e) {
+							// no, not a comparable
+						}
+
+						// same class, so we try to differentiate using the hash
+						// code
+						Integer h1 = o1.receiverReference.get().hashCode();
+						Integer h2 = o2.receiverReference.get().hashCode();
+
+						return h1.compareTo(h2);
 					}
 				});
 

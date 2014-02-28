@@ -25,7 +25,6 @@ public class ConfiguratorTest {
 	}
 
 	@Test
-	@Ignore
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	/**
 	 * Known issue: sort of racing condition in garbage collector when comparing two Descriptors.

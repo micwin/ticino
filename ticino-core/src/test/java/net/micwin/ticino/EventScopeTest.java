@@ -12,8 +12,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings({"unchecked", "rawtypes"})
-
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class EventScopeTest {
 
 	private EventScope eventScope;
@@ -59,7 +58,7 @@ public class EventScopeTest {
 
 	@Before
 	public void before() {
-		eventScope = new EventScope ("unitTest");
+		eventScope = new EventScope("unitTest");
 	}
 
 	@Test
@@ -163,7 +162,7 @@ public class EventScopeTest {
 			eventScope.register(String.class, new Object() {
 				@SuppressWarnings("unused")
 				public void receive(String message) {
-					c.add(message);
+					c.add("second");
 				}
 			});
 
@@ -209,6 +208,23 @@ public class EventScopeTest {
 		// expectation: only the interface receiver received the event.
 		assertEquals(2, interfaceReceiver.received);
 		assertEquals(1, implReceiver.received);
+
+	}
+
+	@Test
+	public void testDoubleCallError() {
+
+		final List hits = new LinkedList();
+		Object listener = new Object() {
+			public void process(List evt) {
+				hits.add("hit");
+			}
+		};
+		eventScope.register(List.class, listener);
+		eventScope.register(LinkedList.class, listener);
+
+		eventScope.dispatch(new LinkedList());
+		assertEquals(1, hits.size());
 
 	}
 
