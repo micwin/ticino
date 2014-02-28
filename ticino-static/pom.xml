@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>net.micwin.ticino</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>0.3.3-SNAPSHOT</version>
+		<version>0.3.2</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>ticino-static</artifactId>
@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>net.micwin.ticino</groupId>
 			<artifactId>ticino-core</artifactId>
-			<version>${project.version}</version>
+			<version>0.3.2</version>
 		</dependency>
 	</dependencies>
 </project>
