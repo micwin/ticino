@@ -4,6 +4,8 @@ Version 0.3.2
 
   * enabled chaining when dispatching an event
   
+  * enabled chaining when registering a listener
+  
   * moved static context Ticino to sub project ticino-static
   
   * ticino-spring: Configurator now not connecting with static Ticino context; instead now in need of a EventScope as 
