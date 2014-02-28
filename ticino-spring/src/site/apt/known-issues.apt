@@ -1,0 +1,12 @@
+Known issues
+
+	0.3.2
+	
+	* Problem spring-1 : when dispatching events configured with Configurator, sometimes internally held 
+	soft references to listeners that are implemented as anonymous adapters, already are emptied. This somehow 
+	leads to let the comparator responsible for sorting out duplicate listeners to malfunction. In the last, 
+	this sometimes leads to listeners to be called twice. When using the Configurator, to avoid this 
+	problem, neither register to interfaces nor subclasses; always use specific, non-abstract event classes,
+	and do not use anonymous adapters to handle events registered via Configurator. Which, by the way, 
+	is really hard to do when using the Configurator in its natural surrounding, which is a spring 
+	configuration file. Nevertheless the corresponding unit test fails and hence is set to @Ignore.
