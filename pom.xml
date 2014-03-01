@@ -13,7 +13,7 @@
 	<groupId>net.micwin.ticino</groupId>
 	<artifactId>parent-pom</artifactId>
 	<packaging>pom</packaging>
-	<version>0.3.2</version>
+	<version>0.3.3-SNAPSHOT</version>
 	<name>ticino - events, not elephants</name>
 	<description>a lightweight, straight forward event framework</description>
 
@@ -135,15 +135,6 @@
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.3</version>
 				<inherited>true</inherited>
-				<dependencies>
-					<!-- <dependency> -->
-					<!-- | allows markdown syntax for site generation. To use it place -->
-					<!-- files below | src/site/markdown/[filename].md -->
-					<!-- <groupId>org.apache.maven.doxia</groupId> -->
-					<!-- <artifactId>doxia-module-markdown</artifactId> -->
-					<!-- <version>1.4</version> -->
-					<!-- </dependency> -->
-				</dependencies>
 				<configuration>
 					<skipDeploy>true</skipDeploy>
 				</configuration>
