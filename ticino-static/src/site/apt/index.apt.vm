@@ -1,8 +1,11 @@
 ticino static context
 
-	When wiring small applications with ticino, you can use the static context class net.micwin.ticino.Ticino to completely avoid configuring with a spring context.
+	When wiring small applications with ticino, it's sometime overload to handle multiple
+	event scopes and pass them along when instantiating modules.
+	This in mind, you can use the static context class net.micwin.ticino.Ticino 
+	to completely avoid extensive configuring with a spring context.
 	
-	With this class, a single EventScope is put in a static field and used for all accesses to ticino.
+	With this class, a single EventScope is created on demand, put in a static field and used for all accesses to ticino.
    
    	To use the static event scope class net.micwin.ticino.Ticino, define the following dependency : 
    
@@ -10,8 +13,8 @@ ticino static context
 <dependencies>
   <dependency>
     <groupId>${project.groupId}</groupId>
-	  <artifactId>ticino-static</artifactId>
-	  <version>${project.version}</version>
+    <artifactId>ticino-static</artifactId>
+    <version>${project.version}</version>
   </dependency>
 </dependencies>
 +--------------------------------
@@ -62,7 +65,3 @@ public class Demo {
 	Some notes here:
 
 	* the static event scope is reachable by all classes in the same vm, so be aware that this might be a significant security risk.
-
-	
-	
-

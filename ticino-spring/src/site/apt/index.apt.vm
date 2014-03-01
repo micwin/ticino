@@ -1,22 +1,9 @@
 spring integration
 
-   
-   To integrate ticino with spring, use the following dependency : 
-    
-   
-+--------------------------------
-<dependencies>
-  <dependency>
-    <groupId>${project.groupId}</groupId>
-	  <artifactId>ticino-spring</artifactId>
-	  <version>${project.version}</version>
-  </dependency>
-</dependencies>
-+--------------------------------
-
-   You can remove the dependency to ticino-core, this comes along with ticino-spring.
-   
-   Then, configure your listeners similar to the following snippet in the spring context:
+	the ticino spring integration is a helper to more easily connect existing code to ticino via spring.
+	   
+  	To connect listeners to ticino without any programmatic dependencies to ticino, 
+	configure your listeners similar to the following snippet in the spring context:
 
 +--------------------------------
 <!-- declare an event scope -->
@@ -59,7 +46,8 @@ spring integration
 
 Spring integration - manual registration
     
-    In the spring context, as above, create a event scope bean:
+    When programmatic dependencies to ticino-core are no issue (but dependencies to ticino-spring are), 
+    you can integrate ticino by defining a event scope bean in the spring context:
     
 +--------------------------------
 <bean name="eventScope" class="net.micwin.ticino.EventScope" />
@@ -104,4 +92,6 @@ public class Caller {
     * make sure to not mix approaches across event types. For instance, configure event Payload either via Configurator or manual registration, not both. 
     
     * You still can use receivers across events; so you, for instance, could still bind listener1 with both methods to disjunct events. 
+    
+    * when using the approach with Configurator, you can connect code to ticino that has no idea what ticino is.
  
