@@ -1,6 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -33,11 +34,10 @@
 
 	<properties>
 		<github.global.server>github</github.global.server>
-		<maven.site.deploy.skip>true</maven.site.deploy.skip>
 	</properties>
 
 
-	<url>http://micwin.github.com/ticino/index.html</url>
+	<url>http://micwin.github.com/ticino</url>
 
 	<licenses>
 		<license>
@@ -95,30 +95,11 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<inherited>true</inherited>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-project-info-reports-plugin</artifactId>
 					<version>2.7</version>
 				</plugin>
-
-				<plugin>
-					<!-- http://maven.apache.org/plugins/maven-site-plugin/ -->
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>3.3</version>
-					<dependencies>
-						<dependency>
-
-							<!-- add support for ssh/scp -->
-							<groupId>org.apache.maven.wagon</groupId>
-							<artifactId>wagon-ssh</artifactId>
-							<version>1.0</version>
-						</dependency>
-					</dependencies>
-					<configuration>
-					</configuration>
-				</plugin>
-
-
 
 			</plugins>
 		</pluginManagement>
@@ -130,11 +111,14 @@
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>0.8</version>
+				<version>0.9</version>
+				<inherited>true</inherited>
 				<configuration>
-					<message>publishing site on github!</message>
-					<!-- <dryRun>true</dryRun> -->
-					<!-- path>site</path -->
+					<message>Creating site for ${project.artifactId},
+						${project.version}, deploying to
+						${project.distributionManagement.site.url}</message>
+					<!-- this does the trick to place every module in the correct subfolder -->
+					<!-- path>${project.url}</path -->
 				</configuration>
 				<executions>
 					<execution>
@@ -144,6 +128,25 @@
 						<phase>site-deploy</phase>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.3</version>
+				<inherited>true</inherited>
+				<dependencies>
+					<!-- <dependency> -->
+					<!-- | allows markdown syntax for site generation. To use it place -->
+					<!-- files below | src/site/markdown/[filename].md -->
+					<!-- <groupId>org.apache.maven.doxia</groupId> -->
+					<!-- <artifactId>doxia-module-markdown</artifactId> -->
+					<!-- <version>1.4</version> -->
+					<!-- </dependency> -->
+				</dependencies>
+				<configuration>
+					<skipDeploy>true</skipDeploy>
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -165,7 +168,7 @@
 		<site>
 			<id>github</id>
 			<name>github site</name>
-			<url>http://github.com/micwin/ticino</url>
+			<url>${project.url}</url>
 		</site>
 	</distributionManagement>
 
