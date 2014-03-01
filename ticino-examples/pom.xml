@@ -7,20 +7,25 @@
 	<parent>
 		<groupId>net.micwin.ticino</groupId>
 		<artifactId>parent-pom</artifactId>
-		<version>0.3.2-SNAPSHOT</version>
+		<version>0.3.2</version>
 	</parent>
 
-	<groupId>net.micwin.ticino</groupId>
 	<artifactId>ticino-examples</artifactId>
 	<packaging>jar</packaging>
-	<version>0.3.2-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.micwin.ticino</groupId>
 			<artifactId>ticino-core</artifactId>
-			<version>0.3.2-SNAPSHOT</version>
+			<version>0.3.2</version>
 		</dependency>
+
+		<dependency>
+			<groupId>net.micwin.ticino</groupId>
+			<artifactId>ticino-static</artifactId>
+			<version>0.3.2</version>
+		</dependency>
+
 	</dependencies>
 
 </project>
