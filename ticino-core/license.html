@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20140301" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>ticino - Dependency Information</title>
+    <title>ticino core - Project License</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.0.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -26,8 +26,7 @@
 				})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 				ga('create', 'UA-48512184-1', 'micwin.github.io');
-				ga('send',
-				'pageview');</script>
+				ga('send', 'pageview');</script>
           
             </head>
         <body class="topBarDisabled">
@@ -50,7 +49,7 @@
           <div id="banner">
         <div class="pull-left">
                                 <div id="bannerLeft">
-                <h2>ticino - events, not elephants</h2>
+                <h2>ticino core library</h2>
                 </div>
                       </div>
         <div class="pull-right">  </div>
@@ -80,52 +79,44 @@
                             
       <li>
     
-                          <a href="index.html" title="Welcome!">
+                          <a href="index.html" title="About">
           <i class="none"></i>
-        Welcome!</a>
+        About</a>
             </li>
                   
       <li>
     
-                          <a href="cookbook.html" title="Cookbook">
+                          <a href="dependency-info.html" title="Download">
           <i class="none"></i>
-        Cookbook</a>
+        Download</a>
             </li>
                   
       <li>
     
-                          <a href="bestpractices.html" title="Best Practices">
+                          <a href="source-repository.html" title="Sources">
           <i class="none"></i>
-        Best Practices</a>
+        Sources</a>
             </li>
                   
       <li>
     
-                          <a href="changelog.html" title="Changelog">
+                          <a href="dependencies.html" title="Dependencies">
           <i class="none"></i>
-        Changelog</a>
-            </li>
-                              <li class="nav-header">Modules</li>
-                                
-      <li>
-    
-                          <a href="ticino-core/index.html" title="core library">
-          <i class="none"></i>
-        core library</a>
+        Dependencies</a>
             </li>
                   
       <li>
     
-                          <a href="ticino-spring/index.html" title="spring integration">
+                          <a href="project-info.html" title="Project Information">
           <i class="none"></i>
-        spring integration</a>
+        Project Information</a>
             </li>
                   
       <li>
     
-                          <a href="ticino-static/index.html" title="static context">
+                          <a href="../index.html" title="ticino homepage">
           <i class="none"></i>
-        static context</a>
+        ticino homepage</a>
             </li>
             </ul>
                 
@@ -138,14 +129,14 @@
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
     
-    <div class="g-plusone" data-href="http://micwin.github.com/ticino" data-size="tall" ></div>
+    <div class="g-plusone" data-href="http://micwin.github.com/ticino/ticino-core" data-size="tall" ></div>
 
                    <div class="clear"></div>
                    
         
         
         
-    <iframe src="http://www.facebook.com/plugins/like.php?href=http://micwin.github.com/ticino&send=false&layout=box_count&show-faces=false&action=like&colorscheme=light"
+    <iframe src="http://www.facebook.com/plugins/like.php?href=http://micwin.github.com/ticino/ticino-core&send=false&layout=box_count&show-faces=false&action=like&colorscheme=light"
         scrolling="no" frameborder="0"
         style="border:none; width:48px; height:63px; margin-top: 10px;" ></iframe>
                <div class="clear"></div>
@@ -159,46 +150,22 @@
         
                 
         <div id="bodyColumn"  class="span9" >
-                                  
-            <div class="section">
-<h2>Dependency Information<a name="Dependency_Information"></a></h2><a name="Dependency_Information"></a>
+                      <div class="section">
+<h2>Overview<a name="Overview"></a></h2><a name="Overview"></a>
+<p>Typically the licenses listed for the project are that of the project itself, and not of dependencies.</p></div>
 <div class="section">
-<h3>Apache Maven<a name="Apache_Maven"></a></h3><a name="Apache_Maven"></a>
-<div class="source">
-<pre>&lt;dependency&gt;
-  &lt;groupId&gt;net.micwin.ticino&lt;/groupId&gt;
-  &lt;artifactId&gt;parent-pom&lt;/artifactId&gt;
-  &lt;version&gt;0.3.2&lt;/version&gt;
-  &lt;type&gt;pom&lt;/type&gt;
-&lt;/dependency&gt;</pre></div></div>
+<h2>Project License<a name="Project_License"></a></h2><a name="Project_License"></a>
 <div class="section">
-<h3>Apache Buildr<a name="Apache_Buildr"></a></h3><a name="Apache_Buildr"></a>
+<h3>Ad-Hoc-License<a name="Ad-Hoc-License"></a></h3><a name="Ad-Hoc-License"></a>
 <div class="source">
-<pre>'net.micwin.ticino:parent-pom:pom:0.3.2'</pre></div></div>
-<div class="section">
-<h3>Apache Ant<a name="Apache_Ant"></a></h3><a name="Apache_Ant"></a>
-<div class="source">
-<pre>&lt;dependency org=&quot;net.micwin.ticino&quot; name=&quot;parent-pom&quot; rev=&quot;0.3.2&quot;&gt;
-  &lt;artifact name=&quot;parent-pom&quot; type=&quot;pom&quot; /&gt;
-&lt;/dependency&gt;</pre></div></div>
-<div class="section">
-<h3>Groovy Grape<a name="Groovy_Grape"></a></h3><a name="Groovy_Grape"></a>
-<div class="source">
-<pre>@Grapes(
-@Grab(group='net.micwin.ticino', module='parent-pom', version='0.3.2')
-)</pre></div></div>
-<div class="section">
-<h3>Grails<a name="Grails"></a></h3><a name="Grails"></a>
-<div class="source">
-<pre>compile 'net.micwin.ticino:parent-pom:0.3.2'</pre></div></div>
-<div class="section">
-<h3>Leiningen<a name="Leiningen"></a></h3><a name="Leiningen"></a>
-<div class="source">
-<pre>[net.micwin.ticino/parent-pom &quot;0.3.2&quot;]</pre></div></div>
-<div class="section">
-<h3>SBT<a name="SBT"></a></h3><a name="SBT"></a>
-<div class="source">
-<pre>libraryDependencies += &quot;net.micwin.ticino&quot; %% &quot;parent-pom&quot; % &quot;0.3.2&quot;</pre></div></div></div>
+<pre>This sources (c) 2012,2013 micwin.net, Munich, Germany
+
+Do whatever you like to do with this, but if you change it, remove every reference to this copyright from the distributed code.
+
+This software comes without any warranty, neither for or against a particular usage, nor in general.
+
+Have fun.
+</pre></div></div></div>
                   </div>
             </div>
           </div>
