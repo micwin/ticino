@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20140301" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>ticino - </title>
+    <title>ticino core - </title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.0.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -26,8 +26,7 @@
 				})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 				ga('create', 'UA-48512184-1', 'micwin.github.io');
-				ga('send',
-				'pageview');</script>
+				ga('send', 'pageview');</script>
           
             </head>
         <body class="topBarDisabled">
@@ -50,7 +49,7 @@
           <div id="banner">
         <div class="pull-left">
                                 <div id="bannerLeft">
-                <h2>ticino - events, not elephants</h2>
+                <h2>ticino core library</h2>
                 </div>
                       </div>
         <div class="pull-right">  </div>
@@ -80,50 +79,42 @@
                             
       <li class="active">
     
-            <a href="#"><i class="none"></i>Welcome!</a>
+            <a href="#"><i class="none"></i>About</a>
           </li>
                   
       <li>
     
-                          <a href="cookbook.html" title="Cookbook">
+                          <a href="dependency-info.html" title="Download">
           <i class="none"></i>
-        Cookbook</a>
+        Download</a>
             </li>
                   
       <li>
     
-                          <a href="bestpractices.html" title="Best Practices">
+                          <a href="source-repository.html" title="Sources">
           <i class="none"></i>
-        Best Practices</a>
+        Sources</a>
             </li>
                   
       <li>
     
-                          <a href="changelog.html" title="Changelog">
+                          <a href="dependencies.html" title="Dependencies">
           <i class="none"></i>
-        Changelog</a>
-            </li>
-                              <li class="nav-header">Modules</li>
-                                
-      <li>
-    
-                          <a href="ticino-core/index.html" title="core library">
-          <i class="none"></i>
-        core library</a>
+        Dependencies</a>
             </li>
                   
       <li>
     
-                          <a href="ticino-spring/index.html" title="spring integration">
+                          <a href="project-info.html" title="Project Information">
           <i class="none"></i>
-        spring integration</a>
+        Project Information</a>
             </li>
                   
       <li>
     
-                          <a href="ticino-static/index.html" title="static context">
+                          <a href="../index.html" title="ticino homepage">
           <i class="none"></i>
-        static context</a>
+        ticino homepage</a>
             </li>
             </ul>
                 
@@ -136,14 +127,14 @@
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
     
-    <div class="g-plusone" data-href="http://micwin.github.com/ticino/index.html" data-size="tall" ></div>
+    <div class="g-plusone" data-href="http://micwin.github.com/ticino/index.html/ticino-core" data-size="tall" ></div>
 
                    <div class="clear"></div>
                    
         
         
         
-    <iframe src="http://www.facebook.com/plugins/like.php?href=http://micwin.github.com/ticino/index.html&send=false&layout=box_count&show-faces=false&action=like&colorscheme=light"
+    <iframe src="http://www.facebook.com/plugins/like.php?href=http://micwin.github.com/ticino/index.html/ticino-core&send=false&layout=box_count&show-faces=false&action=like&colorscheme=light"
         scrolling="no" frameborder="0"
         style="border:none; width:48px; height:63px; margin-top: 10px;" ></iframe>
                <div class="clear"></div>
@@ -159,62 +150,57 @@
         <div id="bodyColumn"  class="span9" >
                                   
             <div>
-<pre>ticino - events, not elephants</pre></div>
+<pre>ticino core library</pre></div>
+<p>This module contains the ticino core classes EventScope and DispatchException</p>
 <div class="section">
-<h2>About Events<a name="About_Events"></a></h2>
-<p>This is about advanced software development. </p>
-<p>Events are small pieces of data, sent by one piece of code to another piece of code. The special charm of events is that sender and receiver are decoupled by an intermediary (the event framework). Think of a note of paper, thrown in the vincinity &quot;to whom it may concern&quot;. </p>
-<p>This loose-end-characteristics of events greatly improves code readability, modularization and separation of concerns: Although sender and receiver dont hold references to each other, they know what to do with the events and hence encapsulate the domain logic and context information of events. the intermediary (an event framework like ticino) in between knows how to transport data, but doesnt care about domain logic.</p>
-<p>Unfortunately, most known event frameworks either come with a real heavy load of dependencies and &quot;additional features&quot;, or are embedded in other frameworks, and hence are not usable stand alone. </p></div>
+<h2>EventScope<a name="EventScope"></a></h2>
+<p>The main event distrbutor class. Register here to receive its events. </p>
+<p>Think of it as a context for events. For instance, you could define an event scope to process life cycle events, one to process uncaught exceptions, one to process config changes, one to process incoming requests, one to process heart beats,... </p>
+<p>To control which sort of events are handled by a specific EventScope, you could define a marker interface and use it as a generic type for a EventScope:</p>
+<div class="source">
+<pre>
+public class Example2 {
+
+        public static void main (String [] args) {
+                // configure an eventscope (normally done somewhere else)
+                EventScope &lt;Serializable&gt; eventScope = new EventScope &lt;Serializable&gt; () ; 
+                
+                // register a String handler as anonymous adapter
+                eventScope.register (String.class, new Object () {
+                        public void stringHandler(String message) {
+                                System.out.println (&quot;incoming String '&quot; + message + &quot;'&quot;) ; 
+                        }
+                }) ; 
+
+                // register an Integer handler as anonymous adapter
+                eventScope.register (Integer.class, new Object () {
+                        public void intHandler(Integer message) {
+                                System.out.println (&quot;incoming Integer '&quot; + message + &quot;'&quot;) ; 
+                        }
+                }) ; 
+                
+                // fire a String
+                eventScope.dispatch (&quot;Hello, World!&quot;) ; 
+                
+                // fire an Integer
+                eventScope.dispatch (42) ;
+                
+                // fire a double
+                eventScope.dispatch (4.5) ;     
+        }       
+}</pre></div>
+<p>Expected output:</p>
+<div class="source">
+<pre>
+incoming String 'Hello, World!'
+incoming Integer '42'
+</pre></div>
+<p>The double is not printed since there is no handler registered that prints the double out. Nevertheless, since java.lang.Double implements Serializable, it can get dispatched via this EventScope</p></div>
 <div class="section">
-<h2>ticino example 1<a name="ticino_example_1"></a></h2>
-<p>Lets say you already have a piece of data you have to send around to an unknown number of receivrs :</p>
-<div class="source">
-<pre>public class IncomingXmlEvent {
-
-        private String xml;
-
-        public IncomingXmlEvent(String xml) {
-                this.xml = xml;
-        }
-
-        public String getXml() {
-                return xml;
-        }
-}</pre></div>
-<p>Lets say further, you already have a class with a method that should process the event:</p>
-<div class="source">
-<pre>public class Receiver {
-        public void doSomethingWithThisEvent(IncomingXmlEvent incomingXml) {
-                System.out.println(&quot;incoming xml : &quot; + incomingXml.getXml());
-        }
-}</pre></div>
-<p>Then there somewhere is a piece of code that initializes all this</p>
-<div class="source">
-<pre>public class Main {
-        public static void main(String[] args) {
-                Receiver rec = new Receiver();
-                Ticino.register(IncomingXmlEvent.class, rec);
-                // yes, there *is* spring support
-        }
-}</pre></div>
-<p>And somwhere else there is someone who throws ...</p>
-<div class="source">
-<pre>public class XmlCaster {
-        public void yep(String newXml) {
-                Ticino.dispatch(new IncomingXmlEvent(newXml));
-        }
-}</pre></div>
-<p>Got it? You neither have to subclass nor implement nor annotate anything. And of course, nothing to configure or license or pay or administer.</p>
-<p>This is drop-in. POJO-Events.</p></div>
-<div class="section">
-<h2>ticino example 2 - the weird one<a name="ticino_example_2_-_the_weird_one"></a></h2>
-<p>Lets make a contest. Please pick your favorite event framework and program the shortest version of configuring, creating, dispatching and receiving an event of your choice. Then count the lines.</p>
-<p>This is what ticino needs:</p>
-<div class="source">
-<pre>Ticino.register(String.class, new Object() { public void yaho(String s) { System.out.println(s); } });
-Ticino.dispatch(&quot;hello, world!&quot;);</pre></div>
-<p>Two lines of code, thats all. As I said, this is a weird example and far beyond of any practical relevance. If you do this in a source code development team, be sure to wear your plates.</p></div>
+<h2>DispatchException<a name="DispatchException"></a></h2>
+<p>Thrown by an event scope when a handler Throws an exception.</p>
+<p>Since this is an unchecked exception, event handlers may decide wether or not to wrap and throw their own checked exceptions.</p>
+<p>ticino does automatically wrap any exception that comes out of a handler, no matter whether checked or unchecked.</p></div>
                   </div>
             </div>
           </div>
