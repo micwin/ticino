@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20140301" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>ticino - Source Repository</title>
+    <title>ticino - </title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.0.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -85,12 +85,10 @@
         Welcome!</a>
             </li>
                   
-      <li>
+      <li class="active">
     
-                          <a href="cookbook.html" title="Cookbook">
-          <i class="none"></i>
-        Cookbook</a>
-            </li>
+            <a href="#"><i class="none"></i>Cookbook</a>
+          </li>
                   
       <li>
     
@@ -161,26 +159,66 @@
         <div id="bodyColumn"  class="span9" >
                                   
             <div class="section">
-<h2>Overview<a name="Overview"></a></h2><a name="Overview"></a>
-<p>This project uses <a class="externalLink" href="http://git-scm.com/">GIT</a> to manage its source code. Instructions on GIT use can be found at <a class="externalLink" href="http://git-scm.com/documentation">http://git-scm.com/documentation</a>.</p></div>
-<div class="section">
-<h2>Web Access<a name="Web_Access"></a></h2><a name="Web_Access"></a>
-<p>The following is a link to the online source repository.</p>
+<h2>event inheritance<a name="event_inheritance"></a></h2>
+<p>say we have a general event containing logic and data common to all of your events, ...</p>
 <div class="source">
-<pre><a class="externalLink" href="http://github.com/micwin/ticino">http://github.com/micwin/ticino</a></pre></div></div>
-<div class="section">
-<h2>Anonymous access<a name="Anonymous_access"></a></h2><a name="Anonymous_access"></a>
-<p>The source can be checked out anonymously from GIT with this command (See <a class="externalLink" href="http://git-scm.com/docs/git-clone">http://git-scm.com/docs/git-clone</a>):</p>
+<pre>class GeneralEvent {
+        // some general stuff
+}</pre></div>
+<p>... an event containing data for a specific use case and extending GeneralEvent, ...</p>
 <div class="source">
-<pre>$ git clone git@github.com:micwin/ticino.git</pre></div></div>
-<div class="section">
-<h2>Developer access<a name="Developer_access"></a></h2><a name="Developer_access"></a>
-<p>Only project developers can access the GIT tree via this method (See <a class="externalLink" href="http://git-scm.com/docs/git-clone">http://git-scm.com/docs/git-clone</a>).</p>
+<pre>class SpecificEvent extends GeneralEvent {
+        // some use case specific data
+}</pre></div>
+<p>... a receiver triggered by the general event, ...</p>
 <div class="source">
-<pre>$ git clone git@github.com:micwin/ticino.git</pre></div></div>
+<pre>class Receiver {
+    public void receive(GeneralEvent event) {
+        System.out.println(&quot;got event of &quot; + event.getClass());
+    }
+}</pre></div>
+<p>... some main method bringing event and receiver together (normally you would do that in a spring context) ...</p>
+<div class="source">
+<pre>public static void main(String[] args) {
+    Ticino.register(GeneralEvent.class, new Receiver());
+}</pre></div>
+<p>... then you could dispatch a specific event like that ...</p>
+<div class="source">
+<pre>// fire specific event
+    Specific event evt = new SpecificEvent();
+    Ticino.dispatch(evt);</pre></div>
+<p>... and finally get an output like that :</p>
+<div class="source">
+<pre>got event of class net.micwin.examples.inheritance.Main$SpecificEvent</pre></div></div>
 <div class="section">
-<h2>Access from behind a firewall<a name="Access_from_behind_a_firewall"></a></h2><a name="Access_from_behind_a_firewall"></a>
-<p>Refer to the documentation of the SCM used for more information about access behind a firewall.</p></div>
+<h2>migration : general approach <a name="migration_:_general_approach"></a></h2>
+<p>being reflection based instead of subclassing and annotating, there is a big migration path from or to ticino. Lets demonstrate the migration in case of wicket - which runs nearly out-of-the-box:</p>
+<div class="source">
+<pre>public class WicketApplication extends WebApplication {
+
+  @Override
+  public void onEvent(IEvent&lt;MyPayLoad&gt; event) {
+        // keep the wicket way functioning
+        super.onEvent(event);
+        
+        // but also support strict typed ticino event handling
+        Ticino.dispatch (event.getPayload()) ;
+  }
+}</pre></div>
+<p>Somewhere else...</p>
+<div class="source">
+<pre>public class NoSink {
+   
+   public NoSink () {
+     Ticino.register (MyPayLoad.class , this) ; 
+   }
+   
+   public void blablah (MyPayLoad payload) {
+     // doSomething meaningful
+   }
+   
+}</pre></div>
+<p>Note that you dont have to unregister - ticino does this for you if the receiver gets gc'ed. </p></div>
                   </div>
             </div>
           </div>
