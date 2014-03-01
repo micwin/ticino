@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20140301" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>ticino core - Issue Tracking</title>
+    <title>ticino spring integration - </title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.0.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -26,7 +26,8 @@
 				})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 				ga('create', 'UA-48512184-1', 'micwin.github.io');
-				ga('send', 'pageview');</script>
+				ga('send',
+				'pageview');</script>
           
             </head>
         <body class="topBarDisabled">
@@ -49,7 +50,7 @@
           <div id="banner">
         <div class="pull-left">
                                 <div id="bannerLeft">
-                <h2>ticino core library</h2>
+                <h2>ticino spring integration</h2>
                 </div>
                       </div>
         <div class="pull-right">  </div>
@@ -77,12 +78,10 @@
                     
                 <ul class="nav nav-list">
                             
-      <li>
+      <li class="active">
     
-                          <a href="index.html" title="About">
-          <i class="none"></i>
-        About</a>
-            </li>
+            <a href="#"><i class="none"></i>About</a>
+          </li>
                   
       <li>
     
@@ -129,14 +128,14 @@
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
     
-    <div class="g-plusone" data-href="http://micwin.github.com/ticino/index.html/ticino-core" data-size="tall" ></div>
+    <div class="g-plusone" data-href="http://micwin.github.com/ticino/index.html/ticino-spring" data-size="tall" ></div>
 
                    <div class="clear"></div>
                    
         
         
         
-    <iframe src="http://www.facebook.com/plugins/like.php?href=http://micwin.github.com/ticino/index.html/ticino-core&send=false&layout=box_count&show-faces=false&action=like&colorscheme=light"
+    <iframe src="http://www.facebook.com/plugins/like.php?href=http://micwin.github.com/ticino/index.html/ticino-spring&send=false&layout=box_count&show-faces=false&action=like&colorscheme=light"
         scrolling="no" frameborder="0"
         style="border:none; width:48px; height:63px; margin-top: 10px;" ></iframe>
                <div class="clear"></div>
@@ -152,13 +151,83 @@
         <div id="bodyColumn"  class="span9" >
                                   
             <div class="section">
-<h2>Overview<a name="Overview"></a></h2><a name="Overview"></a>
-<p>This project uses github issues to manage its issues.</p></div>
-<div class="section">
-<h2>Issue Tracking<a name="Issue_Tracking"></a></h2><a name="Issue_Tracking"></a>
-<p>Issues, bugs, and feature requests should be submitted to the following issue tracking system for this project.</p>
+<h2>spring integration<a name="spring_integration"></a></h2>
+<p>the ticino spring integration is a helper to more easily connect existing code to ticino via spring.</p>
+<p>To connect listeners to ticino without any programmatic dependencies to ticino, configure your listeners similar to the following snippet in the spring context:</p>
 <div class="source">
-<pre><a class="externalLink" href="https://github.com/micwin/ticino/issues">https://github.com/micwin/ticino/issues</a></pre></div></div>
+<pre>&lt;!-- declare an event scope --&gt;
+&lt;bean name=&quot;eventScope&quot; class=&quot;net.micwin.ticino.EventScope&quot; /&gt;
+
+&lt;!-- create the configurator as bean --&gt;
+&lt;bean class=&quot;net.micwin.ticino.spring.Configurator&quot;&gt;
+        &lt;constructor-arg&gt;
+                &lt;map&gt;
+                        &lt;entry&gt;
+                                &lt;!-- the event class to register to --&gt;
+                                &lt;key&gt;
+                                        &lt;value&gt;net.micwin.ticino.test.spring.SpringEvent1&lt;/value&gt;
+                                &lt;/key&gt;
+                                &lt;!-- a list of listener beans to this event. --&gt;
+                                &lt;list&gt;
+                                        &lt;ref bean=&quot;listener1&quot; /&gt;
+                                &lt;/list&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                                &lt;key&gt;
+                                        &lt;value&gt;net.micwin.ticino.test.spring.SpringEvent2&lt;/value&gt;
+                                &lt;/key&gt;
+                                        
+                                &lt;!-- you also can register multiple listeners to one event class --&gt;
+                                &lt;list&gt;
+                                        &lt;ref bean=&quot;listener2&quot; /&gt;
+                                        &lt;ref bean=&quot;listener3&quot; /&gt;
+                                                
+                                        &lt;!-- provided listener1 has an appropriate receiver method, you of course can reuse it as well --&gt;
+                                        &lt;ref bean=&quot;listener1&quot; /&gt;
+                                &lt;/list&gt;
+                        &lt;/entry&gt;
+                &lt;/map&gt;
+        &lt;/constructor-arg&gt;
+        &lt;constructor-arg ref=&quot;eventScope&quot; /&gt;
+&lt;/bean&gt;
+</pre></div></div>
+<div class="section">
+<h2>Spring integration - manual registration<a name="Spring_integration_-_manual_registration"></a></h2>
+<p>When programmatic dependencies to ticino-core are no issue (but dependencies to ticino-spring are), you can integrate ticino by defining a event scope bean in the spring context:</p>
+<div class="source">
+<pre>&lt;bean name=&quot;eventScope&quot; class=&quot;net.micwin.ticino.EventScope&quot; /&gt;</pre></div>
+<p>Autowire that in a receiver</p>
+<div class="source">
+<pre>public class Receiver {
+    
+    @Autowired
+    EventScope eventScope ;
+    
+    private void init () {
+        eventScope.register (Payload.class, this) ;
+    }
+    
+    public void receive (Payload payload) {
+        // do something meaningful with the received event
+    }
+}   </pre></div>
+<p>and in a caller</p>
+<div class="source">
+<pre>public class Caller {
+    
+    @Autowired
+    EventScope eventScope ;
+    
+    public void doSomething (Payload payload) {
+        eventScope.dispatch (payload) ;
+    }
+}</pre></div>
+<p>Some Notes here</p>
+<ul>
+<li>with both approaches, you can use multiple event scopes at once. They will have a disjunct set of event registrations, that is, receivers.</li>
+<li>make sure to not mix approaches across event types. For instance, configure event Payload either via Configurator or manual registration, not both. </li>
+<li>You still can use receivers across events; so you, for instance, could still bind listener1 with both methods to disjunct events. </li>
+<li>when using the approach with Configurator, you can connect code to ticino that has no idea what ticino is.</li></ul></div>
                   </div>
             </div>
           </div>
