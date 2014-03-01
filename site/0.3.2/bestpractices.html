@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20140301" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>ticino static context - Dependency Information</title>
+    <title>ticino - </title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.0.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -50,7 +50,7 @@
           <div id="banner">
         <div class="pull-left">
                                 <div id="bannerLeft">
-                <h2>ticino static event scope</h2>
+                <h2>ticino - events, not elephants</h2>
                 </div>
                       </div>
         <div class="pull-right">  </div>
@@ -80,42 +80,50 @@
                             
       <li>
     
-                          <a href="index.html" title="About">
+                          <a href="index.html" title="Welcome!">
           <i class="none"></i>
-        About</a>
+        Welcome!</a>
+            </li>
+                  
+      <li>
+    
+                          <a href="cookbook.html" title="Cookbook">
+          <i class="none"></i>
+        Cookbook</a>
             </li>
                   
       <li class="active">
     
-            <a href="#"><i class="none"></i>Download</a>
+            <a href="#"><i class="none"></i>Best Practices</a>
           </li>
                   
       <li>
     
-                          <a href="source-repository.html" title="Sources">
+                          <a href="changelog.html" title="Changelog">
           <i class="none"></i>
-        Sources</a>
+        Changelog</a>
+            </li>
+                              <li class="nav-header">Modules</li>
+                                
+      <li>
+    
+                          <a href="ticino-core/index.html" title="core library">
+          <i class="none"></i>
+        core library</a>
             </li>
                   
       <li>
     
-                          <a href="dependencies.html" title="Dependencies">
+                          <a href="ticino-spring/index.html" title="spring integration">
           <i class="none"></i>
-        Dependencies</a>
+        spring integration</a>
             </li>
                   
       <li>
     
-                          <a href="project-info.html" title="Project Information">
+                          <a href="ticino-static/index.html" title="static context">
           <i class="none"></i>
-        Project Information</a>
-            </li>
-                  
-      <li>
-    
-                          <a href="../index.html" title="ticino homepage">
-          <i class="none"></i>
-        ticino homepage</a>
+        static context</a>
             </li>
             </ul>
                 
@@ -128,14 +136,14 @@
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
     
-    <div class="g-plusone" data-href="http://micwin.github.com/ticino/index.html/ticino-static" data-size="tall" ></div>
+    <div class="g-plusone" data-href="http://micwin.github.com/ticino/index.html" data-size="tall" ></div>
 
                    <div class="clear"></div>
                    
         
         
         
-    <iframe src="http://www.facebook.com/plugins/like.php?href=http://micwin.github.com/ticino/index.html/ticino-static&send=false&layout=box_count&show-faces=false&action=like&colorscheme=light"
+    <iframe src="http://www.facebook.com/plugins/like.php?href=http://micwin.github.com/ticino/index.html&send=false&layout=box_count&show-faces=false&action=like&colorscheme=light"
         scrolling="no" frameborder="0"
         style="border:none; width:48px; height:63px; margin-top: 10px;" ></iframe>
                <div class="clear"></div>
@@ -151,43 +159,25 @@
         <div id="bodyColumn"  class="span9" >
                                   
             <div class="section">
-<h2>Dependency Information<a name="Dependency_Information"></a></h2><a name="Dependency_Information"></a>
+<h2>ticino best practices<a name="ticino_best_practices"></a></h2></div>
 <div class="section">
-<h3>Apache Maven<a name="Apache_Maven"></a></h3><a name="Apache_Maven"></a>
-<div class="source">
-<pre>&lt;dependency&gt;
-  &lt;groupId&gt;net.micwin.ticino&lt;/groupId&gt;
-  &lt;artifactId&gt;ticino-static&lt;/artifactId&gt;
-  &lt;version&gt;0.3.2&lt;/version&gt;
-&lt;/dependency&gt;</pre></div></div>
+<h2>Dont use basic types as events<a name="Dont_use_basic_types_as_events"></a></h2>
+<p>Althougt ticino allows to use ie java.lang.String or java.lang.Integer as event types, we strongly discourage this approach. In general, use event whose names describe the purpose of the event, or its inner structure. This said, what's the purpose of dispatching a String?</p></div>
 <div class="section">
-<h3>Apache Buildr<a name="Apache_Buildr"></a></h3><a name="Apache_Buildr"></a>
-<div class="source">
-<pre>'net.micwin.ticino:ticino-static:jar:0.3.2'</pre></div></div>
+<h2>Name your events according to their domain purpose<a name="Name_your_events_according_to_their_domain_purpose"></a></h2>
+<p>Since it is a technical driven naming, IncomingXmlEvent from Example 1 is a discouraged naming for an event. If possible, give more insight into the data provided with this event. In case of the given IncomingXmlEvent you probably might say ie UpdateFlightDataXmlEvent instead.</p></div>
 <div class="section">
-<h3>Apache Ant<a name="Apache_Ant"></a></h3><a name="Apache_Ant"></a>
-<div class="source">
-<pre>&lt;dependency org=&quot;net.micwin.ticino&quot; name=&quot;ticino-static&quot; rev=&quot;0.3.2&quot;&gt;
-  &lt;artifact name=&quot;ticino-static&quot; type=&quot;jar&quot; /&gt;
-&lt;/dependency&gt;</pre></div></div>
+<h2>Be careful what you dispatch<a name="Be_careful_what_you_dispatch"></a></h2>
+<p>Since ticino senders have no meanings to control who catches their events, you probably shoud avoid including such secret things like passwords etc in your events. Also, since they mostly come along with a whole bunch of references, you should think twice including database entities, transaction managers, EJBs, session data et al in your events. It probably might be most useful and of a specific charm throwing a NewRequestEvent, a CreateUserEvent or a LoadMandateEvent as long the drawbacks are well considered.</p></div>
 <div class="section">
-<h3>Groovy Grape<a name="Groovy_Grape"></a></h3><a name="Groovy_Grape"></a>
-<div class="source">
-<pre>@Grapes(
-@Grab(group='net.micwin.ticino', module='ticino-static', version='0.3.2')
-)</pre></div></div>
+<h2>Use Spring<a name="Use_Spring"></a></h2>
+<p>Using spring to connect dispatcher and receiver enforces the loose end characteristics of ticino and hence is highly recommended. Of course you might use another DI or IOC framework as well.</p></div>
 <div class="section">
-<h3>Grails<a name="Grails"></a></h3><a name="Grails"></a>
-<div class="source">
-<pre>compile 'net.micwin.ticino:ticino-static:0.3.2'</pre></div></div>
+<h2>xxxEvent vs <i>not</i><a name="xxxEvent_vs_not"></a></h2>
+<p>Sometimes, its useful to make explicit the fact that a data structure is an event, sometimes not. I most time love short code but only in a context where all participants exactly know the technical background of the software. With above example, instead of UpdateFlightDataXmlEvent, I most likely would prefer IncomingFlightUpdate (and even hide the xml characteristics of the data), but imho that really is a matter of taste. AND, in the case you might reuse a class for multiple purposes,...</p></div>
 <div class="section">
-<h3>Leiningen<a name="Leiningen"></a></h3><a name="Leiningen"></a>
-<div class="source">
-<pre>[net.micwin.ticino/ticino-static &quot;0.3.2&quot;]</pre></div></div>
-<div class="section">
-<h3>SBT<a name="SBT"></a></h3><a name="SBT"></a>
-<div class="source">
-<pre>libraryDependencies += &quot;net.micwin.ticino&quot; %% &quot;ticino-static&quot; % &quot;0.3.2&quot;</pre></div></div></div>
+<h2>Dont play Crusader<a name="Dont_play_Crusader"></a></h2>
+<p>I fought many battles concerning junit and unit testing. I heard much speach about why this will not work in exactly this company for a vast variety of reasons (my favorite: &quot;our code is not testable&quot;). The question you should ask yourself: is *your* energy worth a long lasting crusade? Probably its simply not the time for ticino, but time's are changing so - be patient; in our business good programming concepts sooner or later become accepted.</p></div>
                   </div>
             </div>
           </div>
