@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Date-Revision-yyyymmdd" content="20140301" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>ticino - Project Build Plugins</title>
+    <title>ticino - </title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.0.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -92,12 +92,10 @@
         Cookbook</a>
             </li>
                   
-      <li>
+      <li class="active">
     
-                          <a href="bestpractices.html" title="Best Practices">
-          <i class="none"></i>
-        Best Practices</a>
-            </li>
+            <a href="#"><i class="none"></i>Best Practices</a>
+          </li>
                   
       <li>
     
@@ -161,43 +159,25 @@
         <div id="bodyColumn"  class="span9" >
                                   
             <div class="section">
-<h2>Project Build Plugins<a name="Project_Build_Plugins"></a></h2><a name="Project_Build_Plugins"></a>
-<table border="0" class="table table-striped">
-<tr class="a">
-<th>GroupId</th>
-<th>ArtifactId</th>
-<th>Version</th></tr>
-<tr class="b">
-<td>com.github.github</td>
-<td><a class="externalLink" href="https://github.com/github/maven-plugins">site-maven-plugin</a></td>
-<td>0.9</td></tr>
-<tr class="a">
-<td>org.apache.maven.plugins</td>
-<td><a class="externalLink" href="http://maven.apache.org/plugins/maven-clean-plugin/">maven-clean-plugin</a></td>
-<td>2.5</td></tr>
-<tr class="b">
-<td>org.apache.maven.plugins</td>
-<td><a class="externalLink" href="http://maven.apache.org/plugins/maven-compiler-plugin/">maven-compiler-plugin</a></td>
-<td>2.5.1</td></tr>
-<tr class="a">
-<td>org.apache.maven.plugins</td>
-<td><a class="externalLink" href="http://maven.apache.org/plugins/maven-deploy-plugin/">maven-deploy-plugin</a></td>
-<td>2.7</td></tr>
-<tr class="b">
-<td>org.apache.maven.plugins</td>
-<td><a class="externalLink" href="http://maven.apache.org/plugins/maven-enforcer-plugin/">maven-enforcer-plugin</a></td>
-<td>1.0</td></tr>
-<tr class="a">
-<td>org.apache.maven.plugins</td>
-<td><a class="externalLink" href="http://maven.apache.org/plugins/maven-install-plugin/">maven-install-plugin</a></td>
-<td>2.4</td></tr>
-<tr class="b">
-<td>org.apache.maven.plugins</td>
-<td><a class="externalLink" href="http://maven.apache.org/plugins/maven-site-plugin/">maven-site-plugin</a></td>
-<td>3.3</td></tr></table></div>
+<h2>ticino best practices<a name="ticino_best_practices"></a></h2></div>
 <div class="section">
-<h2>Project Report Plugins<a name="Project_Report_Plugins"></a></h2><a name="Project_Report_Plugins"></a>
-<p>There are no plugins reports defined in the Reporting part of this project.</p></div>
+<h2>Dont use basic types as events<a name="Dont_use_basic_types_as_events"></a></h2>
+<p>Althougt ticino allows to use ie java.lang.String or java.lang.Integer as event types, we strongly discourage this approach. In general, use event whose names describe the purpose of the event, or its inner structure. This said, what's the purpose of dispatching a String?</p></div>
+<div class="section">
+<h2>Name your events according to their domain purpose<a name="Name_your_events_according_to_their_domain_purpose"></a></h2>
+<p>Since it is a technical driven naming, IncomingXmlEvent from Example 1 is a discouraged naming for an event. If possible, give more insight into the data provided with this event. In case of the given IncomingXmlEvent you probably might say ie UpdateFlightDataXmlEvent instead.</p></div>
+<div class="section">
+<h2>Be careful what you dispatch<a name="Be_careful_what_you_dispatch"></a></h2>
+<p>Since ticino senders have no meanings to control who catches their events, you probably shoud avoid including such secret things like passwords etc in your events. Also, since they mostly come along with a whole bunch of references, you should think twice including database entities, transaction managers, EJBs, session data et al in your events. It probably might be most useful and of a specific charm throwing a NewRequestEvent, a CreateUserEvent or a LoadMandateEvent as long the drawbacks are well considered.</p></div>
+<div class="section">
+<h2>Use Spring<a name="Use_Spring"></a></h2>
+<p>Using spring to connect dispatcher and receiver enforces the loose end characteristics of ticino and hence is highly recommended. Of course you might use another DI or IOC framework as well.</p></div>
+<div class="section">
+<h2>xxxEvent vs <i>not</i><a name="xxxEvent_vs_not"></a></h2>
+<p>Sometimes, its useful to make explicit the fact that a data structure is an event, sometimes not. I most time love short code but only in a context where all participants exactly know the technical background of the software. With above example, instead of UpdateFlightDataXmlEvent, I most likely would prefer IncomingFlightUpdate (and even hide the xml characteristics of the data), but imho that really is a matter of taste. AND, in the case you might reuse a class for multiple purposes,...</p></div>
+<div class="section">
+<h2>Dont play Crusader<a name="Dont_play_Crusader"></a></h2>
+<p>I fought many battles concerning junit and unit testing. I heard much speach about why this will not work in exactly this company for a vast variety of reasons (my favorite: &quot;our code is not testable&quot;). The question you should ask yourself: is *your* energy worth a long lasting crusade? Probably its simply not the time for ticino, but time's are changing so - be patient; in our business good programming concepts sooner or later become accepted.</p></div>
                   </div>
             </div>
           </div>
