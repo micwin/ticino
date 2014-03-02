@@ -23,7 +23,8 @@
 		<module>ticino-core</module>
 		<module>ticino-spring</module>
 		<module>ticino-static</module>
-		<module>ticino-registry</module>
+
+		<module>ticino-cloak</module>
 	</modules>
 
 
