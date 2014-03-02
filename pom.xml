@@ -1,17 +1,19 @@
 <?xml version="1.0" standalone="no"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
+		<!-- Documentation on how to get this to maven central: -->
+		<!-- https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-7b.StageExistingArtifacts -->
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>7</version>
 	</parent>
 
 	<groupId>net.micwin.ticino</groupId>
-	<artifactId>parent-pom</artifactId>
+	<artifactId>ticino-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>0.3.3-SNAPSHOT</version>
 	<name>ticino - events, not elephants</name>
@@ -21,6 +23,7 @@
 		<module>ticino-core</module>
 		<module>ticino-spring</module>
 		<module>ticino-static</module>
+		<module>ticino-registry</module>
 	</modules>
 
 

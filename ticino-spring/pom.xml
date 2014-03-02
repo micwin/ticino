@@ -6,7 +6,7 @@
 
 	<parent>
 		<groupId>net.micwin.ticino</groupId>
-		<artifactId>parent-pom</artifactId>
+		<artifactId>ticino-parent</artifactId>
 		<version>0.3.3-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
