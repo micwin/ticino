@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 /**
  * A eventScope in which an event should get dispatched and receivers should
@@ -69,7 +70,24 @@ public class EventScope<T> {
 	 */
 	public synchronized EventScope<T> register(Class<? extends T> eventClass,
 			Object receiver) {
-		Method method = detectReceiverMethod(receiver, eventClass);
+		return register(eventClass, receiver, null);
+
+	}
+
+	/**
+	 * The public method to register a new event receiver.
+	 * 
+	 * @param eventClass
+	 *            the class of event to be received.
+	 * @param receiver
+	 *            The receiver to get the event.
+	 * @param namePattern
+	 *            a name pattern for the method used as handler.
+	 * @return this to enable chaining.
+	 */
+	public synchronized EventScope<T> register(Class<? extends T> eventClass,
+			Object receiver, Pattern namePattern) {
+		Method method = detectReceiverMethod(receiver, eventClass, namePattern);
 		registerInternal(receiver, method, eventClass);
 		return this;
 	}
@@ -101,11 +119,16 @@ public class EventScope<T> {
 	 * <code>eventClass</code>.
 	 * 
 	 * @param receiver
+	 *            the receiver
 	 * @param eventClass
+	 *            the event class
+	 * @param namePattern
+	 *            Optional. A method name regex pattern to better select the
+	 *            handler method.
 	 * @return
 	 */
 	private Method detectReceiverMethod(Object receiver,
-			Class<? extends T> eventClass) {
+			Class<? extends T> eventClass, Pattern namePattern) {
 		Method[] methods = receiver.getClass().getMethods();
 		List<Method> results = new LinkedList<Method>();
 
@@ -117,8 +140,13 @@ public class EventScope<T> {
 				continue;
 			}
 
-			if (method.getParameterTypes()[0].isAssignableFrom(eventClass)
-					&& !"equals".equals(method.getName())) {
+			if (namePattern != null
+					&& !namePattern.matcher(method.getName()).find()) {
+				// wrong method name - try next
+				continue;
+			}
+
+			if (canHandle(method, eventClass)) {
 				// hit!
 				results.add(method);
 			}
@@ -134,7 +162,10 @@ public class EventScope<T> {
 					"receiver '"
 							+ receiver
 							+ "' has more than one accessible method with a single parameter of type '"
-							+ eventClass.getName() + "' : "
+							+ eventClass.getName()
+							+ "' "
+							+ (namePattern != null ? " and name pattern '"
+									+ namePattern.pattern() + "' " : "") + ": "
 							+ results.toString());
 		}
 
@@ -143,8 +174,16 @@ public class EventScope<T> {
 				"receiver '"
 						+ receiver
 						+ "' does not have an accessible method with a single parameter of type '"
-						+ eventClass.getName() + "'");
+						+ eventClass.getName()
+						+ "' "
+						+ (namePattern != null ? " and name pattern '"
+								+ namePattern.pattern() + "' " : ""));
 
+	}
+
+	public boolean canHandle(Method method, Class<? extends T> eventClass) {
+		return method.getParameterTypes()[0].isAssignableFrom(eventClass)
+				&& !"equals".equals(method.getName());
 	}
 
 	/**

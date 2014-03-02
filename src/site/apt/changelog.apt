@@ -1,5 +1,9 @@
 Changelog
 
+Version 0.3.3
+
+  * gave the method EventScope.register an additional regex pattern parameter to better define the handler method. This enables e.g. LinkedList to receive ticinop events.
+
 Version 0.3.2
 
   * enabled chaining when dispatching an event

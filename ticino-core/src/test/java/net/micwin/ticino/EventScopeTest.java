@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -178,6 +179,21 @@ public class EventScopeTest {
 			// assert that the second receiver has not been called
 			assertEquals(0, c.size());
 		}
+	}
+
+	@Test
+	public void testRegister_with_pattern() {
+
+		List<String> receiver = new LinkedList<String>();
+
+		eventScope.register(String.class, receiver, Pattern.compile("add$"));
+
+		eventScope.dispatch("1234");
+
+		assertEquals(1, receiver.size());
+
+		assertEquals("1234", receiver.get(0));
+
 	}
 
 	@Test
