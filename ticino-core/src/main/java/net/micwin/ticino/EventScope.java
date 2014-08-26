@@ -1,4 +1,6 @@
+
 package net.micwin.ticino;
+
 
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Method;
@@ -12,335 +14,312 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 /**
- * A eventScope in which an event should get dispatched and receivers should
- * register to their specified events..
+ * A eventScope in which an event should get dispatched and receivers should register to their specified events..
  * 
  * @author MicWin
  * 
  */
 public class EventScope<T> {
 
-	private String name;
-	Map<Class<? extends T>, List<ReceiverDescriptor>> receiverMap = new HashMap<Class<? extends T>, List<ReceiverDescriptor>>();
+    private String name;
+    Map<Class<? extends T>, List<ReceiverDescriptor>> receiverMap = new HashMap<Class<? extends T>, List<ReceiverDescriptor>>();
 
-	/**
-	 * Creates a eventScope with given name.
-	 * 
-	 * @param name
-	 */
-	public EventScope(String name) {
-		this.name = name;
-	}
+    /**
+     * Creates a eventScope with given name.
+     * 
+     * @param name
+     */
+    public EventScope(final String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Creates a eventScope with name "&lt;none&gt;".
-	 * 
-	 * @param name
-	 */
-	public EventScope() {
-		this("<none>");
-	}
+    /**
+     * Creates a eventScope with name "&lt;none&gt;".
+     * 
+     * @param name
+     */
+    public EventScope() {
+        this("<none>");
+    }
 
-	public String getScopeName() {
-		return name;
-	}
+    public String getScopeName() {
+        return this.name;
+    }
 
-	/**
-	 * Holds a soft reference to a receiver. This will not prevent the receiver
-	 * to get garbage collected, so make sure to store the receiver elsewhere,
-	 * for example you could pass in a spring bean.
-	 * 
-	 * @author MicWin
-	 * 
-	 */
-	private class ReceiverDescriptor {
-		SoftReference<Object> receiverReference;
-		Method method;
-		long creationTime = System.currentTimeMillis();
-	}
+    /**
+     * Holds a soft reference to a receiver. This will not prevent the receiver to get garbage collected, so make sure
+     * to store the receiver elsewhere, for example you could pass in a spring bean.
+     * 
+     * @author MicWin
+     * 
+     */
+    private class ReceiverDescriptor {
+        SoftReference<Object> receiverReference;
+        Method method;
+        long creationTime = System.currentTimeMillis();
+    }
 
-	/**
-	 * The public method to register a new event receiver.
-	 * 
-	 * @param eventClass
-	 *            the class of event to be received.
-	 * @param receiver
-	 *            The receiver to get the event.
-	 * @return this to enable chaining.
-	 */
-	public synchronized EventScope<T> register(Class<? extends T> eventClass,
-			Object receiver) {
-		return register(eventClass, receiver, null);
+    /**
+     * The public method to register a new event receiver.
+     * 
+     * @param eventClass the class of event to be received.
+     * @param receiver The receiver to get the event.
+     * @return this to enable chaining.
+     */
+    public synchronized EventScope<T> register(final Class<? extends T> eventClass, final Object receiver) {
+        return this.register(eventClass, receiver, (Pattern) null);
 
-	}
+    }
 
-	/**
-	 * The public method to register a new event receiver.
-	 * 
-	 * @param eventClass
-	 *            the class of event to be received.
-	 * @param receiver
-	 *            The receiver to get the event.
-	 * @param namePattern
-	 *            a name pattern for the method used as handler.
-	 * @return this to enable chaining.
-	 */
-	public synchronized EventScope<T> register(Class<? extends T> eventClass,
-			Object receiver, Pattern namePattern) {
-		Method method = detectReceiverMethod(receiver, eventClass, namePattern);
-		registerInternal(receiver, method, eventClass);
-		return this;
-	}
+    /**
+     * The public method to register a new event receiver.
+     * 
+     * @param eventClass the class of event to be received.
+     * @param receiver The receiver to get the event.
+     * @param handler handler method to handle specified event.
+     * @return this to enable chaining.
+     */
+    public synchronized EventScope<T> register(final Class<? extends T> eventClass, final Object receiver,
+            final Method handler) {
+        this.registerInternal(receiver, handler, eventClass);
+        return this;
 
-	/**
-	 * Registers a receiver to an internal map.
-	 * 
-	 * @param receiver
-	 * @param method
-	 * @param eventClass
-	 */
-	private void registerInternal(Object receiver, Method method,
-			Class<? extends T> eventClass) {
-		List<ReceiverDescriptor> receivers = receiverMap.get(eventClass);
-		if (receivers == null) {
-			receivers = new LinkedList<ReceiverDescriptor>();
-			receiverMap.put(eventClass, receivers);
-		}
+    }
 
-		ReceiverDescriptor rd = new ReceiverDescriptor();
-		rd.receiverReference = new SoftReference<Object>(receiver);
-		rd.method = method;
+    /**
+     * The public method to register a new event receiver.
+     * 
+     * @param eventClass the class of event to be received.
+     * @param receiver The receiver to get the event.
+     * @param namePattern a name pattern for the method used as handler.
+     * @return this to enable chaining.
+     */
+    public synchronized EventScope<T> register(final Class<? extends T> eventClass, final Object receiver,
+            final Pattern namePattern) {
+        final Method method = this.detectReceiverMethod(receiver, eventClass, namePattern);
+        this.registerInternal(receiver, method, eventClass);
+        return this;
+    }
 
-		receivers.add(rd);
-	}
+    /**
+     * Registers a receiver to an internal map.
+     * 
+     * @param receiver
+     * @param method
+     * @param eventClass
+     */
+    private void registerInternal(final Object receiver, final Method method, final Class<? extends T> eventClass) {
+        List<ReceiverDescriptor> receivers = this.receiverMap.get(eventClass);
+        if (receivers == null) {
+            receivers = new LinkedList<ReceiverDescriptor>();
+            this.receiverMap.put(eventClass, receivers);
+        }
 
-	/**
-	 * Analyzes the receiver for Methods that satisfy to receive events of type
-	 * <code>eventClass</code>.
-	 * 
-	 * @param receiver
-	 *            the receiver
-	 * @param eventClass
-	 *            the event class
-	 * @param namePattern
-	 *            Optional. A method name regex pattern to better select the
-	 *            handler method.
-	 * @return
-	 */
-	private Method detectReceiverMethod(Object receiver,
-			Class<? extends T> eventClass, Pattern namePattern) {
-		Method[] methods = receiver.getClass().getMethods();
-		List<Method> results = new LinkedList<Method>();
+        final ReceiverDescriptor rd = new ReceiverDescriptor();
+        rd.receiverReference = new SoftReference<Object>(receiver);
+        rd.method = method;
 
-		for (Method method : methods) {
+        receivers.add(rd);
+    }
 
-			if (method.getParameterTypes() == null
-					|| method.getParameterTypes().length != 1) {
-				// wrong amount of parameters -> try next
-				continue;
-			}
+    /**
+     * Analyzes the receiver for Methods that satisfy to receive events of type <code>eventClass</code>.
+     * 
+     * @param receiver the receiver
+     * @param eventClass the event class
+     * @param namePattern Optional. A method name regex pattern to better select the handler method.
+     * @return
+     */
+    private Method detectReceiverMethod(final Object receiver, final Class<? extends T> eventClass,
+            final Pattern namePattern) {
+        final Method[] methods = receiver.getClass().getMethods();
+        final List<Method> results = new LinkedList<Method>();
 
-			if (namePattern != null
-					&& !namePattern.matcher(method.getName()).find()) {
-				// wrong method name - try next
-				continue;
-			}
+        for (final Method method : methods) {
 
-			if (canHandle(method, eventClass)) {
-				// hit!
-				results.add(method);
-			}
-		}
+            if (method.getParameterTypes() == null || method.getParameterTypes().length != 1) {
+                // wrong amount of parameters -> try next
+                continue;
+            }
 
-		if (results.size() == 1) {
-			// only one hit - perfect
-			return results.get(0);
-		}
+            if (namePattern != null && !namePattern.matcher(method.getName()).find()) {
+                // wrong method name - try next
+                continue;
+            }
 
-		if (results.size() > 1) {
-			throw new IllegalArgumentException(
-					"receiver '"
-							+ receiver
-							+ "' has more than one accessible method with a single parameter of type '"
-							+ eventClass.getName()
-							+ "' "
-							+ (namePattern != null ? " and name pattern '"
-									+ namePattern.pattern() + "' " : "") + ": "
-							+ results.toString());
-		}
+            if (this.canHandle(method, eventClass)) {
+                // hit!
+                results.add(method);
+            }
+        }
 
-		// no hit _> exception
-		throw new IllegalArgumentException(
-				"receiver '"
-						+ receiver
-						+ "' does not have an accessible method with a single parameter of type '"
-						+ eventClass.getName()
-						+ "' "
-						+ (namePattern != null ? " and name pattern '"
-								+ namePattern.pattern() + "' " : ""));
+        if (results.size() == 1) {
+            // only one hit - perfect
+            return results.get(0);
+        }
 
-	}
+        if (results.size() > 1) {
+            throw new IllegalArgumentException("receiver '" + receiver
+                    + "' has more than one accessible method with a single parameter of type '" + eventClass.getName()
+                    + "' " + (namePattern != null ? " and name pattern '" + namePattern.pattern() + "' " : "") + ": "
+                    + results.toString());
+        }
 
-	public boolean canHandle(Method method, Class<? extends T> eventClass) {
-		return method.getParameterTypes()[0].isAssignableFrom(eventClass)
-				&& !"equals".equals(method.getName());
-	}
+        // no hit _> exception
+        throw new IllegalArgumentException("receiver '" + receiver
+                + "' does not have an accessible method with a single parameter of type '" + eventClass.getName()
+                + "' " + (namePattern != null ? " and name pattern '" + namePattern.pattern() + "' " : ""));
 
-	/**
-	 * Dispatch an event to receivers.
-	 * 
-	 * @param event
-	 *            The event object to dispatch.
-	 */
-	public synchronized <Q extends T> Q dispatch(Q event) {
+    }
 
-		Collection<ReceiverDescriptor> receivers = new TreeSet<ReceiverDescriptor>(
-				new Comparator<ReceiverDescriptor>() {
+    public boolean canHandle(final Method method, final Class<? extends T> eventClass) {
+        return method.getParameterTypes()[0].isAssignableFrom(eventClass) && !"equals".equals(method.getName());
+    }
 
-					@Override
-					public int compare(ReceiverDescriptor o1,
-							ReceiverDescriptor o2) {
+    /**
+     * Dispatch an event to receivers.
+     * 
+     * @param event The event object to dispatch.
+     */
+    public synchronized <Q extends T> Q dispatch(final Q event) {
 
-						// direct check descriptor
-						if (o1 == o2) {
-							return 0;
-						}
+        final Collection<ReceiverDescriptor> receivers = new TreeSet<ReceiverDescriptor>(
+                new Comparator<ReceiverDescriptor>() {
 
-						boolean o1IsNull = o1 == null
-								|| o1.receiverReference == null
-								|| o1.receiverReference.get() == null;
-						boolean o2IsNull = o2 == null
-								|| o2.receiverReference == null
-								|| o2.receiverReference.get() == null;
+                    @Override
+                    public int compare(final ReceiverDescriptor o1, final ReceiverDescriptor o2) {
 
-						if (o1IsNull && o2IsNull) {
-							return 0;
-						}
+                        // direct check descriptor
+                        if (o1 == o2) {
+                            return 0;
+                        }
 
-						if (o1IsNull) {
-							return 1;
-						}
+                        final boolean o1IsNull = o1 == null || o1.receiverReference == null
+                                || o1.receiverReference.get() == null;
+                        final boolean o2IsNull = o2 == null || o2.receiverReference == null
+                                || o2.receiverReference.get() == null;
 
-						if (o2IsNull) {
-							return -1;
-						}
+                        if (o1IsNull && o2IsNull) {
+                            return 0;
+                        }
 
-						// direct check receiverReference
-						if (o1.receiverReference == o2.receiverReference) {
-							return 0;
-						}
+                        if (o1IsNull) {
+                            return 1;
+                        }
 
-						// direct check object
-						if (o1.receiverReference.get() == o2.receiverReference
-								.get()) {
-							return 0;
-						}
+                        if (o2IsNull) {
+                            return -1;
+                        }
 
-						// check creationDate
-						if (o1.creationTime < o2.creationTime) {
-							return -1;
-						} else if (o1.creationTime > o2.creationTime) {
-							return 1;
-						}
+                        // direct check receiverReference
+                        if (o1.receiverReference == o2.receiverReference) {
+                            return 0;
+                        }
 
-						// when coming to this point, we really have a problem
-						// to *order* the calls by registration.
-						// so we assume: if two registration happen in the same
-						// millisecond, then they are anonymous adapters
+                        // direct check object
+                        if (o1.receiverReference.get() == o2.receiverReference.get()) {
+                            return 0;
+                        }
 
-						int classComparison = o1.receiverReference
-								.get()
-								.getClass()
-								.getName()
-								.compareTo(
-										o2.receiverReference.get().getClass()
-												.getName());
+                        // check creationDate
+                        if (o1.creationTime < o2.creationTime) {
+                            return -1;
+                        }
+                        else if (o1.creationTime > o2.creationTime) {
+                            return 1;
+                        }
 
-						if (classComparison != 0) {
-							return classComparison;
-						}
+                        // when coming to this point, we really have a problem
+                        // to *order* the calls by registration.
+                        // so we assume: if two registration happen in the same
+                        // millisecond, then they are anonymous adapters
 
-						// same class
+                        final int classComparison = o1.receiverReference.get().getClass().getName()
+                                .compareTo(o2.receiverReference.get().getClass().getName());
 
-						// check wether we can use Comparable
+                        if (classComparison != 0) {
+                            return classComparison;
+                        }
 
-						try {
+                        // same class
 
-							Comparable c1 = (Comparable) o1.receiverReference
-									.get();
-							Comparable c2 = (Comparable) o2.receiverReference
-									.get();
-							int comparison = c1.compareTo(c2);
-							if (comparison != 0) {
-								return comparison;
-							}
+                        // check wether we can use Comparable
 
-						} catch (ClassCastException e) {
-							// no, not a comparable
-						}
+                        try {
 
-						// same class, so we try to differentiate using the hash
-						// code
-						Integer h1 = o1.receiverReference.get().hashCode();
-						Integer h2 = o2.receiverReference.get().hashCode();
+                            final Comparable c1 = (Comparable) o1.receiverReference.get();
+                            final Comparable c2 = (Comparable) o2.receiverReference.get();
+                            final int comparison = c1.compareTo(c2);
+                            if (comparison != 0) {
+                                return comparison;
+                            }
 
-						return h1.compareTo(h2);
-					}
-				});
+                        }
+                        catch (final ClassCastException e) {
+                            // no, not a comparable
+                        }
 
-		collectReceiver(event.getClass(), receivers);
+                        // same class, so we try to differentiate using the hash
+                        // code
+                        final Integer h1 = o1.receiverReference.get().hashCode();
+                        final Integer h2 = o2.receiverReference.get().hashCode();
 
-		// no receivers registered, so bye-bye
-		if (receivers == null || receivers.size() < 1) {
-			return event;
-		}
+                        return h1.compareTo(h2);
+                    }
+                });
 
-		// when finding a garbage collected receiver, store here
-		List<ReceiverDescriptor> defunct = new LinkedList<ReceiverDescriptor>();
+        this.collectReceiver(event.getClass(), receivers);
 
-		try {
-			for (ReceiverDescriptor receiverDescriptor : receivers) {
-				Object receiver = receiverDescriptor.receiverReference.get();
-				if (receiver == null) {
+        // no receivers registered, so bye-bye
+        if (receivers == null || receivers.size() < 1) {
+            return event;
+        }
 
-					defunct.add(receiverDescriptor);
-					continue;
-				}
-				try {
-					receiverDescriptor.method.setAccessible(true);
-					receiverDescriptor.method.invoke(receiver, event);
-				} catch (Exception e) {
-					// wrap non runtime exception
-					throw new DispatchException(receiver, event, e);
-				}
-			}
-		} finally {
-			// throw away gc'ed items
-			receivers.removeAll(defunct);
-		}
-		return event;
+        // when finding a garbage collected receiver, store here
+        final List<ReceiverDescriptor> defunct = new LinkedList<ReceiverDescriptor>();
 
-	}
+        try {
+            for (final ReceiverDescriptor receiverDescriptor : receivers) {
+                final Object receiver = receiverDescriptor.receiverReference.get();
+                if (receiver == null) {
 
-	/**
-	 * collects receiver descriptors of super classes and interfaces.
-	 * 
-	 * @param eventClass
-	 * @param receiverCollection
-	 *            the collection receivers are put in.
-	 */
-	private void collectReceiver(Class<?> eventClass,
-			Collection<ReceiverDescriptor> receiverCollection) {
-		if (receiverMap.get(eventClass) != null) {
-			receiverCollection.addAll(receiverMap.get(eventClass));
-		}
-		if (!eventClass.isInterface()
-				&& eventClass.getSuperclass() != Object.class) {
-			collectReceiver(eventClass.getSuperclass(), receiverCollection);
-		}
-		for (Class interfaceClass : eventClass.getInterfaces()) {
-			collectReceiver(interfaceClass, receiverCollection);
-		}
-	}
+                    defunct.add(receiverDescriptor);
+                    continue;
+                }
+                try {
+                    receiverDescriptor.method.setAccessible(true);
+                    receiverDescriptor.method.invoke(receiver, event);
+                }
+                catch (final Exception e) {
+                    // wrap non runtime exception
+                    throw new DispatchException(receiver, event, e);
+                }
+            }
+        }
+        finally {
+            // throw away gc'ed items
+            receivers.removeAll(defunct);
+        }
+        return event;
+
+    }
+
+    /**
+     * collects receiver descriptors of super classes and interfaces.
+     * 
+     * @param eventClass
+     * @param receiverCollection the collection receivers are put in.
+     */
+    private void collectReceiver(final Class<?> eventClass, final Collection<ReceiverDescriptor> receiverCollection) {
+        if (this.receiverMap.get(eventClass) != null) {
+            receiverCollection.addAll(this.receiverMap.get(eventClass));
+        }
+        if (!eventClass.isInterface() && eventClass.getSuperclass() != Object.class) {
+            this.collectReceiver(eventClass.getSuperclass(), receiverCollection);
+        }
+        for (final Class interfaceClass : eventClass.getInterfaces()) {
+            this.collectReceiver(interfaceClass, receiverCollection);
+        }
+    }
 
 }
