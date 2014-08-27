@@ -21,29 +21,16 @@ import java.util.regex.Pattern;
  */
 public class EventScope<T> {
 
-    private String name;
     Map<Class<? extends T>, List<ReceiverDescriptor>> receiverMap = new HashMap<Class<? extends T>, List<ReceiverDescriptor>>();
+    private final Class<T> baseClass;
 
     /**
      * Creates a eventScope with given name.
      * 
-     * @param name
+     * @param pBaseClass
      */
-    public EventScope(final String name) {
-        this.name = name;
-    }
-
-    /**
-     * Creates a eventScope with name "&lt;none&gt;".
-     * 
-     * @param name
-     */
-    public EventScope() {
-        this("<none>");
-    }
-
-    public String getScopeName() {
-        return this.name;
+    public EventScope(final Class<T> pBaseClass) {
+        this.baseClass = pBaseClass;
     }
 
     /**
@@ -320,6 +307,11 @@ public class EventScope<T> {
         for (final Class interfaceClass : eventClass.getInterfaces()) {
             this.collectReceiver(interfaceClass, receiverCollection);
         }
+    }
+
+    public Class<T> getBaseClass() {
+
+        return this.baseClass;
     }
 
 }

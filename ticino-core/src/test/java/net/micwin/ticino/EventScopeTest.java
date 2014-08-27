@@ -9,13 +9,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class EventScopeTest {
-
-    private EventScope eventScope;
 
     /**
      * An interface for a dummy event
@@ -55,15 +52,12 @@ public class EventScopeTest {
         }
     }
 
-    @Before
-    public void before() {
-        this.eventScope = new EventScope("unitTest");
-    }
-
     @Test
     public void testInit() {
-        Assert.assertEquals("unitTest", this.eventScope.getScopeName());
-        Assert.assertEquals(0, this.eventScope.receiverMap.size());
+
+        final EventScope<IDummyEvent> eventScope = new EventScope<EventScopeTest.IDummyEvent>(IDummyEvent.class);
+        Assert.assertEquals(IDummyEvent.class, eventScope.getBaseClass());
+        Assert.assertEquals(0, eventScope.receiverMap.size());
     }
 
     /**
@@ -72,11 +66,11 @@ public class EventScopeTest {
      */
     @Test
     public void testWorkflow() {
-
+        final EventScope<IDummyEvent> eventScope = new EventScope<EventScopeTest.IDummyEvent>(IDummyEvent.class);
         final DummyReceiver receiver = new DummyReceiver();
-        this.eventScope.register(DummyEventImpl.class, receiver);
+        eventScope.register(DummyEventImpl.class, receiver);
 
-        this.eventScope.dispatch(new DummyEventImpl());
+        eventScope.dispatch(new DummyEventImpl());
         Assert.assertEquals(1, receiver.received);
     }
 
@@ -97,7 +91,8 @@ public class EventScopeTest {
 
         // register an anonymous adapter as receiver, that puts the received
         // "event" (i.e. the Integer) into the list above.
-        this.eventScope.register(Integer.class, new Object() {
+        final EventScope<Integer> eventScope = new EventScope<Integer>(Integer.class);
+        eventScope.register(Integer.class, new Object() {
             @SuppressWarnings("unused")
             public void receive(final Integer i) {
                 // this is the receiver method.
@@ -106,8 +101,8 @@ public class EventScopeTest {
         });
 
         // trigger receiver twice
-        this.eventScope.dispatch(4);
-        this.eventScope.dispatch(42);
+        eventScope.dispatch(4);
+        eventScope.dispatch(42);
 
         // check that both integers have been put into the list (and hence rthe
         // receivers have been processed).
@@ -118,8 +113,10 @@ public class EventScopeTest {
     @Test
     public void testSameClass() {
 
+        final EventScope<String> eventScope = new EventScope<String>(String.class);
+
         try {
-            this.eventScope.register(String.class, new Object() {
+            eventScope.register(String.class, new Object() {
 
                 // receiver that has two methods that possibly could catch the
                 // event
@@ -144,8 +141,10 @@ public class EventScopeTest {
     @Test
     public void testClassInSameHierarchy() {
 
+        final EventScope<String> eventScope = new EventScope<String>(String.class);
+
         try {
-            this.eventScope.register(String.class, new Object() {
+            eventScope.register(String.class, new Object() {
 
                 // receiver that has two methods that possibly could catch the
                 // event
@@ -169,18 +168,19 @@ public class EventScopeTest {
 
     @Test
     public void testReceiverThrowingException() {
+        final EventScope<String> eventScope = new EventScope<String>(String.class);
         final Collection<String> c = new LinkedList<String>();
         try {
 
             // register first receiver, throwing an exception.
-            this.eventScope.register(String.class, new Object() {
+            eventScope.register(String.class, new Object() {
                 @SuppressWarnings("unused")
                 public void receive(final String message) throws IOException {
                     throw new IOException();
                 }
             });
             // register second receiver, expecting work to do (but not reached)
-            this.eventScope.register(String.class, new Object() {
+            eventScope.register(String.class, new Object() {
                 @SuppressWarnings("unused")
                 public void receive(final String message) {
                     c.add("second");
@@ -188,7 +188,7 @@ public class EventScopeTest {
             });
 
             // firing dummy event
-            this.eventScope.dispatch("Hello, receivers!");
+            eventScope.dispatch("Hello, receivers!");
 
             // exception not thrown
             Assert.fail();
@@ -204,12 +204,12 @@ public class EventScopeTest {
 
     @Test
     public void testRegister_with_pattern() {
-
+        final EventScope<String> eventScope = new EventScope<String>(String.class);
         final List<String> receiver = new LinkedList<String>();
 
-        this.eventScope.register(String.class, receiver, Pattern.compile("add$"));
+        eventScope.register(String.class, receiver, Pattern.compile("add$"));
 
-        this.eventScope.dispatch("1234");
+        eventScope.dispatch("1234");
 
         Assert.assertEquals(1, receiver.size());
 
@@ -221,16 +221,17 @@ public class EventScopeTest {
     public void testSuperClassRegistration() {
 
         // register a receiver upon the interface
+        final EventScope<IDummyEvent> eventScope = new EventScope<EventScopeTest.IDummyEvent>(IDummyEvent.class);
         final DummyReceiver interfaceReceiver = new DummyReceiver();
-        this.eventScope.register(IDummyEvent.class, interfaceReceiver);
+        eventScope.register(IDummyEvent.class, interfaceReceiver);
 
         // register a receiver upon the implementation
         final DummyReceiver implReceiver = new DummyReceiver();
-        this.eventScope.register(DummyEventImpl.class, implReceiver);
+        eventScope.register(DummyEventImpl.class, implReceiver);
 
         //
         // dispatch an impl event
-        this.eventScope.dispatch(new DummyEventImpl());
+        eventScope.dispatch(new DummyEventImpl());
 
         // assert impl calls
         // expected: both receivers received the event once
@@ -239,7 +240,7 @@ public class EventScopeTest {
 
         //
         // dispatch an abstract adaptor event
-        this.eventScope.dispatch(new IDummyEvent() {});
+        eventScope.dispatch(new IDummyEvent() {});
 
         // expectation: only the interface receiver received the event.
         Assert.assertEquals(2, interfaceReceiver.received);
@@ -249,17 +250,17 @@ public class EventScopeTest {
 
     @Test
     public void testDoubleCallError() {
-
+        final EventScope<List> eventScope = new EventScope<List>(List.class);
         final List hits = new LinkedList();
         final Object listener = new Object() {
             public void process(final List evt) {
                 hits.add("hit");
             }
         };
-        this.eventScope.register(List.class, listener);
-        this.eventScope.register(LinkedList.class, listener);
+        eventScope.register(List.class, listener);
+        eventScope.register(LinkedList.class, listener);
 
-        this.eventScope.dispatch(new LinkedList());
+        eventScope.dispatch(new LinkedList());
         Assert.assertEquals(1, hits.size());
 
     }
