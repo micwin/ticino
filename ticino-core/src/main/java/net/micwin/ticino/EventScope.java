@@ -4,7 +4,9 @@ package net.micwin.ticino;
 
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -14,7 +16,7 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 /**
- * A eventScope in which an event should get dispatched and receivers should register to their specified events..
+ * A eventScope in which an event should get dispatched and receivers should register to their specified events.
  * 
  * @author MicWin
  * 
@@ -22,15 +24,103 @@ import java.util.regex.Pattern;
 public class EventScope<T> {
 
     Map<Class<? extends T>, List<ReceiverDescriptor>> receiverMap = new HashMap<Class<? extends T>, List<ReceiverDescriptor>>();
+
     private final Class<T> baseClass;
 
     /**
-     * Creates a eventScope with given name.
+     * Creates a eventScope for given base class.
      * 
      * @param pBaseClass
      */
     public EventScope(final Class<T> pBaseClass) {
         this.baseClass = pBaseClass;
+    }
+
+    /**
+     * A comparator that sorts out call order of listeners when dispatching an event.
+     * 
+     * @author micwin
+     * 
+     */
+    private final class DispatchComparator implements Comparator<ReceiverDescriptor> {
+        @Override
+        public int compare(final ReceiverDescriptor o1, final ReceiverDescriptor o2) {
+
+            // direct check descriptor
+            if (o1 == o2) {
+                return 0;
+            }
+
+            final boolean o1IsNull = o1 == null || o1.receiverReference == null || o1.receiverReference.get() == null;
+            final boolean o2IsNull = o2 == null || o2.receiverReference == null || o2.receiverReference.get() == null;
+
+            if (o1IsNull && o2IsNull) {
+                return 0;
+            }
+
+            if (o1IsNull) {
+                return 1;
+            }
+
+            if (o2IsNull) {
+                return -1;
+            }
+
+            // direct check receiverReference
+            if (o1.receiverReference == o2.receiverReference) {
+                return 0;
+            }
+
+            // direct check object
+            if (o1.receiverReference.get() == o2.receiverReference.get()) {
+                return 0;
+            }
+
+            // check creationDate
+            if (o1.creationTime < o2.creationTime) {
+                return -1;
+            }
+            else if (o1.creationTime > o2.creationTime) {
+                return 1;
+            }
+
+            // when coming to this point, we really have a problem
+            // to *order* the calls by registration.
+            // so we assume: if two registration happen in the same
+            // millisecond, then they are anonymous adapters
+
+            final int classComparison = o1.receiverReference.get().getClass().getName()
+                    .compareTo(o2.receiverReference.get().getClass().getName());
+
+            if (classComparison != 0) {
+                return classComparison;
+            }
+
+            // same class
+
+            // check wether we can use Comparable
+
+            try {
+
+                final Comparable c1 = (Comparable) o1.receiverReference.get();
+                final Comparable c2 = (Comparable) o2.receiverReference.get();
+                final int comparison = c1.compareTo(c2);
+                if (comparison != 0) {
+                    return comparison;
+                }
+
+            }
+            catch (final ClassCastException e) {
+                // no, not a comparable
+            }
+
+            // same class, so we try to differentiate using the hash
+            // code
+            final Integer h1 = o1.receiverReference.get().hashCode();
+            final Integer h2 = o2.receiverReference.get().hashCode();
+
+            return h1.compareTo(h2);
+        }
     }
 
     /**
@@ -170,90 +260,7 @@ public class EventScope<T> {
      */
     public synchronized <Q extends T> Q dispatch(final Q event) {
 
-        final Collection<ReceiverDescriptor> receivers = new TreeSet<ReceiverDescriptor>(
-                new Comparator<ReceiverDescriptor>() {
-
-                    @Override
-                    public int compare(final ReceiverDescriptor o1, final ReceiverDescriptor o2) {
-
-                        // direct check descriptor
-                        if (o1 == o2) {
-                            return 0;
-                        }
-
-                        final boolean o1IsNull = o1 == null || o1.receiverReference == null
-                                || o1.receiverReference.get() == null;
-                        final boolean o2IsNull = o2 == null || o2.receiverReference == null
-                                || o2.receiverReference.get() == null;
-
-                        if (o1IsNull && o2IsNull) {
-                            return 0;
-                        }
-
-                        if (o1IsNull) {
-                            return 1;
-                        }
-
-                        if (o2IsNull) {
-                            return -1;
-                        }
-
-                        // direct check receiverReference
-                        if (o1.receiverReference == o2.receiverReference) {
-                            return 0;
-                        }
-
-                        // direct check object
-                        if (o1.receiverReference.get() == o2.receiverReference.get()) {
-                            return 0;
-                        }
-
-                        // check creationDate
-                        if (o1.creationTime < o2.creationTime) {
-                            return -1;
-                        }
-                        else if (o1.creationTime > o2.creationTime) {
-                            return 1;
-                        }
-
-                        // when coming to this point, we really have a problem
-                        // to *order* the calls by registration.
-                        // so we assume: if two registration happen in the same
-                        // millisecond, then they are anonymous adapters
-
-                        final int classComparison = o1.receiverReference.get().getClass().getName()
-                                .compareTo(o2.receiverReference.get().getClass().getName());
-
-                        if (classComparison != 0) {
-                            return classComparison;
-                        }
-
-                        // same class
-
-                        // check wether we can use Comparable
-
-                        try {
-
-                            final Comparable c1 = (Comparable) o1.receiverReference.get();
-                            final Comparable c2 = (Comparable) o2.receiverReference.get();
-                            final int comparison = c1.compareTo(c2);
-                            if (comparison != 0) {
-                                return comparison;
-                            }
-
-                        }
-                        catch (final ClassCastException e) {
-                            // no, not a comparable
-                        }
-
-                        // same class, so we try to differentiate using the hash
-                        // code
-                        final Integer h1 = o1.receiverReference.get().hashCode();
-                        final Integer h2 = o2.receiverReference.get().hashCode();
-
-                        return h1.compareTo(h2);
-                    }
-                });
+        final Collection<ReceiverDescriptor> receivers = new TreeSet<ReceiverDescriptor>(new DispatchComparator());
 
         this.collectReceiver(event.getClass(), receivers);
 
@@ -314,4 +321,58 @@ public class EventScope<T> {
         return this.baseClass;
     }
 
+    /**
+     * Unregisters a handler from all events it has been registered in this event scope.
+     * <p />
+     * <strong>Caution!</strong>
+     * <p>
+     * this is an expensive operation! Since we have no idea where to search, we must scan all listeners registered to
+     * this scope. Only remove listeners explicitely if design demands! Avoid creating designs that incorporate explicit
+     * untyped unregistering! Remember that listeners are stored as soft reference anyway, getting garbage collected if
+     * there is a demand for memory.
+     * </p>
+     * 
+     * @param pHandler The handler to be unregistered from this EventScope.
+     * @return <code>true</code> if the handler has been found and unregistered.
+     */
+    public synchronized boolean unregisterListener(final Object pHandler) {
+
+        boolean found = false;
+
+        final List<Integer> toRemove = new ArrayList<Integer>();
+
+        for (final List<ReceiverDescriptor> listenerList : this.receiverMap.values()) {
+
+            toRemove.clear();
+
+            for (int index = 0; index < listenerList.size(); index++) {
+
+                final ReceiverDescriptor receiverDescriptor = listenerList.get(index);
+                final boolean isNull = receiverDescriptor.receiverReference == null
+                        || receiverDescriptor.receiverReference.get() == null;
+
+                if (isNull) {
+                    // nope
+                    continue;
+                }
+
+                if (receiverDescriptor.receiverReference.get() == pHandler) {
+                    toRemove.add(index);
+                }
+            }
+
+            if (toRemove.size() > 0) {
+                found = true;
+            }
+
+            // reverse order (we want remove from higher to lower index)
+            Collections.reverse(toRemove);
+
+            for (final Integer indexToRemove : toRemove) {
+                listenerList.remove(indexToRemove.intValue());
+            }
+        }
+
+        return found;
+    }
 }

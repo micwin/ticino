@@ -265,4 +265,104 @@ public class EventScopeTest {
 
     }
 
+    @Test
+    public void testUnregister_simple() {
+        final EventScope<String> eventScope = new EventScope<String>(String.class);
+        final List<String> touches = new LinkedList<String>();
+
+        final Object receiver = new Object() {
+            public void process(final String event) {
+                touches.add(event);
+            }
+        };
+
+        // first, check wether it's receiving
+        eventScope.register(String.class, receiver);
+        eventScope.dispatch("A");
+        Assert.assertTrue(touches.contains("A"));
+
+        touches.clear();
+
+        // unregister
+        eventScope.unregisterListener(receiver);
+        eventScope.dispatch("B");
+
+        Assert.assertEquals(0, touches.size());
+
+    }
+
+    @Test
+    public void testUnregister_three() {
+        final EventScope<String> eventScope = new EventScope<String>(String.class);
+        final List<String> touches = new LinkedList<String>();
+
+        final Object receiver1 = new Object() {
+            public void process(final String event) {
+                touches.add("A");
+            }
+        };
+        eventScope.register(String.class, receiver1);
+
+        final Object receiver2 = new Object() {
+            public void process(final String event) {
+                touches.add("B");
+            }
+        };
+        eventScope.register(String.class, receiver2);
+
+        final Object receiver3 = new Object() {
+            public void process(final String event) {
+                touches.add("C");
+            }
+        };
+        eventScope.register(String.class, receiver3);
+
+        eventScope.unregisterListener(receiver2);
+
+        eventScope.dispatch("E");
+        Assert.assertTrue(touches.contains("A"));
+        Assert.assertTrue(touches.contains("C"));
+
+        Assert.assertEquals(2, touches.size());
+
+    }
+
+    @Test
+    public void testUnregister_hierarchy() {
+        final EventScope<Number> eventScope = new EventScope<Number>(Number.class);
+        final List<String> touches = new LinkedList<String>();
+
+        final Object receiver1 = new Object() {
+            public void process(final Integer event) {
+                touches.add("A");
+            }
+        };
+        eventScope.register(Integer.class, receiver1);
+
+        final Object receiver2 = new Object() {
+            public void process(final Number event) {
+                touches.add("B");
+            }
+        };
+        eventScope.register(Integer.class, receiver2);
+        eventScope.register(Number.class, receiver2);
+
+        final Object receiver3 = new Object() {
+            public void process(final Integer event) {
+                touches.add("C");
+            }
+        };
+        eventScope.register(Integer.class, receiver3);
+
+        eventScope.unregisterListener(receiver2);
+
+        eventScope.dispatch(new Integer(4));
+
+        // assert
+        Assert.assertTrue(touches.contains("A"));
+        Assert.assertTrue(touches.contains("C"));
+
+        Assert.assertEquals(2, touches.size());
+    }
+
 }
