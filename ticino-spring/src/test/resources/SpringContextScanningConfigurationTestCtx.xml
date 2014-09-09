@@ -5,8 +5,6 @@
 	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-	<bean name="ticinoConfiguration"
-		class="net.micwin.ticino.spring.SpringContextScanningConfiguration" />
 
 	<bean class="net.micwin.ticino.spring.DummyBean" />
 
