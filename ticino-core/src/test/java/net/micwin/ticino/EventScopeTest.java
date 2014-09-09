@@ -333,7 +333,7 @@ public class EventScopeTest {
         final List<String> touches = new LinkedList<String>();
 
         final Object receiver1 = new Object() {
-            public void process(final Integer event) {
+            public void process(final Number event) {
                 touches.add("A");
             }
         };
