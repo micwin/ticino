@@ -22,8 +22,6 @@
 	<modules>
 		<module>ticino-core</module>
 		<module>ticino-spring</module>
-
-		<module>ticino-cloak</module>
 	</modules>
 
 

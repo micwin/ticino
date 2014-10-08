@@ -10,7 +10,7 @@ EventScope
 	
 	Think of it as a context for events. For instance, you could define an event scope 
 	to process life cycle events, one to process uncaught exceptions, one to process config changes, one to process
-	incoming requests, one to process heart beats,... 
+	incoming requests, one to process heart beats,... or you could just use a single one and later split responsibilities.
 
 	To control which sort of events are handled by a specific EventScope, you could define a marker interface and use 
 	it as a generic type for a EventScope:
@@ -21,7 +21,7 @@ public class Example2 {
 
 	public static void main (String [] args) {
 		// configure an eventscope (normally done somewhere else)
-		EventScope <Serializable> eventScope = new EventScope <Serializable> () ; 
+		EventScope <Serializable> eventScope = new EventScope <Serializable> (Serializable.class) ; 
 		
 		// register a String handler as anonymous adapter
 		eventScope.register (String.class, new Object () {
@@ -66,7 +66,7 @@ incoming Integer '42'
 	
 DispatchException
 
-	Thrown by an event scope when a handler Throws an exception.
+	Thrown by an event scope when a handler/receiver throws an exception.
 	
 	Since this is an unchecked exception, event handlers may decide wether or not to wrap and throw 
 	their own checked exceptions.

@@ -25,13 +25,13 @@
 		<menu>
 			<item name="Welcome!" href="index.html" />
 			<item name="Cookbook" href="cookbook.html" />
-			<item name="Best Practices" href="bestpractices.html" />
 			<item name="Changelog" href="changelog.html" />
+            <item name="MIT License" href="license.html" />
+            
 		</menu>
 		<menu name="Modules">
 			<item name="core library" href="ticino-core/index.html" />
 			<item name="spring integration" href="ticino-spring/index.html" />
-			<item name="static context" href="ticino-static/index.html" />
 		</menu>
 
 		<footer />

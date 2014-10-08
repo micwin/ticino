@@ -2,7 +2,15 @@ Changelog
 
 Version 0.3.3
 
-  * gave the method EventScope.register an additional regex pattern parameter to better define the handler method. This enables e.g. LinkedList to receive ticinop events.
+  * changed to the more liberal MIT License
+
+  * added EventScope.unregisterListener to unregister listeners
+
+  * added a class parameter to the constructor to check more precisely event types at runtime.
+
+  * gave the method EventScope.register an additional regex pattern parameter to better define 
+    the handler method. This enables e.g. LinkedList to receive ticino events.
+
 
 Version 0.3.2
 
