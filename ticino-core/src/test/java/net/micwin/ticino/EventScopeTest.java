@@ -402,12 +402,18 @@ public class EventScopeTest {
     @Test(expected = IllegalArgumentException.class)
     public void testTypeCheck () {
 
-        // this test should properly compile but throw an exception in runtime.
-        @SuppressWarnings("unused")
         final EventScope evtScope = new EventScope (Number.class) ;
 
         evtScope.dispatch ("Hello, World!") ;
         fail ("No exception thrown!") ;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNull () {
+
+        final EventScope<Object> scope = new EventScope<Object> () ;
+
+        scope.dispatch ((Object) null) ;
     }
 
 }

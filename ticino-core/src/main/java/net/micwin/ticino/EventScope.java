@@ -282,6 +282,10 @@ public class EventScope<T> {
      */
     public synchronized <Q extends T> Q dispatch (final Q event) {
 
+        if (event == null) {
+            throw new IllegalArgumentException ("event is null") ;
+        }
+
         if (this.baseClass != null && !this.baseClass.isAssignableFrom (event.getClass ())) {
             throw new IllegalArgumentException (
                     "event of type " + event.getClass ().getName () + " not dispatchable over this event scope of base type '" + this.baseClass
