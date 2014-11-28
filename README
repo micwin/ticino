@@ -1,6 +1,6 @@
 ticino is a lightweight stand-alone event framework.
 
-The core library only consist of 2 class files and is of size less than 8 kb.
+The core library only consist of 2 class files and is of size approx. 9 kb.
 
 To use ticino, there is no class to extend, nor an interface to implement, nor an annotation to use. 
 In fact, to receive ticino events along with spring, you dont have to change any code at all.
