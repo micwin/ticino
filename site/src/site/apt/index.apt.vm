@@ -4,7 +4,7 @@ ticino - events, not elephants
 
 	ticino is a tiny type-safe java event framework with a minimalistic class interface.
 	
-	Events are small pieces of data, sent by one piece of code to another piece of code. 
+	Events are small pieces of data, sent ("dispatched") by one piece of code to another piece of code. 
 	The special charm of events is that sender and receiver are decoupled by an intermediary (the event framework).
 	 
 	Unfortunately, most known event frameworks either come with a real heavy load of dependencies and "additional features", 
@@ -49,7 +49,3 @@ ticino - events, not elephants
 
   * current javadoc jar is located at 
       {{http://repo1.maven.org/maven2/net/micwin/ticino/ticino-core/${project.version}/ticino-core-${project.version}-javadoc.jar}}
-
-* Downloading with other build tools
-
-  * see Project Information -> Dependency Information  

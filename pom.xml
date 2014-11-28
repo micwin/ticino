@@ -1,167 +1,175 @@
 <?xml version="1.0" standalone="no"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<!-- Documentation on how to get this to maven central: -->
-		<!-- https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-7b.StageExistingArtifacts -->
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
+    <parent>
+        <!-- Documentation on how to get this to maven central: -->
+        <!-- https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-7b.StageExistingArtifacts -->
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
-	<groupId>net.micwin.ticino</groupId>
-	<artifactId>ticino-parent</artifactId>
-	<packaging>pom</packaging>
-	<version>0.3.3-SNAPSHOT</version>
-	<name>ticino - events, not elephants</name>
-	<description>a lightweight, straight forward event framework</description>
-
-	<modules>
-		<module>ticino-core</module>
-		<module>ticino-spring</module>
-	</modules>
+    <groupId>net.micwin.ticino</groupId>
+    <artifactId>ticino-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>0.3.3</version>
+    <name>ticino - events, not elephants</name>
+    <description>a lightweight, straight forward event framework</description>
 
 
-	<scm>
-		<connection>scm:git:git@github.com:micwin/ticino.git</connection>
-		<developerConnection>scm:git:git@github.com:micwin/ticino.git</developerConnection>
-		<url>http://github.com/micwin/ticino</url>
-	</scm>
+    <modules>
+        <module>core</module>
+        <module>site</module>
+	<module>spring</module>
+    </modules>
 
-
-
-	<properties>
-		<github.global.server>github</github.global.server>
-	</properties>
-
-
-	<url>http://micwin.github.com/ticino</url>
-
-	<licenses>
-		<license>
-			<name>Ad-Hoc-License</name>
-			<url>https://raw.github.com/micwin/ticino/master/LICENSE</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	<mailingLists>
-		<mailingList>
-			<name>dev-support</name>
-			<post>ticino-dev@micwin.net</post>
-		</mailingList>
-	</mailingLists>
-
-	<developers>
-		<developer>
-			<id>micwin</id>
-			<name>Michael Winkler</name>
-			<organization>micwin.net</organization>
-			<organizationUrl>http://www.micwin.net</organizationUrl>
-			<timezone>+1</timezone>
-			<email>michael.winkler @7 micwin.net</email>
-			<url>@micwin</url>
-		</developer>
-	</developers>
-
-
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.9.0</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
-
-	<issueManagement>
-		<system>github issues</system>
-		<url>https://github.com/micwin/ticino/issues</url>
-	</issueManagement>
+    <scm>
+        <connection>scm:git:git@github.com:micwin/ticino.git</connection>
+        <developerConnection>scm:git:git@github.com:micwin/ticino.git</developerConnection>
+        <url>http://github.com/micwin/ticino</url>
+    </scm>
 
 
 
-	<build>
+    <properties>
+        <github.global.server>github</github.global.server>
+        <github.site.plugin.version>0.9</github.site.plugin.version>
+    </properties>
 
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<inherited>true</inherited>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-project-info-reports-plugin</artifactId>
-					<version>2.7</version>
-				</plugin>
 
-			</plugins>
-		</pluginManagement>
+    <url>http://micwin.github.com/ticino</url>
 
-		<plugins>
+    <licenses>
+        <license>
+            <name>Ad-Hoc-License</name>
+            <url>https://raw.github.com/micwin/ticino/master/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <mailingLists>
+        <mailingList>
+            <name>dev-support</name>
+            <post>ticino-dev@micwin.net</post>
+        </mailingList>
+    </mailingLists>
 
-			<!-- to copy the site to github pages -->
-			<!-- https://github.com/github/maven-plugins -->
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
-				<version>0.9</version>
-				<inherited>true</inherited>
-				<configuration>
-					<message>Creating site for ${project.artifactId},
-						${project.version}, deploying to
-						${project.distributionManagement.site.url}</message>
-					<!-- this does the trick to place every module in the correct subfolder -->
-					<!-- path>${project.url}</path -->
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>site</goal>
-						</goals>
-						<phase>site-deploy</phase>
-					</execution>
-				</executions>
-			</plugin>
+    <developers>
+        <developer>
+            <id>micwin</id>
+            <name>Michael Winkler</name>
+            <organization>micwin.net</organization>
+            <organizationUrl>http://www.micwin.net</organizationUrl>
+            <timezone>+1</timezone>
+            <email>michael.winkler @7 micwin.net</email>
+            <url>@micwin</url>
+        </developer>
+    </developers>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.3</version>
-				<inherited>true</inherited>
-				<configuration>
-					<skipDeploy>true</skipDeploy>
-				</configuration>
-			</plugin>
 
-			<plugin>
-				<inherited>true</inherited>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<optimize>true</optimize>
-					<debug>true</debug>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
 
-	<distributionManagement>
-		<site>
-			<id>github</id>
-			<name>github site</name>
-			<url>${project.url}</url>
-		</site>
-	</distributionManagement>
+        <!-- <dependency> -->
+        <!-- <groupId>org.mockito</groupId> -->
+        <!-- <artifactId>mockito-all</artifactId> -->
+        <!-- <version>1.9.0</version> -->
+        <!-- <scope>test</scope> -->
+        <!-- </dependency> -->
+        <dependency>
+            <groupId>org.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>1.13</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+    <issueManagement>
+        <system>github issues</system>
+        <url>https://github.com/micwin/ticino/issues</url>
+    </issueManagement>
+
+
+
+    <build>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <inherited>true</inherited>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+
+            <!-- to copy the site to github pages -->
+            <!-- https://github.com/github/maven-plugins -->
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>${github.site.plugin.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <message>Creating site for ${project.artifactId},
+                        ${project.version}, deploying to
+                        ${project.distributionManagement.site.url}</message>
+                    <!-- this does the trick to place every module in the correct subfolder -->
+                    <!-- path>${project.url}</path -->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>site-deploy</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.3</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <skipDeploy>true</skipDeploy>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <optimize>true</optimize>
+                    <debug>true</debug>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <site>
+            <id>github</id>
+            <name>github site</name>
+            <url>${project.url}</url>
+        </site>
+    </distributionManagement>
 
 </project>

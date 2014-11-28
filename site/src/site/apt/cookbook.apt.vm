@@ -10,7 +10,7 @@ cookbook
         
         * parameters and context information
         
-        * results - information that flows from receiver to dispatcher
+        * results - information that flows from receiver back to dispatcher
     
     * a dispatcher that wants to dispatch events (your design)
     
@@ -74,7 +74,7 @@ class Launcher {
 	// Create the event scope
 	EventScope <ShowText> eventScope = new EventScope<ShowText> (ShowText.class) ; 
 	
-	// Create 10 listeners
+	// Create and register 10 listeners
 	for (int i = 0 ; i < 10 ; i++) {
 	  Listener listener = new Listener (eventScope) ;
 	  eventScope.register(ShowText.class, listener) ; 
@@ -175,9 +175,12 @@ public class WicketApplication extends WebApplication {
    
 +--------------------------------
 public class NoSink {
+
+  @Autowired
+  EventScope <MyPayload> eventScope = new EventScope<MyPayload>(MyPayload.class) ;
    
    public NoSink () {
-     Ticino.register (MyPayLoad.class , this) ; 
+     eventScope.register (MyPayLoad.class , this) ; 
    }
    
    public void blablah (MyPayLoad payload) {
@@ -187,8 +190,8 @@ public class NoSink {
 }
 +--------------------------------
 
-    Note that you dont have to unregister - ticino does this for you if the receiver gets gc'ed.   
-    
+    Although there are methods to do so, yo dont have to unregister - ticino does this for you if the receiver gets gc'ed.   
+   
 
 * best practices
 
@@ -207,7 +210,9 @@ public class NoSink {
 ** Be careful what you dispatch
 
     Since ticino senders have no meanings to control who catches their events, you probably 
-    shoud avoid including such secret things like passwords etc in your events.
+    shoud avoid including such secret things like passwords etc in your events. When using
+    multiple event scopes, use the base type constructor to better control which events are 
+    fired on which event scope.
     Also, since they mostly come along with a whole bunch of references, you should think twice including 
 	database entities, transaction managers, EJBs, session data et al in your events. It probably might be most 
 	useful and of a specific charm throwing a NewRequestEvent, a CreateUserEvent or a LoadMandateEvent 
@@ -216,7 +221,9 @@ public class NoSink {
 ** Use Spring
 
 	Using spring to connect dispatcher and receiver enforces the loose end characteristics of ticino and 
-	hence is highly recommended. Of course you might use another DI or IOC framework as well.
+	hence is highly recommended. Of course you might use another DI or IOC framework as well. Although
+	the spring integration is on rework with 0.3.3, you surely can define beans from event scopes and
+	register listeners in an init method.
 	
 ** xxxEvent vs <not>
 

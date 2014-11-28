@@ -29,10 +29,11 @@
             <item name="MIT License" href="license.html" />
             
 		</menu>
-		<menu name="Modules">
-			<item name="core library" href="ticino-core/index.html" />
-			<item name="spring integration" href="ticino-spring/index.html" />
-		</menu>
+<!-- 		<menu name="Modules"> -->
+<!-- 			<item name="core library" href="ticino-core/index.html" /> -->
+<!-- 			<item name="spring integration" href="ticino-spring/index.html" /> -->
+<!--             <item name="" -->
+<!-- 		</menu> -->
 
 		<footer />
 	</body>
