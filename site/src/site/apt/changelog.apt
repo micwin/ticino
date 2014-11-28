@@ -11,6 +11,7 @@ Version 0.3.3
   * gave the method EventScope.register an additional regex pattern parameter to better define 
     the handler method. This enables e.g. LinkedList to receive ticino events.
 
+  * removed spring module again - not satisfying 
 
 Version 0.3.2
 
