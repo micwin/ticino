@@ -356,7 +356,6 @@ public class EventScope<T> {
     /**
      * Unregisters a handler from all events it has been registered in this
      * event scope.
-     * <p />
      * <strong>Caution!</strong>
      * <p>
      * this is an expensive operation! Since we have no idea where to search, we

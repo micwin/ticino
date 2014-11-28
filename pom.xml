@@ -9,11 +9,11 @@
     <!-- http://central.sonatype.org/pages/ossrh-guide.html -->
 
 
-    <!-- <parent> -->
-    <!-- <groupId>org.sonatype.oss</groupId> -->
-    <!-- <artifactId>oss-parent</artifactId> -->
-    <!-- <version>7</version> -->
-    <!-- </parent> -->
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
     <groupId>net.micwin.ticino</groupId>
     <artifactId>ticino-parent</artifactId>
@@ -79,18 +79,13 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- <dependency> -->
-        <!-- <groupId>org.mockito</groupId> -->
-        <!-- <artifactId>mockito-all</artifactId> -->
-        <!-- <version>1.9.0</version> -->
-        <!-- <scope>test</scope> -->
-        <!-- </dependency> -->
         <dependency>
             <groupId>org.jmockit</groupId>
             <artifactId>jmockit</artifactId>
             <version>1.13</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
 
@@ -180,14 +175,14 @@
                     <!-- mvn nexus-staging:release -->
                     <!-- If you find something went wrong you can drop the staging repository with -->
                     <!-- mvn nexus-staging:drop -->
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
+                <version>2.4</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -200,7 +195,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>2.10.1</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
