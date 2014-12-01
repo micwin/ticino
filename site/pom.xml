@@ -17,21 +17,4 @@
 
     <description>contains files for site generation</description>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>${github.site.plugin.version}</version>
-                <configuration>
-                    <path>/</path>
-                    <merge>false</merge>
-                </configuration>
-            </plugin>
-        </plugins>
-
-
-    </build>
-
-
 </project>
