@@ -13,7 +13,7 @@
     <artifactId>ticino-site</artifactId>
     <packaging>jar</packaging>
 
-    <name>ticino site module</name>
+    <name>ticino - events, not elephants</name>
 
     <description>contains files for site generation</description>
 
