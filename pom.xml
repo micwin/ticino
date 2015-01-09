@@ -26,6 +26,7 @@
     <modules>
         <module>core</module>
         <module>site</module>
+        <module>static</module>
     </modules>
 
     <scm>
