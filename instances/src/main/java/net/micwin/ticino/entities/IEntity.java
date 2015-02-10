@@ -1,5 +1,5 @@
 
-package net.micwin.ticino.instances.core ;
+package net.micwin.ticino.entities ;
 
 import java.util.UUID ;
 

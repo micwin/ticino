@@ -1,7 +1,8 @@
 
-package net.micwin.ticino.instances.core ;
+package net.micwin.ticino.entities ;
 
 import static org.junit.Assert.* ;
+import net.micwin.ticino.entities.AEntity ;
 
 import org.junit.* ;
 
