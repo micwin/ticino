@@ -10,10 +10,10 @@
         <version>0.3.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ticino-instances</artifactId>
+    <artifactId>ticino-entities</artifactId>
     <packaging>jar</packaging>
 
-    <name>ticino instances library</name>
+    <name>ticino entities library</name>
 
     <description>contains classes to easily manage instances and container of instances</description>
 

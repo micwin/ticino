@@ -19,15 +19,14 @@
     <artifactId>ticino-parent</artifactId>
     <packaging>pom</packaging>
     <version>0.3.4-SNAPSHOT</version>
-    <name>ticino - events, not elephants</name>
-    <description>a lightweight, straight forward event framework</description>
+    <name>ticino parent pom </name>
 
 
     <modules>
         <module>core</module>
         <module>site</module>
         <module>static</module>
-        <module>instances</module>
+        <module>entities</module>
     </modules>
 
     <scm>
