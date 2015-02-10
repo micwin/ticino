@@ -1,4 +1,4 @@
-package net.micwin.ticino;
+package net.micwin.ticino.events;
 
 /**
  * Thrown when something goes wrong while dispatching an event.

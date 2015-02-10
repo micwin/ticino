@@ -1,11 +1,13 @@
 
-package net.micwin.ticino ;
+package net.micwin.ticino.events ;
 
 import static org.junit.Assert.* ;
 
 import java.io.IOException ;
 import java.util.* ;
 import java.util.regex.Pattern ;
+
+import net.micwin.ticino.events.* ;
 
 import org.junit.Test ;
 

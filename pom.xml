@@ -23,7 +23,7 @@
 
 
     <modules>
-        <module>core</module>
+        <module>events</module>
         <module>site</module>
         <module>static</module>
         <module>entities</module>

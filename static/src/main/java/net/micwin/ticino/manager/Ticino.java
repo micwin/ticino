@@ -6,7 +6,7 @@ package net.micwin.ticino.manager ;
  * 
  * @author micwin
  */
-public class EventScopes {
+public class Ticino {
 
     /**
      * Restart all event scope contexts.

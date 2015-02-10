@@ -3,12 +3,12 @@ package net.micwin.ticino.manager ;
 
 import org.junit.* ;
 
-public class EventScopesTest extends EventScopes {
+public class EventScopesTest extends Ticino {
 
     @Before
     public void before () {
 
-        EventScopes.restart () ;
+        Ticino.restart () ;
     }
 
     @Test

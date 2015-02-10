@@ -7,12 +7,13 @@
         <version>0.3.4-SNAPSHOT</version>
     </parent>
     <artifactId>ticino-static</artifactId>
-    <name>ticino static scope manager</name>
+    <name>ticino static library</name>
+    <description>contains classes to intuitively organize your project using a single static context</description>
 
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ticino-core</artifactId>
+            <artifactId>ticino-events</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

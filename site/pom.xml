@@ -13,8 +13,9 @@
     <artifactId>ticino-site</artifactId>
     <packaging>jar</packaging>
 
-    <name>ticino - events, not elephants</name>
+    <name>ticino site</name>
+    <description>holds the meta data and files needed to create the ticino home page</description>
 
-    <description>contains files for site generation</description>
+
 
 </project>

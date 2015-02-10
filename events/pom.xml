@@ -10,10 +10,10 @@
 		<version>0.3.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>ticino-core</artifactId>
+	<artifactId>ticino-events</artifactId>
 	<packaging>jar</packaging>
 
-	<name>ticino core library</name>
+	<name>ticino event library</name>
 
 	<description>contains core classes EventScope and DispatchException</description>
 

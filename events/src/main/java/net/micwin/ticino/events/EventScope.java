@@ -1,5 +1,5 @@
 
-package net.micwin.ticino ;
+package net.micwin.ticino.events ;
 
 import java.lang.ref.SoftReference ;
 import java.lang.reflect.Method ;
