@@ -1,15 +1,18 @@
 
 package net.micwin.ticino.events ;
 
-import static org.junit.Assert.* ;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import java.io.IOException ;
-import java.util.* ;
-import java.util.regex.Pattern ;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.regex.Pattern;
 
-import net.micwin.ticino.events.* ;
-
-import org.junit.Test ;
+import org.junit.Test;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class EventScopeTest {
