@@ -1,7 +1,7 @@
 
 package net.micwin.ticino.entities ;
 
-import java.util.UUID ;
+import java.util.UUID;
 
 /**
  * A helper class to simplify creation of ticino entities.
@@ -10,23 +10,18 @@ import java.util.UUID ;
  */
 public abstract class AEntity implements IEntity {
 
-    transient UUID fPhysicalId ;
-    int            fStateCounter = 0 ;
+	EntitySupport fSup = new EntitySupport() ; 
 
     @Override
     public UUID getPhysicalId () {
 
-        if (fPhysicalId == null) {
-
-            fPhysicalId = UUID.randomUUID () ;
-        }
-        return fPhysicalId ;
+        return fSup.getPhysicalId() ;
     }
 
     @Override
     public int getStateCounter () {
 
-        return fStateCounter ;
+        return fSup.getStateCounter() ;
     }
 
     /**
@@ -36,7 +31,7 @@ public abstract class AEntity implements IEntity {
      */
     protected int raiseStateCounter () {
 
-        return ++fStateCounter ;
+        return fSup.raiseStateCounter() ;
     }
 
     /**
@@ -47,8 +42,7 @@ public abstract class AEntity implements IEntity {
      */
     protected int raiseStateCounter (final int pAmount) {
 
-        fStateCounter += pAmount ;
-        return fStateCounter ;
+        return fSup.raiseStateCounter(pAmount) ;
     }
 
 }
