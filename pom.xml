@@ -25,8 +25,8 @@
     <modules>
         <module>events</module>
         <module>site</module>
-        <module>static</module>
         <module>entities</module>
+        <module>wiring</module>
     </modules>
 
     <scm>
