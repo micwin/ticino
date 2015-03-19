@@ -13,7 +13,7 @@
 	<artifactId>ticino-events</artifactId>
 	<packaging>jar</packaging>
 
-	<name>ticino event library</name>
+	<name>ticino events</name>
 
 	<description>contains core classes EventScope and DispatchException</description>
 

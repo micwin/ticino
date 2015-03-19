@@ -1,0 +1,115 @@
+------
+ticino events
+------
+
+	events are a design pattern meant for sending information from one java object to another
+	without having references to each other. This a convenient method to reduce
+	compile time dependencies and hence have a chance to achieve true code reusability.
+
+	once understood event handling, ticino events are designed to be 
+	used ridiculously easy and without disturbing other code.
+
+the basics
+
+	if something remarkable happens during the runtime of a program, you can call that an event.
+	The simplest example is an uncaught exception, or an incoming request, or a data model change,
+	a new database entry, a user request, a shutdown sequence initiated and such things.
+
+	If an object wants to react to such an event, it normally has to provide a callback method and 
+	has to register to the source of the event or an event transportation
+	mechanism.
+	
+the ticino event
+
+	a ticino event is a class that represents a single specific event. Unlike message queues and such, 
+	ticino denotes what's happening through the event type, ie the java class of the event.
+	
+	For instance, a system shutdown event would be called ShutdownInitiatedEvent or just ShutdownInitiated - or just ShuttingDown.
+	
+	This event class can hold any type of data. In case of a ShutdownEvent, you might send along a reason 
+	why this is happening, or who is initiating this or when the shutdown will happen. 
+	
+	The event's internal data can be final or not, accessible through a getter or not, private or public or not. The event doesnt even have 
+	to be a java bean, have a default constructor, implement an interface, extend a class  or carry annotations. ticino doesnt use any of 
+	these concepts to manage or deliver the class, and you are completely free of using them for other purposes, or avoiding them - as you like.
+	
+	To create an own event type, you simply have to define a public class:
+	
++--------------------------------
+
+/**
+* A event dispatched when a user requests a program to quit.
+**/
+public class ShutdownRequested {
+}	
+
++--------------------------------
+	
+	As you see, creating an event is quite a simple thing - you also could create a event class hierarchy, starting 
+	with  a simple marker interface, an abstract type providing some "standards", over to, lets say 
+	"user initiated", "technically induced" and "uncaught exceptions" events, followed by the extending, case specific event types.
+	Listeners can register to each and every single level of abstraction involved, even to the interface, so feel free to
+	design whatever you want. The minimum, though, is that you have an event class, one for each specific event.
+
+	If you, for some reasons, already have a class that perfectly fits the purpose, use this one -ticino events does not
+	change any data. The following event-like
+	classes (even already created instances of them) and concepts perfectly fit as ticino events:
+	
+	* JMS messages
+	
+	* exceptions
+	
+	* guava events
+	
+	* wicket event payloads (even if you don't know their appropriate class)
+	
+	* Futures, Proxies, Facades
+	
+	The single thing you may not do is to only use one single class to represent all possible events like
+
++--------------------------------
+// DONT DO THAT!
+public class Event {
+	public int eventType ;
+	Object data;
+}	
++--------------------------------
+
+	This will screw ticino's runtime performance and maintainability.
+	
+the event scope
+	
+	To get the events from dispatcher to receiver, we need a means of transportation. In ticino, this means is called
+	an event scope and provided by the class net.micwin.ticino.events.EventScope.
+	event senders use the event scope to send events, receivers use it to register to receive a specific
+	event.
+	
+	The event scope is typically created during initialization time and then passed to all instances that might need
+	it. Typically, it's injected with a spring context or a CDI annotation, or provided with a singleton.
+	
+	The event scope also serves as a means of separation. You might create one event scope for ui events, one for 
+	database events, one for user requests, one for login and log off events, one for life cycle events,... 
+	use as many as you see fit, but be aware that with many event scopes, complexity rises and maintainability drops.
+
+the event dispatcher
+
+	The entity that initiates an event is called the dispatcher. The process of initiating an event is called 
+	dispatching. There can be multiple entities that dispatch a specific event, but most events tend to make only 
+	sense when there is only one dispatcher.
+	
++--------------------------------
+public Launcher
+
+	public void main (String [] pArgs) {
+
+		// initialize everything
+		EventScope <ILifeCycleEvent> lLifeCycleScope = new EventScope <ILifeCycleEvent> (ILifeCycleEvent.class) ; 
+		
+		// startup stuff
+		...
+		
+		// do a clean shutdown
+		lLifeCycleScope.dispatch (new ShutdownInitiated()) ; 
+				
+	}
++--------------------------------
