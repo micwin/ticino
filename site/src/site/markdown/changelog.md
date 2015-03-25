@@ -1,6 +1,11 @@
-Changelog
+# Changelog
 
-Version 0.3.3
+
+## Version 0.3.4
+
+* reorganized project. ticino now becomes a container for multiple, simplicity targeted aspects, while the events part now is called _ticino events_. 
+
+## Version 0.3.3
 
   * changed to the more liberal MIT License
 
@@ -13,7 +18,7 @@ Version 0.3.3
 
   * removed spring module again - not satisfying 
 
-Version 0.3.2
+## Version 0.3.2
 
   * enabled chaining when dispatching an event
   
@@ -24,7 +29,7 @@ Version 0.3.2
   * ticino-spring: Configurator now not connecting with static Ticino context; instead now in need of a EventScope as 
     constructor param. In consequence, you can use multiple configurators to configure multiple event scopes.
 
-Version 0.3.1
+## Version 0.3.1
 
   * Introduced EventScope
   
@@ -32,12 +37,12 @@ Version 0.3.1
 
   * renamed to ticino
 
-Version 0.3
+## Version 0.3
 
   * event inheritance
   
   * spring support
   
-Version 0.2.1
+## Version 0.2.1
 
   * finally going to maven central repository

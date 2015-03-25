@@ -8,13 +8,26 @@
 
 	<body>
 
-		<menu>
-			<item name="About" href="index.html" />
-            <item name="Cookbook" href="cookbook.html" />
+		<menu name="ticino events">
+			<item name="Welcome!" href="index.html" />
+			<item name="MIT License" href="license.html" />
 			<item name="Download" href="dependency-info.html" />
+		</menu>
+
+		<menu name="documentation">
+			<item name="the basics" href="basics.html" />
+			<item name="advanced stuff" href="advanced.html" />
+			<item name="migration from/to ticino events" href="migration.html" />
+			<item name="best practices" href="best_practices.html" />
+		</menu>
+
+		<menu name="maven default stuff">
 			<item name="Sources" href="source-repository.html" />
 			<item name="Dependencies" href="dependencies.html" />
 			<item name="Project Information" href="project-info.html" />
+		</menu>
+
+		<menu name="etc">
 			<item name="ticino homepage" href="http://ticino.micwin.net" />
 		</menu>
 		<footer />
