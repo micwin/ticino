@@ -4,11 +4,12 @@ package net.micwin.ticino.entities ;
 import java.util.UUID ;
 
 /**
- * A helper class to simplify creation of ticino entities.
+ * A helper class to simplify creation of ticino entities. Use this to create a
+ * delegate. If you desire a base class to extend, use {@link AEntity}.
  * 
  * @author micwin
  */
-public class EntitySupport {
+public final class EntitySupport {
 
     transient UUID fPhysicalId ;
     int            fStateCounter = 0 ;

@@ -19,7 +19,7 @@ public interface IEntity {
      * stay the same when traversing these representation from one to another.
      * Since UUIDs come with a markable resource cost, implementors of this
      * interface
-     * should generate this on demand, not anticipant, while customers should
+     * should generate this id on demand, not anticipant, while customers should
      * use this method with caution and not without well defined reason.
      * Again, this ID is guaranteed to be unique in *one* representation, but is
      * not guaranteed to survive representation change.
@@ -32,8 +32,8 @@ public interface IEntity {
      * The state counter that reports how often something of this entity has
      * been changed.
      * <ul>
-     * <li>0 : instantiated (default constructor called, at least one field has
-     * values resuluting in unpredictable behavior)</li>
+     * <li>0 : instantiated (default constructor called if present, at least one
+     * field has values resuluting in unpredictable behavior)</li>
      * <li>1 : initialized (all fields have well defined values)</li>
      * <li>2: one field changed since initialization</li>
      * <li>3 : two fields changed since initialization</li>
