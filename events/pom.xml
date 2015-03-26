@@ -8,6 +8,7 @@
 		<groupId>net.micwin.ticino</groupId>
 		<artifactId>ticino-parent</artifactId>
 		<version>0.3.4-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
 
 	<artifactId>ticino-events</artifactId>
@@ -16,5 +17,19 @@
 	<name>ticino events</name>
 
 	<description>contains core classes EventScope and DispatchException</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<skipDeploy>true</skipDeploy>
+					<outputDirectory>
+						../target/site/events</outputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

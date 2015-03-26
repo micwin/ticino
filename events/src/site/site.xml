@@ -28,7 +28,7 @@
 		</menu>
 
 		<menu name="etc">
-			<item name="ticino homepage" href="http://ticino.micwin.net" />
+			<item name="the ticino modules homepage" href="../index.html" />
 		</menu>
 		<footer />
 	</body>

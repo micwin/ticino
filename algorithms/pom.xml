@@ -1,10 +1,26 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>net.micwin.ticino</groupId>
-    <artifactId>ticino-parent</artifactId>
-    <version>0.3.4-SNAPSHOT</version>
-  </parent>
-  <artifactId>ticino-algorithms</artifactId>
-  <name>ticino algorithms</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.micwin.ticino</groupId>
+		<artifactId>ticino-parent</artifactId>
+		<version>0.3.4-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<artifactId>ticino-algorithms</artifactId>
+	<name>ticino algorithms</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<skipDeploy>true</skipDeploy>
+					<outputDirectory>
+						../target/site/algorithms</outputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

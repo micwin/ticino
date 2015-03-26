@@ -19,18 +19,14 @@
 	<artifactId>ticino-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>0.3.4-SNAPSHOT</version>
-	<name>ticino parent pom </name>
+	<name>the ticino modules</name>
 
 	<properties>
 		<github.global.server>github</github.global.server>
-		<github.site.plugin.version>0.9</github.site.plugin.version>
 	</properties>
-
-
 
 	<modules>
 		<module>events</module>
-		<module>ticino/site</module>
 		<module>entities</module>
 		<module>wiring</module>
 		<module>algorithms</module>
@@ -42,10 +38,6 @@
 		<url>http://github.com/micwin/ticino</url>
 	</scm>
 
-
-
-
-
 	<url>http://micwin.github.com/ticino</url>
 
 	<licenses>
@@ -55,6 +47,7 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
 	<mailingLists>
 		<mailingList>
 			<name>dev-support</name>
@@ -74,6 +67,31 @@
 		</developer>
 	</developers>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.micwin.ticino</groupId>
+				<artifactId>ticino-events</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.micwin.ticino</groupId>
+				<artifactId>ticino-entities</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.micwin.ticino</groupId>
+				<artifactId>ticino-wiring</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.micwin.ticino</groupId>
+				<artifactId>ticino-algorithms</artifactId>
+				<version>${version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -88,7 +106,6 @@
 			<version>1.13</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 
@@ -96,8 +113,6 @@
 		<system>github issues</system>
 		<url>https://github.com/micwin/ticino/issues</url>
 	</issueManagement>
-
-
 
 	<build>
 
@@ -110,44 +125,15 @@
 					<version>2.7</version>
 				</plugin>
 
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.3</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 
 		<plugins>
-
-			<!-- to copy the site to github pages -->
-			<!-- https://github.com/github/maven-plugins -->
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>site-maven-plugin</artifactId>
-				<version>${github.site.plugin.version}</version>
-				<inherited>true</inherited>
-				<configuration>
-					<message>Creating site for ${project.artifactId},
-						${project.version}, deploying to
-						${project.distributionManagement.site.url}</message>
-					<!-- this does the trick to place every module in the correct subfolder -->
-					<!-- path>${project.url}</path -->
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>site</goal>
-						</goals>
-						<phase>site-deploy</phase>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.3</version>
-				<inherited>true</inherited>
-				<configuration>
-					<skipDeploy>true</skipDeploy>
-				</configuration>
-			</plugin>
 
 			<plugin>
 				<inherited>true</inherited>
@@ -161,6 +147,8 @@
 					<debug>true</debug>
 				</configuration>
 			</plugin>
+
+
 
 			<plugin>
 
@@ -197,6 +185,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>

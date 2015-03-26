@@ -17,4 +17,21 @@
 			<version>4.11</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<skipDeploy>true</skipDeploy>
+					<outputDirectory>
+						../target/site/wiring</outputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+
 </project>

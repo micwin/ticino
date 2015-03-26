@@ -26,5 +26,21 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+
+				<configuration>
+					<skipDeploy>true</skipDeploy>
+					<outputDirectory>
+						../target/site/entities</outputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
 
 </project>

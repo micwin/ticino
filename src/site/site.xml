@@ -16,6 +16,9 @@
 		
 		<menu name="modules">
 			<item name="ticino events" href="events/index.html" />
+			<item name="ticino entities" href="entities/index.html" />
+			<item name="ticino algorithms" href="algorithms/index.html" />
+			<item name="ticino wiring" href="wiring/index.html" />
 		</menu>
 		
 		
