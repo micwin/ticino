@@ -30,9 +30,10 @@
 
 	<modules>
 		<module>events</module>
-		<module>site</module>
+		<module>ticino/site</module>
 		<module>entities</module>
 		<module>wiring</module>
+		<module>algorithms</module>
 	</modules>
 
 	<scm>
