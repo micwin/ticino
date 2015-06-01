@@ -1,5 +1,4 @@
-
-package net.micwin.ticino.events ;
+package net.micwin.ticino.events;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -17,408 +16,465 @@ import org.junit.Test;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class EventScopeTest {
 
-    /**
-     * An interface for a dummy event
-     *
-     * @author MicWin
-     */
-    interface IDummyEvent {
-
-    }
-
-    /**
-     * A mock dummy event.
-     *
-     * @author MicWin
-     */
-    class DummyEventImpl implements IDummyEvent {
-
-    }
-
-    /**
-     * A dummy receiver that receives the dummy event.
-     */
-    class DummyReceiver {
-
-        private int received ;
-
-        /**
-         * Dont do this (using Object as event type) in real life since the
-         * method then might get shadowed by other
-         * methods not associated with event handling.
-         *
-         * @param evt
-         */
-        public void receive (final Object evt) {
-
-            this.received++ ;
-        }
-    }
-
-    @Test
-    public void testInit () {
-
-        final EventScope<IDummyEvent> eventScope = new EventScope<EventScopeTest.IDummyEvent> (IDummyEvent.class) ;
-        assertEquals (IDummyEvent.class , eventScope.getBaseClass ()) ;
-        assertEquals (0 , eventScope.receiverMap.size ()) ;
-    }
-
-    /**
-     * This is a simple test with a mock event and mock receiver. It
-     * demonstrates the default event work flow:
-     * registering, dsipatching, receiving.
-     */
-    @Test
-    public void testWorkflow () {
-
-        final EventScope<IDummyEvent> eventScope = new EventScope<EventScopeTest.IDummyEvent> (IDummyEvent.class) ;
-        final DummyReceiver receiver = new DummyReceiver () ;
-        eventScope.register (DummyEventImpl.class , receiver) ;
-
-        eventScope.dispatch (new DummyEventImpl ()) ;
-        assertEquals (1 , receiver.received) ;
-    }
-
-    /**
-     * This is an absurd test that perfectly demonstrates the absolute
-     * flexibility of ticino. In fact, this is absolute
-     * pojo; you dont have to create event or payload classes if there already
-     * is something like an already programmed
-     * event or payload class around, like in wicket, or JMS.
-     * <p />
-     * <strong>CAUTION!</strong> Using very basic types like Integers really
-     * only is advisable for demonstration purposes. For instance, the problem
-     * comes with registration where *all* methods receiving a primitive int or
-     * an Integer automatically become possible receiver methods. You dont want
-     * that.
-     */
-    @Test
-    public void testAbsurd () {
-
-        // create a container to put the payload in.
-        final List<Integer> payload = new LinkedList<Integer> () ;
-
-        // register an anonymous adapter as receiver, that puts the received
-        // "event" (i.e. the Integer) into the list above.
-        final EventScope<Integer> eventScope = new EventScope<Integer> (Integer.class) ;
-        eventScope.register (Integer.class , new Object () {
-
-            @SuppressWarnings("unused")
-            public void receive (final Integer i) {
+	/**
+	 * An interface for a dummy event
+	 *
+	 * @author MicWin
+	 */
+	interface IDummyEvent {
+
+	}
+
+	/**
+	 * A mock dummy event.
+	 *
+	 * @author MicWin
+	 */
+	class DummyEventImpl implements IDummyEvent {
+
+	}
+
+	/**
+	 * A dummy receiver that receives the dummy event.
+	 */
+	class DummyReceiver {
+
+		private int received;
+
+		/**
+		 * Dont do this (using Object as event type) in real life since the
+		 * method then might get shadowed by other methods not associated with
+		 * event handling.
+		 *
+		 * @param evt
+		 */
+		public void receive(final Object evt) {
+
+			this.received++;
+		}
+	}
+
+	@Test
+	public void testInit() {
+
+		final EventScope<IDummyEvent> eventScope = new EventScope<EventScopeTest.IDummyEvent>(
+				IDummyEvent.class);
+		assertEquals(IDummyEvent.class, eventScope.getBaseClass());
+		assertEquals(0, eventScope.receiverMap.size());
+	}
+
+	/**
+	 * This is a simple test with a mock event and mock receiver. It
+	 * demonstrates the default event work flow: registering, dsipatching,
+	 * receiving.
+	 */
+	@Test
+	public void testWorkflow() {
+
+		final EventScope<IDummyEvent> eventScope = new EventScope<EventScopeTest.IDummyEvent>(
+				IDummyEvent.class);
+		final DummyReceiver receiver = new DummyReceiver();
+		eventScope.register(DummyEventImpl.class, receiver);
+
+		eventScope.dispatch(new DummyEventImpl());
+		assertEquals(1, receiver.received);
+	}
+
+	/**
+	 * This is an absurd test that perfectly demonstrates the absolute
+	 * flexibility of ticino. In fact, this is absolute pojo; you dont have to
+	 * create event or payload classes if there already is something like an
+	 * already programmed event or payload class around, like in wicket, or JMS.
+	 * <p />
+	 * <strong>CAUTION!</strong> Using very basic types like Integers really
+	 * only is advisable for demonstration purposes. For instance, the problem
+	 * comes with registration where *all* methods receiving a primitive int or
+	 * an Integer automatically become possible receiver methods. You dont want
+	 * that.
+	 */
+	@Test
+	public void testAbsurd() {
+
+		// create a container to put the payload in.
+		final List<Integer> payload = new LinkedList<Integer>();
+
+		// register an anonymous adapter as receiver, that puts the received
+		// "event" (i.e. the Integer) into the list above.
+		final EventScope<Integer> eventScope = new EventScope<Integer>(
+				Integer.class);
+		eventScope.register(Integer.class, new Object() {
+
+			@SuppressWarnings("unused")
+			public void receive(final Integer i) {
+
+				// this is the receiver method.
+				payload.add(i);
+			}
+		});
+
+		// trigger receiver twice
+		eventScope.dispatch(4);
+		eventScope.dispatch(42);
+
+		// check that both integers have been put into the list (and hence rthe
+		// receivers have been processed).
+		assertEquals((Integer) 4, payload.get(0));
+		assertEquals((Integer) 42, payload.get(1));
+	}
 
-                // this is the receiver method.
-                payload.add (i) ;
-            }
-        }) ;
-
-        // trigger receiver twice
-        eventScope.dispatch (4) ;
-        eventScope.dispatch (42) ;
+	@Test
+	public void testSameClass() {
 
-        // check that both integers have been put into the list (and hence rthe
-        // receivers have been processed).
-        assertEquals ((Integer) 4 , payload.get (0)) ;
-        assertEquals ((Integer) 42 , payload.get (1)) ;
-    }
+		final EventScope<String> eventScope = new EventScope<String>(
+				String.class);
 
-    @Test
-    public void testSameClass () {
+		try {
+			eventScope.register(String.class, new Object() {
 
-        final EventScope<String> eventScope = new EventScope<String> (String.class) ;
+				// receiver that has two methods that possibly could catch the
+				// event
+				@SuppressWarnings("unused")
+				public void receive1(final String evt) {
 
-        try {
-            eventScope.register (String.class , new Object () {
+				}
 
-                // receiver that has two methods that possibly could catch the
-                // event
-                @SuppressWarnings("unused")
-                public void receive1 (final String evt) {
+				@SuppressWarnings("unused")
+				public void receive2(final String evt) {
 
-                }
+				}
+			});
 
-                @SuppressWarnings("unused")
-                public void receive2 (final String evt) {
+			fail("illegal receiver accepted");
 
-                }
-            }) ;
+		} catch (final IllegalArgumentException iae) {
+			// w^5
 
-            fail ("illegal receiver accepted") ;
+		}
+	}
 
-        } catch (final IllegalArgumentException iae) {
-            // w^5
+	@Test
+	public void testClassInSameHierarchy() {
 
-        }
-    }
+		final EventScope<String> eventScope = new EventScope<String>(
+				String.class);
 
-    @Test
-    public void testClassInSameHierarchy () {
+		try {
+			eventScope.register(String.class, new Object() {
 
-        final EventScope<String> eventScope = new EventScope<String> (String.class) ;
+				// receiver that has two methods that possibly could catch the
+				// event
+				@SuppressWarnings("unused")
+				public void receive1(final String evt) {
 
-        try {
-            eventScope.register (String.class , new Object () {
+				}
 
-                // receiver that has two methods that possibly could catch the
-                // event
-                @SuppressWarnings("unused")
-                public void receive1 (final String evt) {
+				@SuppressWarnings("unused")
+				public void receive2(final Object evt) {
 
-                }
+				}
+			});
 
-                @SuppressWarnings("unused")
-                public void receive2 (final Object evt) {
+			fail("illegal receiver accepted");
 
-                }
-            }) ;
+		} catch (final IllegalArgumentException iae) {
+			// w^5
 
-            fail ("illegal receiver accepted") ;
+		}
+	}
 
-        } catch (final IllegalArgumentException iae) {
-            // w^5
+	@Test
+	public void testReceiverThrowingException() {
 
-        }
-    }
+		final EventScope<String> eventScope = new EventScope<String>(
+				String.class);
+		final Collection<String> c = new LinkedList<String>();
+		try {
 
-    @Test
-    public void testReceiverThrowingException () {
+			// register first receiver, throwing an exception.
+			eventScope.register(String.class, new Object() {
 
-        final EventScope<String> eventScope = new EventScope<String> (String.class) ;
-        final Collection<String> c = new LinkedList<String> () ;
-        try {
+				@SuppressWarnings("unused")
+				public void receive(final String message) throws IOException {
 
-            // register first receiver, throwing an exception.
-            eventScope.register (String.class , new Object () {
+					throw new IOException();
+				}
+			});
+			// register second receiver, expecting work to do (but not reached)
+			eventScope.register(String.class, new Object() {
 
-                @SuppressWarnings("unused")
-                public void receive (final String message) throws IOException {
+				@SuppressWarnings("unused")
+				public void receive(final String message) {
 
-                    throw new IOException () ;
-                }
-            }) ;
-            // register second receiver, expecting work to do (but not reached)
-            eventScope.register (String.class , new Object () {
+					c.add("second");
+				}
+			});
 
-                @SuppressWarnings("unused")
-                public void receive (final String message) {
+			// firing dummy event
+			eventScope.dispatch("Hello, receivers!");
 
-                    c.add ("second") ;
-                }
-            }) ;
+			// exception not thrown
+			fail();
+		} catch (final Exception ise) {
 
-            // firing dummy event
-            eventScope.dispatch ("Hello, receivers!") ;
+			assertSame(DispatchException.class, ise.getClass());
 
-            // exception not thrown
-            fail () ;
-        } catch (final Exception ise) {
+			// assert that the second receiver has not been called
+			assertEquals(0, c.size());
+		}
+	}
 
-            assertSame (DispatchException.class , ise.getClass ()) ;
+	@Test
+	public void testRegister_with_pattern() {
 
-            // assert that the second receiver has not been called
-            assertEquals (0 , c.size ()) ;
-        }
-    }
+		final EventScope<String> eventScope = new EventScope<String>(
+				String.class);
+		final List<String> receiver = new LinkedList<String>();
 
-    @Test
-    public void testRegister_with_pattern () {
+		eventScope.register(String.class, receiver, Pattern.compile("add$"));
 
-        final EventScope<String> eventScope = new EventScope<String> (String.class) ;
-        final List<String> receiver = new LinkedList<String> () ;
+		eventScope.dispatch("1234");
 
-        eventScope.register (String.class , receiver , Pattern.compile ("add$")) ;
+		assertEquals(1, receiver.size());
 
-        eventScope.dispatch ("1234") ;
+		assertEquals("1234", receiver.get(0));
 
-        assertEquals (1 , receiver.size ()) ;
+	}
 
-        assertEquals ("1234" , receiver.get (0)) ;
+	@Test
+	public void testSuperClassRegistration() {
 
-    }
+		// register a receiver upon the interface
+		final EventScope<IDummyEvent> eventScope = new EventScope<EventScopeTest.IDummyEvent>(
+				IDummyEvent.class);
+		final DummyReceiver interfaceReceiver = new DummyReceiver();
+		eventScope.register(IDummyEvent.class, interfaceReceiver);
 
-    @Test
-    public void testSuperClassRegistration () {
+		// register a receiver upon the implementation
+		final DummyReceiver implReceiver = new DummyReceiver();
+		eventScope.register(DummyEventImpl.class, implReceiver);
 
-        // register a receiver upon the interface
-        final EventScope<IDummyEvent> eventScope = new EventScope<EventScopeTest.IDummyEvent> (IDummyEvent.class) ;
-        final DummyReceiver interfaceReceiver = new DummyReceiver () ;
-        eventScope.register (IDummyEvent.class , interfaceReceiver) ;
+		//
+		// dispatch an impl event
+		eventScope.dispatch(new DummyEventImpl());
 
-        // register a receiver upon the implementation
-        final DummyReceiver implReceiver = new DummyReceiver () ;
-        eventScope.register (DummyEventImpl.class , implReceiver) ;
+		// assert impl calls
+		// expected: both receivers received the event once
+		assertEquals(1, implReceiver.received);
+		assertEquals(1, interfaceReceiver.received);
 
-        //
-        // dispatch an impl event
-        eventScope.dispatch (new DummyEventImpl ()) ;
+		//
+		// dispatch an abstract adaptor event
+		eventScope.dispatch(new IDummyEvent() {
+		});
 
-        // assert impl calls
-        // expected: both receivers received the event once
-        assertEquals (1 , implReceiver.received) ;
-        assertEquals (1 , interfaceReceiver.received) ;
+		// expectation: only the interface receiver received the event.
+		assertEquals(2, interfaceReceiver.received);
+		assertEquals(1, implReceiver.received);
 
-        //
-        // dispatch an abstract adaptor event
-        eventScope.dispatch (new IDummyEvent () {
-        }) ;
+	}
 
-        // expectation: only the interface receiver received the event.
-        assertEquals (2 , interfaceReceiver.received) ;
-        assertEquals (1 , implReceiver.received) ;
+	@Test
+	public void testDoubleCallError() {
 
-    }
+		final EventScope<List> eventScope = new EventScope<List>(List.class);
+		final List hits = new LinkedList();
+		final Object listener = new Object() {
 
-    @Test
-    public void testDoubleCallError () {
+			public void process(final List evt) {
 
-        final EventScope<List> eventScope = new EventScope<List> (List.class) ;
-        final List hits = new LinkedList () ;
-        final Object listener = new Object () {
+				hits.add("hit");
+			}
+		};
+		eventScope.register(List.class, listener);
+		eventScope.register(LinkedList.class, listener);
 
-            public void process (final List evt) {
+		eventScope.dispatch(new LinkedList());
+		assertEquals(1, hits.size());
 
-                hits.add ("hit") ;
-            }
-        } ;
-        eventScope.register (List.class , listener) ;
-        eventScope.register (LinkedList.class , listener) ;
+	}
 
-        eventScope.dispatch (new LinkedList ()) ;
-        assertEquals (1 , hits.size ()) ;
+	@Test
+	public void testUnregister_simple() {
 
-    }
+		final EventScope<String> eventScope = new EventScope<String>(
+				String.class);
+		final List<String> touches = new LinkedList<String>();
 
-    @Test
-    public void testUnregister_simple () {
+		final Object receiver = new Object() {
 
-        final EventScope<String> eventScope = new EventScope<String> (String.class) ;
-        final List<String> touches = new LinkedList<String> () ;
+			public void process(final String event) {
 
-        final Object receiver = new Object () {
+				touches.add(event);
+			}
+		};
 
-            public void process (final String event) {
+		// first, check wether it's receiving
+		eventScope.register(String.class, receiver);
+		eventScope.dispatch("A");
+		assertTrue(touches.contains("A"));
 
-                touches.add (event) ;
-            }
-        } ;
+		touches.clear();
 
-        // first, check wether it's receiving
-        eventScope.register (String.class , receiver) ;
-        eventScope.dispatch ("A") ;
-        assertTrue (touches.contains ("A")) ;
+		// unregister
+		eventScope.unregisterListener(receiver);
+		eventScope.dispatch("B");
 
-        touches.clear () ;
+		assertEquals(0, touches.size());
 
-        // unregister
-        eventScope.unregisterListener (receiver) ;
-        eventScope.dispatch ("B") ;
+	}
 
-        assertEquals (0 , touches.size ()) ;
+	@Test
+	public void testUnregister_three() {
 
-    }
+		final EventScope<String> eventScope = new EventScope<String>(
+				String.class);
+		final List<String> touches = new LinkedList<String>();
 
-    @Test
-    public void testUnregister_three () {
+		final Object receiver1 = new Object() {
 
-        final EventScope<String> eventScope = new EventScope<String> (String.class) ;
-        final List<String> touches = new LinkedList<String> () ;
+			public void process(final String event) {
 
-        final Object receiver1 = new Object () {
+				touches.add("A");
+			}
+		};
+		eventScope.register(String.class, receiver1);
 
-            public void process (final String event) {
+		final Object receiver2 = new Object() {
 
-                touches.add ("A") ;
-            }
-        } ;
-        eventScope.register (String.class , receiver1) ;
+			public void process(final String event) {
 
-        final Object receiver2 = new Object () {
+				touches.add("B");
+			}
+		};
+		eventScope.register(String.class, receiver2);
 
-            public void process (final String event) {
+		final Object receiver3 = new Object() {
 
-                touches.add ("B") ;
-            }
-        } ;
-        eventScope.register (String.class , receiver2) ;
+			public void process(final String event) {
 
-        final Object receiver3 = new Object () {
+				touches.add("C");
+			}
+		};
+		eventScope.register(String.class, receiver3);
 
-            public void process (final String event) {
+		eventScope.unregisterListener(receiver2);
 
-                touches.add ("C") ;
-            }
-        } ;
-        eventScope.register (String.class , receiver3) ;
+		eventScope.dispatch("E");
+		assertTrue(touches.contains("A"));
+		assertTrue(touches.contains("C"));
 
-        eventScope.unregisterListener (receiver2) ;
+		assertEquals(2, touches.size());
 
-        eventScope.dispatch ("E") ;
-        assertTrue (touches.contains ("A")) ;
-        assertTrue (touches.contains ("C")) ;
+	}
 
-        assertEquals (2 , touches.size ()) ;
+	@Test
+	public void testUnregister_hierarchy() {
 
-    }
+		final EventScope<Number> eventScope = new EventScope<Number>(
+				Number.class);
+		final List<String> touches = new LinkedList<String>();
 
-    @Test
-    public void testUnregister_hierarchy () {
+		final Object receiver1 = new Object() {
 
-        final EventScope<Number> eventScope = new EventScope<Number> (Number.class) ;
-        final List<String> touches = new LinkedList<String> () ;
+			public void process(final Number event) {
 
-        final Object receiver1 = new Object () {
+				touches.add("A");
+			}
+		};
+		eventScope.register(Integer.class, receiver1);
 
-            public void process (final Number event) {
+		final Object receiver2 = new Object() {
 
-                touches.add ("A") ;
-            }
-        } ;
-        eventScope.register (Integer.class , receiver1) ;
+			public void process(final Number event) {
 
-        final Object receiver2 = new Object () {
+				touches.add("B");
+			}
+		};
+		eventScope.register(Integer.class, receiver2);
+		eventScope.register(Number.class, receiver2);
 
-            public void process (final Number event) {
+		final Object receiver3 = new Object() {
 
-                touches.add ("B") ;
-            }
-        } ;
-        eventScope.register (Integer.class , receiver2) ;
-        eventScope.register (Number.class , receiver2) ;
+			public void process(final Integer event) {
 
-        final Object receiver3 = new Object () {
+				touches.add("C");
+			}
+		};
+		eventScope.register(Integer.class, receiver3);
 
-            public void process (final Integer event) {
+		eventScope.unregisterListener(receiver2);
 
-                touches.add ("C") ;
-            }
-        } ;
-        eventScope.register (Integer.class , receiver3) ;
+		eventScope.dispatch(new Integer(4));
 
-        eventScope.unregisterListener (receiver2) ;
+		// assert
+		assertTrue(touches.contains("A"));
+		assertTrue(touches.contains("C"));
 
-        eventScope.dispatch (new Integer (4)) ;
+		assertEquals(2, touches.size());
+	}
 
-        // assert
-        assertTrue (touches.contains ("A")) ;
-        assertTrue (touches.contains ("C")) ;
+	@Test(expected = IllegalArgumentException.class)
+	public void testTypeCheck() {
 
-        assertEquals (2 , touches.size ()) ;
-    }
+		final EventScope evtScope = new EventScope(Number.class);
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testTypeCheck () {
+		evtScope.dispatch("Hello, World!");
+		fail("No exception thrown!");
+	}
 
-        final EventScope evtScope = new EventScope (Number.class) ;
+	@Test(expected = IllegalArgumentException.class)
+	public void testNull() {
 
-        evtScope.dispatch ("Hello, World!") ;
-        fail ("No exception thrown!") ;
-    }
+		final EventScope<Object> scope = new EventScope<Object>();
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNull () {
+		scope.dispatch((Object) null);
+	}
 
-        final EventScope<Object> scope = new EventScope<Object> () ;
+	@Test
+	public void testAsynchronous() throws InterruptedException {
 
-        scope.dispatch ((Object) null) ;
-    }
+		final EventScope<Object> scope = new EventScope<Object>();
+
+		// register a sleeper receiver
+
+		scope.register(String.class, new Object() {
+
+			@SuppressWarnings("unused")
+			public void sleep(String pString) throws InterruptedException {
+				Thread.sleep(500);
+			}
+
+		});
+
+		final List<String> lReceived = new LinkedList<String>();
+
+		scope.dispatchAsynchronous("Hello, World",
+				new IPostProcessor<String>() {
+
+					@Override
+					public void done(String pProcessedEvent) {
+						// w^5
+						lReceived.add(pProcessedEvent);
+
+					}
+
+					@Override
+					public void done(DispatchException pException) {
+						fail("wrong done method called");
+
+					}
+				});
+
+		assertEquals(0, lReceived.size());
+		// wait for receiver to end its sleep
+		Thread.sleep(600);
+
+		// look wether the message has been processed by the postprocessor
+		assertEquals(1, lReceived.size());
+
+		// look what message has been processed by the postprocessor
+		assertEquals("Hello, World", lReceived.get(0));
+
+	}
 
 }
