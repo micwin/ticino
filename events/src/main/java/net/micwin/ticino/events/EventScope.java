@@ -305,6 +305,13 @@ public class EventScope<T> {
 	 *
 	 * @param event
 	 *            The event object to dispatch.
+	 * 
+	 * @throws DispatchException
+	 *             as a wrapper of the first exception that comes up.
+	 * 
+	 * @return the throws event for convenience in case of chaining and events
+	 *         also holding results.
+	 * 
 	 */
 	public synchronized <Q extends T> Q dispatch(final Q event) {
 
