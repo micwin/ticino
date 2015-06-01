@@ -1,4 +1,4 @@
-package net.micwin.ticino.wiring;
+package net.micwin.ticino.entities.wiring;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

@@ -1,9 +1,12 @@
-package net.micwin.ticino.wiring;
+package net.micwin.ticino.entities.wiring;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.LinkedList;
+
+import net.micwin.ticino.entities.wiring.Wiring;
+import net.micwin.ticino.entities.wiring.WiringBuilder;
 
 import org.junit.Test;
 

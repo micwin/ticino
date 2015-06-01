@@ -1,4 +1,4 @@
-package net.micwin.ticino.wiring;
+package net.micwin.ticino.entities.wiring;
 
 /**
  * A dummy class working as a entity for unit testing..
