@@ -25,9 +25,11 @@
 
     <properties>
         <github.global.server>github</github.global.server>
-        <github.scm.url>http://github.com/micwin/ticino</github.scm.url>
+        <scm.web.url>http://github.com/micwin/ticino</scm.web.url>
+        <scm.developer.url>scm:git:git@github.com:micwin/ticino.git</scm.developer.url>
         <github.site.url>http://micwin.github.io/ticino/</github.site.url>
-        <sonatype.autoRelease>false</sonatype.autoRelease>
+        <sonatype.autoRelease>true</sonatype.autoRelease>
+
     </properties>
 
     <modules>
@@ -40,9 +42,9 @@
     </modules>
 
     <scm>
-        <connection>scm:git:git@github.com:micwin/ticino.git</connection>
-        <developerConnection>scm:git:git@github.com:micwin/ticino.git</developerConnection>
-        <url>${github.scm.url}</url>
+        <connection>${scm.developer.url}</connection>
+        <developerConnection>${scm.developer.url}</developerConnection>
+        <url>${scm.web.url}</url>
     </scm>
 
 
@@ -129,7 +131,8 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.3</version>
+                    <version>3.4</version>
+
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -232,28 +235,31 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>0.9</version>
-                <configuration>
-                    <message>Creating site for ${project.version}</message>
-                    <dryRun>false</dryRun>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>site-deploy</phase>
-                        <goals>
-                            <goal>site</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>2.5</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>scm-publish</id>
+                        <phase>site-deploy</phase>
+                        <goals>
+                            <goal>publish-scm</goal>
+                        </goals>
+                        <configuration>
+                            <scmBranch>gh-pages</scmBranch>
+                            <dryRun>true</dryRun>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
 
@@ -291,6 +297,8 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+
+
         </plugins>
     </reporting>
 
@@ -298,7 +306,7 @@
         <site>
             <id>site</id>
             <name>main site</name>
-            <url>${github.site.url}</url>
+            <url>${scm.developer.url}</url>
         </site>
 
         <snapshotRepository>
