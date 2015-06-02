@@ -1,234 +1,243 @@
 <?xml version="1.0" standalone="no"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<!-- Documentation on how to get this to maven central: -->
-	<!-- https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-7b.StageExistingArtifacts -->
-	<!-- http://central.sonatype.org/pages/ossrh-guide.html -->
+    <!-- Documentation on how to get this to maven central: -->
+    <!-- https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-7b.StageExistingArtifacts -->
+    <!-- http://central.sonatype.org/pages/ossrh-guide.html -->
 
 
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
 
-	<groupId>net.micwin.ticino</groupId>
-	<artifactId>ticino-parent</artifactId>
-	<packaging>pom</packaging>
-	<version>0.3.4-SNAPSHOT</version>
-	<name>the ticino modules</name>
-    
+    <groupId>net.micwin.ticino</groupId>
+    <artifactId>ticino-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>0.3.4-SNAPSHOT</version>
+    <name>the ticino modules</name>
+
     <url>http://ticino.micwin.net</url>
 
-	<properties>
-		<github.global.server>github</github.global.server>
+    <properties>
+        <github.global.server>github</github.global.server>
         <github.scm.url>http://github.com/micwin/ticino</github.scm.url>
-        <github.site.url>http://micwin.github.io/ticino/</github.site.url>     
+        <github.site.url>http://micwin.github.io/ticino/</github.site.url>
         <sonatype.autoRelease>false</sonatype.autoRelease>
-	</properties>
+    </properties>
 
-	<modules>
-		<module>events</module>
-		<module>entities</module>
-		
-		<module>algorithms</module>
+    <modules>
+        <module>events</module>
+        <module>entities</module>
+
+        <module>algorithms</module>
         <module>peer</module>
-       
-	</modules>
 
-	<scm>
-		<connection>scm:git:git@github.com:micwin/ticino.git</connection>
-		<developerConnection>scm:git:git@github.com:micwin/ticino.git</developerConnection>
-		<url>${github.scm.url}</url>
-	</scm>
+    </modules>
 
-
-	<licenses>
-		<license>
-			<name>MIT-License</name>
-			<url>https://raw.github.com/micwin/ticino/master/LICENSE</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
-	<mailingLists>
-		<mailingList>
-			<name>dev-support</name>
-			<post>ticino-dev@micwin.net</post>
-		</mailingList>
-	</mailingLists>
-
-	<developers>
-		<developer>
-			<id>micwin</id>
-			<name>Michael Winkler</name>
-			<organization>micwin.net</organization>
-			<organizationUrl>http://www.micwin.net</organizationUrl>
-			<timezone>+1</timezone>
-			<email>michael.winkler @7 micwin.net</email>
-			<url>@micwin</url>
-		</developer>
-	</developers>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>net.micwin.ticino</groupId>
-				<artifactId>ticino-events</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.micwin.ticino</groupId>
-				<artifactId>ticino-entities</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.micwin.ticino</groupId>
-				<artifactId>ticino-algorithms</artifactId>
-				<version>${version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jmockit</groupId>
-			<artifactId>jmockit</artifactId>
-			<version>1.13</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+    <scm>
+        <connection>scm:git:git@github.com:micwin/ticino.git</connection>
+        <developerConnection>scm:git:git@github.com:micwin/ticino.git</developerConnection>
+        <url>${github.scm.url}</url>
+    </scm>
 
 
-	<issueManagement>
-		<system>github issues</system>
-		<url>https://github.com/micwin/ticino/issues</url>
-	</issueManagement>
+    <licenses>
+        <license>
+            <name>MIT-License</name>
+            <url>https://raw.github.com/micwin/ticino/master/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-	<build>
+    <mailingLists>
+        <mailingList>
+            <name>dev-support</name>
+            <post>ticino-dev@micwin.net</post>
+        </mailingList>
+    </mailingLists>
 
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<inherited>true</inherited>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-project-info-reports-plugin</artifactId>
-					<version>2.7</version>
-				</plugin>
+    <developers>
+        <developer>
+            <id>micwin</id>
+            <name>Michael Winkler</name>
+            <organization>micwin.net</organization>
+            <organizationUrl>http://www.micwin.net</organizationUrl>
+            <timezone>+1</timezone>
+            <email>michael.winkler @7 micwin.net</email>
+            <url>@micwin</url>
+        </developer>
+    </developers>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>3.3</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>net.micwin.ticino</groupId>
+                <artifactId>ticino-events</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.micwin.ticino</groupId>
+                <artifactId>ticino-entities</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.micwin.ticino</groupId>
+                <artifactId>ticino-algorithms</artifactId>
+                <version>${version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-		<plugins>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
 
-			<plugin>
-				<inherited>true</inherited>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<optimize>true</optimize>
-					<debug>true</debug>
-				</configuration>
-			</plugin>
+        <dependency>
+            <groupId>org.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>1.13</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+    <issueManagement>
+        <system>github issues</system>
+        <url>https://github.com/micwin/ticino/issues</url>
+    </issueManagement>
+
+    <build>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <inherited>true</inherited>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.3</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <optimize>true</optimize>
+                    <debug>true</debug>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <tagNameFormat>release-@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+
+                <!-- for staging to nexus -->
+                <!-- mvn clean deploy -->
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <!-- With the property autoReleaseAfterClose set to false you can manually inspect the staging repository in Nexus 
+                        and trigger a release of the staging repository later with -->
+                    <!-- mvn nexus-staging:release -->
+                    <!-- If you find something went wrong you can drop the staging repository with -->
+                    <!-- mvn nexus-staging:drop -->
+                    <autoReleaseAfterClose>${sonatype.autoRelease}</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
 
 
 
-			<plugin>
 
-				<!-- for staging to nexus -->
-				<!-- mvn clean deploy -->
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.3</version>
-				<extensions>true</extensions>
-				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<!-- With the property autoReleaseAfterClose set to false you can manually 
-						inspect the staging repository in Nexus and trigger a release of the staging 
-						repository later with -->
-					<!-- mvn nexus-staging:release -->
-					<!-- If you find something went wrong you can drop the staging repository 
-						with -->
-					<!-- mvn nexus-staging:drop -->
-					<autoReleaseAfterClose>${sonatype.autoRelease}</autoReleaseAfterClose>
-				</configuration>
-			</plugin>
+        </plugins>
+    </build>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.4</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.1</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
-	<distributionManagement>
+    <distributionManagement>
         <site>
             <id>site</id>
             <name>main site</name>
             <url>${github.site.url}</url>
         </site>
 
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
 
-	</distributionManagement>
+    </distributionManagement>
 </project>
