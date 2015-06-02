@@ -1,26 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <project xmlns="http://maven.apache.org/DECORATION/1.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd" name="ticino events">
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd" name="ticino algorithms">
 
 
     <body>
 
         <menu ref="parent" />
-
-        <menu name="ticino events">
-            <item name="Welcome!" href="index.html" />
-            <item name="MIT License" href="license.html" />
-            <item name="Changelog" href="changelog.html" />
-            <item name="Download" href="dependency-info.html" />
-        </menu>
-
-        <menu name="Documentation">
-            <item name="the basics" href="basics.html" />
-            <item name="advanced stuff" href="advanced.html" />
-            <item name="migration from/to ticino events" href="migration.html" />
-            <item name="best practices" href="best_practices.html" />
-        </menu>
 
         <menu ref="reports" />
 

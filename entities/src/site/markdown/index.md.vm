@@ -1,0 +1,12 @@
+#set($h1 = '#')
+#set($h2 = '##')
+#set($h3 = '###')
+#set($h4 = '####')
+
+ticino - entities
+
+$h1 Welcome!
+
+This is the ticino entities project in coming alive.
+
+It is an experiment from which I know I must do - but currently do not know how.
