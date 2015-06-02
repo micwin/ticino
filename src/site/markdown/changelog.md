@@ -3,8 +3,9 @@
 
 ## Version 0.3.4
 
-* reorganized project. ticino now becomes a container for multiple, simplicity targeted aspects, while the events part now is called _ticino events_. 
 * ticino events now also work asynchronously.
+
+* reorganized project. ticino now becomes a container for multiple, simplicity targeted aspects, while the events part now is called _ticino events_. 
 
 ## Version 0.3.3
 

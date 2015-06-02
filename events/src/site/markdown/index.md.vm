@@ -1,0 +1,56 @@
+#set($h1 = '#')
+#set($h2 = '##')
+#set($h3 = '###')
+#set($h4 = '####')
+
+ticino - events, not elephants
+
+$h1 Welcome!
+
+ticino is a tiny type-safe java event framework with a minimalistic class interface.
+
+ticino introduces the silent broker approach:
+	
+* as few as possible code changes
+	
+* as few as possible design decisions in client code towards ticino
+
+* as few as possible transitive dependencies
+	
+* as few as possible side effects
+
+* uses the MIT license - no license, copyright or copyleft problems at all
+
+* being fully compatible with other event frameworks
+
+See the cookbook for examples and best practices
+	
+$h1 Downloading ticino events with maven
+  
+<pre>
+
+&lt;dependencies&gt;
+    ...
+	&lt;dependency&gt;
+		&lt;groupId&gt;${project.groupId}&lt;/groupId&gt;
+		&lt;artifactId&gt;ticino-events&lt;/artifactId&gt;
+		&lt;version&gt;${project.version}&lt;/version&gt;
+	&lt;/dependency&gt;
+	...
+&lt;/dependencies&gt;
+
+</pre>
+
+$h2 Download manually
+
+* current binaries jar is located at 
+
+(http://repo1.maven.org/maven2/net/micwin/ticino/ticino-events/${project.version}/ticino-events-${project.version}.jar)
+      
+* current sources jar is located at 
+
+(http://repo1.maven.org/maven2/net/micwin/ticino/ticino-events/${project.version}/ticino-events-${project.version}-sources.jar)
+
+* current javadoc jar is located at 
+
+(http://repo1.maven.org/maven2/net/micwin/ticino/ticino-events/${project.version}/ticino-events-${project.version}-javadoc.jar)

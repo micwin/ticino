@@ -16,20 +16,6 @@
 
 	<name>ticino events</name>
 
-	<description>contains core classes EventScope and DispatchException</description>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<configuration>
-					<skipDeploy>true</skipDeploy>
-					<outputDirectory>
-						../target/site/events</outputDirectory>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	<description>contains core classes EventScope, DispatchException and IPostProcessor</description>
 
 </project>

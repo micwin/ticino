@@ -20,25 +20,31 @@
 	<packaging>pom</packaging>
 	<version>0.3.4-SNAPSHOT</version>
 	<name>the ticino modules</name>
+    
+    <url>http://ticino.micwin.net</url>
 
 	<properties>
 		<github.global.server>github</github.global.server>
+        <github.scm.url>http://github.com/micwin/ticino</github.scm.url>
+        <github.site.url>http://micwin.github.io/ticino/</github.site.url>     
+        <sonatype.autoRelease>false</sonatype.autoRelease>
 	</properties>
 
 	<modules>
 		<module>events</module>
 		<module>entities</module>
-		<module>wiring</module>
+		
 		<module>algorithms</module>
+        <module>peer</module>
+       
 	</modules>
 
 	<scm>
 		<connection>scm:git:git@github.com:micwin/ticino.git</connection>
 		<developerConnection>scm:git:git@github.com:micwin/ticino.git</developerConnection>
-		<url>http://github.com/micwin/ticino</url>
+		<url>${github.scm.url}</url>
 	</scm>
 
-	<url>http://micwin.github.com/ticino</url>
 
 	<licenses>
 		<license>
@@ -77,11 +83,6 @@
 			<dependency>
 				<groupId>net.micwin.ticino</groupId>
 				<artifactId>ticino-entities</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.micwin.ticino</groupId>
-				<artifactId>ticino-wiring</artifactId>
 				<version>${version}</version>
 			</dependency>
 			<dependency>
@@ -168,7 +169,7 @@
 					<!-- If you find something went wrong you can drop the staging repository 
 						with -->
 					<!-- mvn nexus-staging:drop -->
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					<autoReleaseAfterClose>${sonatype.autoRelease}</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
 
@@ -218,11 +219,11 @@
 	</build>
 
 	<distributionManagement>
-		<site>
-			<id>github</id>
-			<name>github site</name>
-			<url>${project.url}</url>
-		</site>
+        <site>
+            <id>site</id>
+            <name>main site</name>
+            <url>${github.site.url}</url>
+        </site>
 
 		<snapshotRepository>
 			<id>ossrh</id>

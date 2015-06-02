@@ -10,17 +10,4 @@
 	<artifactId>ticino-algorithms</artifactId>
 	<name>ticino algorithms</name>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<configuration>
-					<skipDeploy>true</skipDeploy>
-					<outputDirectory>
-						../target/site/algorithms</outputDirectory>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>

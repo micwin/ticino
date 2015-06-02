@@ -14,12 +14,15 @@
             <item name="MIT License" href="license.html" />
 		</menu>
 		
-		<menu name="modules">
-			<item name="ticino events" href="events/index.html" />
-			<item name="ticino entities" href="entities/index.html" />
-			<item name="ticino algorithms" href="algorithms/index.html" />
-			<item name="ticino wiring" href="wiring/index.html" />
+		<menu name="main modules">
+			<item name="ticino events" href="ticino-events/index.html" />
 		</menu>
+
+        <menu name="experiments">
+            <item name="ticino entities" href="ticino-entities/index.html" />
+            <item name="ticino algorithms" href="ticino-algorithms/index.html" />
+            <item name="ticino peer" href="ticino-peer/index.html" />
+        </menu>
 		
 		
 		<footer />
