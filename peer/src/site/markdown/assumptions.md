@@ -24,6 +24,10 @@ There are contexts where stability, speed and the guarantee of delivery is not a
 
 hence the context is of crucial importance th the overall performance of the net.
 
+## contexts may change, so do guarantees
+
+when times go by, an importance of stability and speed may change; hence there might be a good reason to version contexts along with their application providers, while sometimes the guarantees are needed to float from peer to peer.
+
 ## end points handle application specific encryption by themselves
 
 the peers only use encryption to provide infrastructure, not to encrypt domain specific application data.
