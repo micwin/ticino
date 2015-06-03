@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.micwin.ticino</groupId>
+        <artifactId>ticino-plank</artifactId>
+        <version>0.3.5-SNAPSHOT</version>
+    </parent>
+    <artifactId>ticino-plank-example</artifactId>
+    <name>the ticino plank example application</name>
+    <description>an example application to demonstrate the versability of ticino plank</description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.micwin.ticino</groupId>
+            <artifactId>ticino-algorithms</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.micwin.ticino</groupId>
+            <artifactId>ticino-plank-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.micwin.ticino</groupId>
+            <artifactId>ticino-plank-swing</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+    </dependencies>
+</project>

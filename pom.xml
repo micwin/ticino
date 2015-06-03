@@ -39,6 +39,7 @@
         <module>algorithms</module>
         <module>peer</module>
 
+        <module>plank</module>
     </modules>
 
     <scm>
