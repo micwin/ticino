@@ -8,6 +8,13 @@ public class SwingApplicationPlatform implements IPlankPlatform {
     private SwingApplicationContext fContext ;
     private PlankSwingFrame         fFrame ;
     private IPlankApplication       fApplication ;
+    private final String []         fArgs ;
+
+    public SwingApplicationPlatform (final String [] pArgs) {
+
+        fArgs = pArgs ;
+
+    }
 
     @Override
     public void start (final IPlankApplication pApplication) {

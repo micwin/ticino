@@ -5,7 +5,7 @@
     <groupId>net.micwin.ticino</groupId>
     <version>0.3.5-SNAPSHOT</version>
 
-    <artifactId>ticino-plank-example</artifactId>
+    <artifactId>ticino-example</artifactId>
     <name>the ticino example application</name>
     <description>an example application to demonstrate the versability of ticino modules</description>
     <packaging>jar</packaging>
