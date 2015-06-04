@@ -1,8 +1,8 @@
 
-package net.micwin.ticino.plank.example ;
+package net.micwin.ticino.example ;
 
 import net.micwin.ticino.plank.* ;
-import net.micwin.ticino.plank.actions.* ;
+import net.micwin.ticino.plank.actions.ShutdownPlatformAction ;
 import net.micwin.ticino.plank.ui.* ;
 
 import org.slf4j.* ;
@@ -27,14 +27,14 @@ public class PlankExampleApplication implements IPlankApplication {
     }
 
     @Override
-    public IPlankSession openNewSession () {
+    public PlankSession openNewSession () {
 
-        final PlankExampleSession lSession = new PlankExampleSession (this) ;
+        final PlankSession lSession = new PlankSession (this) ;
         lSession.setUi (createInitialUi (lSession)) ;
         return lSession ;
     }
 
-    private PlankUI createInitialUi (final PlankExampleSession pSession) {
+    private PlankUI createInitialUi (final PlankSession pSession) {
 
         final PlankUI lPlankUi = new PlankUI () ;
 

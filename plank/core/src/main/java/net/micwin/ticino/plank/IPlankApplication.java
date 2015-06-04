@@ -21,7 +21,7 @@ public interface IPlankApplication {
      * 
      * @return
      */
-    IPlankSession openNewSession () ;
+    PlankSession openNewSession () ;
 
     /**
      * returns human readable name of application

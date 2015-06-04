@@ -19,11 +19,11 @@ public class PlankSwingFrame extends JFrame {
 
     private static final long   serialVersionUID = -9165917481729675078L ;
 
-    private final IPlankSession fSession ;
+    private final PlankSession fSession ;
 
     private JMenuBar            fMenuBar ;
 
-    public PlankSwingFrame (final IPlankSession pSession) {
+    public PlankSwingFrame (final PlankSession pSession) {
 
         fSession = pSession ;
 

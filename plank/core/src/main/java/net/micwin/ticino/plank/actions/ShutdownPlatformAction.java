@@ -1,7 +1,7 @@
 
 package net.micwin.ticino.plank.actions ;
 
-import net.micwin.ticino.plank.IPlankSession ;
+import net.micwin.ticino.plank.PlankSession ;
 
 /**
  * Shuts the whole platform gracefully down.
@@ -11,7 +11,7 @@ import net.micwin.ticino.plank.IPlankSession ;
 public class ShutdownPlatformAction implements IPlankAction {
 
     @Override
-    public void perform (final IPlankSession pSession) {
+    public void perform (final PlankSession pSession) {
 
         pSession.getApplication ().getContext ().getPlatform ().shutDown () ;
     }

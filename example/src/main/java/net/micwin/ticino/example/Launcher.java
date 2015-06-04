@@ -1,5 +1,5 @@
 
-package net.micwin.ticino.plank.example ;
+package net.micwin.ticino.example ;
 
 import net.micwin.ticino.plank.* ;
 import net.micwin.ticino.plank.swing.application.SwingApplicationPlatform ;

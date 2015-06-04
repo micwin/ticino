@@ -25,7 +25,7 @@ public class SwingApplicationPlatform implements IPlankPlatform {
 
         pApplication.initialize (fContext) ;
 
-        final IPlankSession lSession = pApplication.openNewSession () ;
+        final PlankSession lSession = pApplication.openNewSession () ;
 
         fFrame = new PlankSwingFrame (lSession) ;
 
