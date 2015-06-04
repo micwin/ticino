@@ -1,7 +1,6 @@
 
 package net.micwin.ticino.plank.ui ;
 
-import net.micwin.ticino.plank.PlankActions ;
 
 /**
  * A section of the ui. Can contain menus, links and a content which all are
@@ -10,21 +9,21 @@ import net.micwin.ticino.plank.PlankActions ;
  * @author micwin
  */
 
-public class PlankSection {
+public class Section {
 
     /**
      * Identifier for the always visible section.
      */
     public static final String GLOBAL = "global" ;
 
-    private PlankActions       fActions ;
+    private ActionGroup       fActions ;
 
-    public PlankActions getActions () {
+    public ActionGroup getActions () {
 
         return fActions ;
     }
 
-    public void setActions (final PlankActions pActions) {
+    public void setActions (final ActionGroup pActions) {
 
         fActions = pActions ;
     }

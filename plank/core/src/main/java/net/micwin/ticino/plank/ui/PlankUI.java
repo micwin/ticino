@@ -10,11 +10,11 @@ import java.util.* ;
  */
 public class PlankUI {
 
-    Map<String , PlankSection> fSection           = new HashMap<String , PlankSection> () ;
+    Map<String , Section> fSection           = new HashMap<String , Section> () ;
 
     private String             fActiveSectionName = null ;
 
-    PlankSection               fActiveSection ;
+    Section               fActiveSection ;
 
     /**
      * Returns the section with specified name. Section "global" is always
@@ -23,16 +23,16 @@ public class PlankUI {
      * @param pName
      * @return
      */
-    public PlankSection getSection (final String pName) {
+    public Section getSection (final String pName) {
 
         return fSection.get (pName) ;
     }
 
-    public void setSection (final String pName , final PlankSection pPlankSection) {
+    public void setSection (final String pName , final Section pPlankSection) {
 
         fSection.put (pName , pPlankSection) ;
 
-        if (fActiveSection == null && !PlankSection.GLOBAL.equals (pName)) {
+        if (fActiveSection == null && !Section.GLOBAL.equals (pName)) {
             fActiveSectionName = pName ;
             fActiveSection = pPlankSection ;
         }

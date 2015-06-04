@@ -1,8 +1,8 @@
 
 package net.micwin.ticino.plank.example ;
 
-import net.micwin.ticino.actions.ShutdownPlatformAction ;
 import net.micwin.ticino.plank.* ;
+import net.micwin.ticino.plank.actions.* ;
 import net.micwin.ticino.plank.ui.* ;
 
 import org.slf4j.* ;
@@ -38,13 +38,13 @@ public class PlankExampleApplication implements IPlankApplication {
 
         final PlankUI lPlankUi = new PlankUI () ;
 
-        final PlankSection lGlobalSection = new PlankSection () ;
+        final Section lGlobalSection = new Section () ;
 
-        final PlankActions lGlobalActions = new PlankActions ("actions") ;
+        final ActionGroup lGlobalActions = new ActionGroup ("actions") ;
         lGlobalActions.addAction ("shutdown" , new ShutdownPlatformAction ()) ;
 
         lGlobalSection.setActions (lGlobalActions) ;
-        lPlankUi.setSection (PlankSection.GLOBAL , lGlobalSection) ;
+        lPlankUi.setSection (Section.GLOBAL , lGlobalSection) ;
         return lPlankUi ;
     }
 

@@ -6,9 +6,9 @@ import java.util.Locale ;
 
 import javax.swing.* ;
 
-import net.micwin.ticino.actions.ActionItem ;
 import net.micwin.ticino.plank.* ;
-import net.micwin.ticino.plank.ui.PlankSection ;
+import net.micwin.ticino.plank.actions.* ;
+import net.micwin.ticino.plank.ui.* ;
 
 /**
  * A jframe as companion of a plank UI.
@@ -66,11 +66,11 @@ public class PlankSwingFrame extends JFrame {
 
     private JMenu composeGlobalSectionMenu () {
 
-        final PlankSection lGlobalSection = fSession.getUi ().getSection (PlankSection.GLOBAL) ;
-        return composeSectionMenu (PlankSection.GLOBAL , lGlobalSection) ;
+        final Section lGlobalSection = fSession.getUi ().getSection (Section.GLOBAL) ;
+        return composeSectionMenu (Section.GLOBAL , lGlobalSection) ;
     }
 
-    private JMenu composeSectionMenu (final String pName , final PlankSection pSection) {
+    private JMenu composeSectionMenu (final String pName , final Section pSection) {
 
         final String lLabelKey = "section." + pName ;
         final String lLabel = fSession.getApplication ().getContext ().getLabel (lLabelKey , Locale.getDefault ()) ;
@@ -82,13 +82,13 @@ public class PlankSwingFrame extends JFrame {
         return jMenu ;
     }
 
-    private void composeItems (final String pParentName , final PlankActions pParent , final JMenu pParentMenu) {
+    private void composeItems (final String pParentName , final ActionGroup pParent , final JMenu pParentMenu) {
 
         if (pParent == null) {
             return ;
         }
 
-        for (final PlankActions lNode : pParent.getNodes ()) {
+        for (final ActionGroup lNode : pParent.getNodes ()) {
             final String lNodeName = pParentName + '.' + lNode.getName () ;
             final JMenu lNodeMenu = new JMenu (fSession.getApplication ().getContext ()
                     .getLabel (lNodeName , Locale.getDefault ())) ;

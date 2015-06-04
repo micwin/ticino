@@ -1,5 +1,5 @@
 
-package net.micwin.ticino.actions ;
+package net.micwin.ticino.plank.actions ;
 
 import net.micwin.ticino.plank.IPlankSession ;
 

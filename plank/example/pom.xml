@@ -6,9 +6,10 @@
         <artifactId>ticino-plank</artifactId>
         <version>0.3.5-SNAPSHOT</version>
     </parent>
+    
     <artifactId>ticino-plank-example</artifactId>
-    <name>the ticino plank example application</name>
-    <description>an example application to demonstrate the versability of ticino plank</description>
+    <name>the ticino example application</name>
+    <description>an example application to demonstrate the versability of ticino modules</description>
     <packaging>jar</packaging>
 
     <dependencies>

@@ -1,17 +1,17 @@
 
-package net.micwin.ticino.plank ;
+package net.micwin.ticino.plank.ui ;
 
 import java.util.* ;
 
-import net.micwin.ticino.actions.* ;
+import net.micwin.ticino.plank.actions.ShutdownPlatformAction ;
 
-public class PlankActions {
+public class ActionGroup {
 
-    private String                   fName ;
-    private final List<PlankActions> fNodes       = new LinkedList<PlankActions> () ;
-    private final List<ActionItem>   fActionItems = new LinkedList<ActionItem> () ;
+    private String                  fName ;
+    private final List<ActionGroup> fNodes       = new LinkedList<ActionGroup> () ;
+    private final List<ActionItem>  fActionItems = new LinkedList<ActionItem> () ;
 
-    public PlankActions (final String pName) {
+    public ActionGroup (final String pName) {
 
         fName = pName ;
 
@@ -27,12 +27,12 @@ public class PlankActions {
         fName = pName ;
     }
 
-    public List<PlankActions> getNodes () {
+    public List<ActionGroup> getNodes () {
 
         return fNodes ;
     }
 
-    public void addNode (final PlankActions pNewNode) {
+    public void addNode (final ActionGroup pNewNode) {
 
         fNodes.add (pNewNode) ;
 
