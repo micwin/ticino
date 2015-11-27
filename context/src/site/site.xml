@@ -12,9 +12,8 @@
         </menu>
 
         <menu name="main modules">
-            <item name="ticino events" href="ticino-events/index.html" />
-            <item name="ticino context" href="ticino-context/index.html" />
-            <item name="change log" href="changelog.html" />
+            <item name="ticino modules" href="../index.html" />
+            <item name="ticino events" href="../ticino-events/index.html" />
         </menu>
 
         <menu ref="reports" />

@@ -1,11 +1,9 @@
 package net.micwin.ticino.events;
 
-import java.lang.ref.SoftReference;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.regex.Pattern;
+import java.lang.ref.SoftReference ;
+import java.lang.reflect.Method ;
+import java.util.* ;
+import java.util.regex.Pattern ;
 
 /**
  * A eventScope in which an event should get dispatched and receivers should
@@ -376,11 +374,6 @@ public class EventScope<T> {
 	 */
 	public synchronized <Q extends T> void dispatchAsynchronous(final Q event,
 			final IPostProcessor<Q> pPostProcessor) {
-
-		if (pPostProcessor == null) {
-			throw new IllegalArgumentException(
-					"argument 'pPostProcessor' must not be null");
-		}
 
 		new Thread(new Runnable() {
 
