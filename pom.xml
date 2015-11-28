@@ -4,7 +4,16 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Documentation on how to get this to maven central: -->
+    <!-- Steps to publish to maven central : -->
+    <!-- 1 - raise versions to non-SNAPSHOT -->
+    <!-- 2 - commit changes to a release-Branch RELEASE-${project.version} -->
+    <!-- 3 - deploy to maven central : mvn deploy -->
+
+    <!-- steps to publish documentation to github pages: -->
+    <!-- mvn -Preporting site site:stage -->
+    <!-- mvn scm-publish:publish-scm -->
+
+    <!-- offocial documentation on how to get this to maven central: -->
     <!-- https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-7b.StageExistingArtifacts -->
     <!-- http://central.sonatype.org/pages/ossrh-guide.html -->
 
@@ -18,7 +27,7 @@
     <groupId>net.micwin.ticino</groupId>
     <artifactId>ticino-modules</artifactId>
     <packaging>pom</packaging>
-    <version>0.3.5-SNAPSHOT</version>
+    <version>0.3.5</version>
     <name>the ticino modules</name>
 
     <url>http://ticino.micwin.net</url>
@@ -187,6 +196,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -254,7 +264,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-publish-plugin</artifactId>
-                <version>1.1</version>
                 <executions>
                     <execution>
                         <id>scm-publish</id>
@@ -264,7 +273,6 @@
                         </goals>
                         <configuration>
                             <scmBranch>gh-pages</scmBranch>
-                            <dryRun>true</dryRun>
                         </configuration>
                     </execution>
                 </executions>

@@ -15,28 +15,64 @@ public class DefaultContext<ElementType> implements IReadableModifyableContext<E
     LinkedList<ElementType>        fElements ;
     private Predicate<ElementType> fPutValidator ;
 
+    /**
+     * Create a default context without elementsd and no validator.
+     */
     public DefaultContext () {
 
         this (null , new LinkedList<> ()) ;
     }
 
+    /**
+     * Creates a new DefaultContext and puts given elements nto it.
+     * 
+     * @param pInitialElements
+     *            Initial elements.
+     */
     @SafeVarargs
     public DefaultContext (final ElementType ... pInitialElements) {
 
         this (null , Arrays.asList (pInitialElements)) ;
     }
 
+    /**
+     * Create a DefaultContext with given validator and puts givene elements in
+     * it. Does validate elements.
+     * 
+     * @param pPutValidator
+     *            A validator that validates elements that are put into the
+     *            context via methods {@link #put(Object)} and
+     *            {@link #putAll(IReadableContext)}.
+     * @param pInitialElements
+     *            Initial elements.
+     */
     @SafeVarargs
     public DefaultContext (final Predicate<ElementType> pPutValidator, final ElementType ... pInitialElements) {
 
         this (pPutValidator , Arrays.asList (pInitialElements)) ;
     }
 
+    /**
+     * Creates a DefaultContext without validator and puts given elements into
+     * it.
+     * 
+     * @param pInitialElements
+     */
     public DefaultContext (final Collection<ElementType> pInitialElements) {
 
         this (null , pInitialElements) ;
     }
 
+    /**
+     * Create a DefaultContext with given validator and puts givene elements in
+     * it. Does validate elements.
+     * 
+     * @param pPutValidator
+     *            A validator that validates elements that are put into the
+     *            context via methods {@link #put(Object)} and
+     *            {@link #putAll(IReadableContext)}.
+     * @param pInitialElements
+     */
     public DefaultContext (final Predicate<ElementType> pPutValidator, final Iterable<ElementType> pInitialElements) {
 
         fElements = new LinkedList<> () ;
@@ -47,11 +83,28 @@ public class DefaultContext<ElementType> implements IReadableModifyableContext<E
         }
     }
 
+    /**
+     * Looks up elements that match given predicate and returns them in a newly
+     * created DefaultContext.
+     * 
+     * @param pPredicate
+     *            The criteria the elements must match to be found.
+     */
     @Override
-    public IModifyableContext<ElementType> lookup (final Predicate<ElementType> pPredicate) {
+    public DefaultContext<ElementType> lookup (final Predicate<ElementType> pPredicate) {
 
         return lookup (pPredicate , Integer.MAX_VALUE , new DefaultContext<ElementType> ()) ;
     }
+
+    /**
+     * Looks up elements that match given predicate and returns them in given
+     * {@link IModifyableContext}.
+     * 
+     * @param pPredicate
+     *            The criteria the elements must match to be found.
+     * @param pTarget
+     *            Where the found elements were put into.
+     */
 
     @Override
     public <TargetContextType extends IModifyableContext<ElementType>> TargetContextType lookup (
@@ -60,12 +113,34 @@ public class DefaultContext<ElementType> implements IReadableModifyableContext<E
         return lookup (pPredicate , Integer.MAX_VALUE , pTarget) ;
     }
 
+    /**
+     * Looks up elements that match given predicate and returns them in a newly
+     * created DefaultContext.
+     * 
+     * @param pPredicate
+     *            The criteria the elements must match to be found.
+     * @param pMaxCount
+     *            If lookup would return more elements, this limits the max
+     *            number of elements looked up.
+     */
     @Override
     public DefaultContext<ElementType> lookup (final Predicate<ElementType> pPredicate , final int pMaxCount) {
 
         return lookup (pPredicate , pMaxCount , new DefaultContext<> ()) ;
     }
 
+    /**
+     * Looks up elements that match given predicate and returns them in given
+     * {@link IModifyableContext}.
+     * 
+     * @param pPredicate
+     *            The criteria the elements must match to be found.
+     * @param pMaxCount
+     *            If lookup would return more elements, this limits the max
+     *            number of elements looked up.
+     * @param pTarget
+     *            Where the found elements were put into.
+     */
     @Override
     public <TargetContextType extends IModifyableContext<ElementType>> TargetContextType lookup (
             final Predicate<ElementType> pPredicate , final int pMaxCount , final TargetContextType pTarget) {
@@ -121,18 +196,40 @@ public class DefaultContext<ElementType> implements IReadableModifyableContext<E
         return this ;
     }
 
+    /**
+     * Creates an iterator over the current set of elements. Does not adjust if
+     * the contents of Context changes, nor does throw an Exception. See
+     * {@link Iterator} and {@link Iterable} for more information.
+     * 
+     * @see Iterator
+     * @see Iterable
+     */
     @Override
     public Iterator<ElementType> iterator () {
 
         return Collections.unmodifiableList (fElements).iterator () ;
     }
 
+    /**
+     * Sets a new put validator. Note that elements currently in the list are
+     * not validated, only new one. So if you want to have a context with
+     * partially valid elements, make sure to put them into the context
+     * <i>before</i> setting a validator.
+     * 
+     * @param pPutValidator
+     *            New put validator.
+     */
     public void setValidator (final Predicate<ElementType> pPutValidator) {
 
         fPutValidator = pPutValidator ;
 
     }
 
+    /**
+     * Returns the put validator currently in place.
+     * 
+     * @return Optionally <code>null</code>.
+     */
     @Override
     public Predicate<ElementType> getValidator () {
 
