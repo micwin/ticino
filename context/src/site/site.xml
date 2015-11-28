@@ -6,14 +6,16 @@
     <!-- see http://maven.apache.org/doxia/doxia-sitetools/doxia-decoration-model/decoration.html -->
 
     <body>
-        <menu>
-            <item name="Welcome!" href="index.html" />
-            <item name="MIT License" href="license.html" />
-        </menu>
 
-        <menu name="main modules">
+        <menu name="Welcome!">
             <item name="ticino modules" href="../index.html" />
             <item name="ticino events" href="../ticino-events/index.html" />
+            <item name="ticino context" href="index.html" />
+        </menu>
+
+        <menu>
+            <item name="change log" href="../changelog.html" />
+            <item name="MIT License" href="../license.html" />
         </menu>
 
         <menu ref="reports" />
