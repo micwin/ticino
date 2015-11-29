@@ -3,4 +3,30 @@
 the ticino context module is java library that adresses the grey-ness of meaning
 when programmers talk about context, collections and containers.
 
-It's not yet mature but since it's already quite usable, this is also published.
+In ticino, a _context_ is a container for objects of certain means.
+
+The base class _net.micwin.ticino.context.IContext<ElementType>_ only provides
+methods to find out how many elements are in it, how much it can take and when 
+it starts to restructure.
+
+To lookup elements you have to have an instance of type 
+_net.micwin.ticino.context.IReadableContext<ElementType>_. Looking up an element
+ that meets a specific criteria is as simple as writing a lambda that returns 
+ _true_ or _false_.
+
+If you want a Context to  successively put elements into, you have to have an
+instance of type _net.micwin.ticino.context.IModifyableContext_.
+
+Contexts where you can limit the element to a specific sort of common criteria 
+have to implement the interface _net.micwin.ticino.context.IValidatable<ElementType>_.
+
+Currently, there only is one type of context implementation - _net.micwin.ticino.context.DefaultContext<ElementType>_.
+
+	DefaultContext <String> lCtx = new DefaultContext<>(Arrays.asList("A","b","C")) ;
+	
+	// find all capitals 
+	DefaultContext  lAllContainedCapitals = lCtx.lookup ((lElem)->{lElem.equals(lElem.toUpperCase()});  
+	
+	// find "A"
+	boolean lHasA = lCtx.lookup ((lElem) -> "A".equals(lElem) , 1).getCurrentCount ()== 1 ;
+	
