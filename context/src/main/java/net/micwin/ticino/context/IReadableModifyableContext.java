@@ -1,4 +1,4 @@
-package hive.context;
+package net.micwin.ticino.context;
 
 /**
  * A context that can both be read and modified.

@@ -1,5 +1,5 @@
 
-package hive.context ;
+package net.micwin.ticino.context ;
 
 public interface IModifyableContext<ElementType> extends IContext<ElementType> {
 
