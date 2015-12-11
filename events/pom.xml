@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>net.micwin.ticino</groupId>
 		<artifactId>ticino-modules</artifactId>
-		<version>0.3.6</version>
+		<version>0.3.7-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
 	<artifactId>ticino-events</artifactId>
 	<packaging>jar</packaging>
 
-	<name>ticino events</name>
+	<name>${artifactId} v${version}</name>
 
 	<description>contains core classes EventScope, DispatchException and IPostProcessor</description>
 
