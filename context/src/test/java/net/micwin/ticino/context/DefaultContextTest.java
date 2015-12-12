@@ -1,110 +1,98 @@
-package net.micwin.ticino.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+package net.micwin.ticino.context ;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import static org.junit.Assert.* ;
 
-import net.micwin.ticino.context.* ;
+import java.util.* ;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.* ;
 
 public class DefaultContextTest {
 
-	private DefaultContext<String> fCtx;
+    private DefaultContext<String> fCtx ;
 
-	@Before
-	public void before() {
-		fCtx = new DefaultContext<String>("A", "B", "C");
-	}
+    @Before
+    public void before () {
 
-	@Test
-	public void testDefaultContext() {
+        fCtx = new DefaultContext<String> ("A" , "B" , "C") ;
+    }
 
-		assertEquals(3, fCtx.getCurrentElementCount());
-		assertEquals(Integer.MAX_VALUE, fCtx.getMaxStructureSize());
-		assertEquals(Integer.MAX_VALUE, fCtx.getMaxTheoreticalSize());
+    @Test
+    public void testDefaultContext () {
 
-	}
+        assertEquals (3 , fCtx.getCurrentElementCount ()) ;
+        assertEquals (Integer.MAX_VALUE , fCtx.getMaxStructureSize ()) ;
+        assertEquals (Integer.MAX_VALUE , fCtx.getMaxTheoreticalSize ()) ;
 
-	@Test
-	public void testIterator() {
-		Iterator<String> lIterator = fCtx.iterator();
-		assertTrue(lIterator.hasNext());
-		assertEquals("A", lIterator.next());
-		assertEquals("B", lIterator.next());
-		assertEquals("C", lIterator.next());
-		assertFalse(lIterator.hasNext());
+    }
 
-	}
+    @Test
+    public void testIterator () {
 
-	@Test
-	public void testLookupPredicateOfElementTypeInt() {
-		IModifyableContext<String> lLookup = fCtx.lookup(pElement -> true, 2);
-		assertEquals(2, lLookup.getCurrentElementCount());
+        final Iterator<String> lIterator = fCtx.iterator () ;
+        assertTrue (lIterator.hasNext ()) ;
+        assertEquals ("A" , lIterator.next ()) ;
+        assertEquals ("B" , lIterator.next ()) ;
+        assertEquals ("C" , lIterator.next ()) ;
+        assertFalse (lIterator.hasNext ()) ;
 
-	}
+    }
 
-	@Test
-	public void testLookupPredicateOfElementTypeIntTargetContextType() {
-		DefaultContext<String> lTarget = new DefaultContext<>(Arrays.asList());
-		IModifyableContext<String> lLookup = fCtx.lookup(pElement -> true, 2, lTarget);
-		assertSame(lTarget, lLookup);
-		assertEquals(2, lLookup.getCurrentElementCount());
-	}
+    @Test
+    public void testLookupPredicateOfElementTypeInt () {
 
-	@Test
-	public void testGetMaxStructureSize() {
-		assertEquals(Integer.MAX_VALUE, fCtx.getMaxStructureSize());
-	}
+        final IModifyableContext<String> lLookup = fCtx.lookup (pElement -> true , 2) ;
+        assertEquals (2 , lLookup.getCurrentElementCount ()) ;
 
-	@Test
-	public void testGetMaxTheoreticalSize() {
-		assertEquals(Integer.MAX_VALUE, fCtx.getMaxTheoreticalSize());
-	}
+    }
 
-	@Test
-	public void testGetCurrentElementCount() {
-		assertEquals(3, fCtx.getCurrentElementCount());
-	}
+    @Test
+    public void testLookupPredicateOfElementTypeIntTargetContextType () {
 
-	@Test
-	public void testPut() {
+        final DefaultContext<String> lTarget = new DefaultContext<> (Arrays.asList ()) ;
+        final IModifyableContext<String> lLookup = fCtx.lookup (pElement -> true , 2 , lTarget) ;
+        assertSame (lTarget , lLookup) ;
+        assertEquals (2 , lLookup.getCurrentElementCount ()) ;
+    }
 
-		DefaultContext<String> lPut = fCtx.put("D");
-		assertSame(fCtx, lPut);
-		assertEquals(4, fCtx.getCurrentElementCount());
-		assertEquals(1, fCtx.lookup((s) -> "D".equals(s)).getCurrentElementCount());
+    @Test
+    public void testGetMaxStructureSize () {
 
-	}
+        assertEquals (Integer.MAX_VALUE , fCtx.getMaxStructureSize ()) ;
+    }
 
-	@Test
-	public void testPutAll() {
+    @Test
+    public void testGetMaxTheoreticalSize () {
 
-		DefaultContext<String> lNewElements = new DefaultContext<>(Arrays.asList("X", "Y", "Z"));
-		fCtx.putAll(lNewElements);
+        assertEquals (Integer.MAX_VALUE , fCtx.getMaxTheoreticalSize ()) ;
+    }
 
-		assertEquals(6, fCtx.getCurrentElementCount());
-		assertEquals(1, fCtx.lookup((s) -> "X".equals(s)).getCurrentElementCount());
-		assertEquals(1, fCtx.lookup((s) -> "Y".equals(s)).getCurrentElementCount());
-		assertEquals(1, fCtx.lookup((s) -> "Z".equals(s)).getCurrentElementCount());
-	}
+    @Test
+    public void testGetCurrentElementCount () {
 
-	@Test
-	public void testValidator() {
+        assertEquals (3 , fCtx.getCurrentElementCount ()) ;
+    }
 
-		fCtx.setValidator((s) -> "A".equals(s));
-		fCtx.put("A");
+    @Test
+    public void testPut () {
 
-	}
+        final DefaultContext<String> lPut = fCtx.put ("D") ;
+        assertSame (fCtx , lPut) ;
+        assertEquals (4 , fCtx.getCurrentElementCount ()) ;
+        assertEquals (1 , fCtx.lookup ( (s) -> "D".equals (s)).getCurrentElementCount ()) ;
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testValidator_fail() {
-		fCtx.setValidator((s) -> "A".equals(s));
-		fCtx.put("B");
-	}
+    }
+
+    @Test
+    public void testPutAll () {
+
+        final DefaultContext<String> lNewElements = new DefaultContext<> (Arrays.asList ("X" , "Y" , "Z")) ;
+        fCtx.putAll (lNewElements) ;
+
+        assertEquals (6 , fCtx.getCurrentElementCount ()) ;
+        assertEquals (1 , fCtx.lookup ( (s) -> "X".equals (s)).getCurrentElementCount ()) ;
+        assertEquals (1 , fCtx.lookup ( (s) -> "Y".equals (s)).getCurrentElementCount ()) ;
+        assertEquals (1 , fCtx.lookup ( (s) -> "Z".equals (s)).getCurrentElementCount ()) ;
+    }
+
 }

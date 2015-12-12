@@ -10,21 +10,21 @@ import java.util.function.Predicate ;
  *
  * @param <ElementType>
  */
-public class DefaultContext<ElementType> implements IReadableModifyableContext<ElementType> , IValidatable<ElementType> {
+public class DefaultContext<ElementType> implements IReadableModifyableContext<ElementType> {
 
-    LinkedList<ElementType>        fElements ;
-    private Predicate<ElementType> fPutValidator ;
+    LinkedList<ElementType> fElements ;
 
     /**
      * Create a default context without elementsd and no validator.
      */
     public DefaultContext () {
 
-        this (null , new LinkedList<> ()) ;
+        fElements = new LinkedList<ElementType> () ;
     }
 
     /**
-     * Creates a new DefaultContext and puts given elements nto it.
+     * Create a DefaultContext and puts givene elements in
+     * it.
      * 
      * @param pInitialElements
      *            Initial elements.
@@ -32,35 +32,11 @@ public class DefaultContext<ElementType> implements IReadableModifyableContext<E
     @SafeVarargs
     public DefaultContext (final ElementType ... pInitialElements) {
 
-        this (null , Arrays.asList (pInitialElements)) ;
-    }
+        fElements = new LinkedList<> () ;
 
-    /**
-     * Create a DefaultContext with given validator and puts givene elements in
-     * it. Does validate elements.
-     * 
-     * @param pPutValidator
-     *            A validator that validates elements that are put into the
-     *            context via methods {@link #put(Object)} and
-     *            {@link #putAll(IReadableContext)}.
-     * @param pInitialElements
-     *            Initial elements.
-     */
-    @SafeVarargs
-    public DefaultContext (final Predicate<ElementType> pPutValidator, final ElementType ... pInitialElements) {
-
-        this (pPutValidator , Arrays.asList (pInitialElements)) ;
-    }
-
-    /**
-     * Creates a DefaultContext without validator and puts given elements into
-     * it.
-     * 
-     * @param pInitialElements
-     */
-    public DefaultContext (final Collection<ElementType> pInitialElements) {
-
-        this (null , pInitialElements) ;
+        for (final ElementType lElement : pInitialElements) {
+            fElements.add (lElement) ;
+        }
     }
 
     /**
@@ -73,14 +49,14 @@ public class DefaultContext<ElementType> implements IReadableModifyableContext<E
      *            {@link #putAll(IReadableContext)}.
      * @param pInitialElements
      */
-    public DefaultContext (final Predicate<ElementType> pPutValidator, final Iterable<ElementType> pInitialElements) {
+    public DefaultContext (final Iterable<ElementType> pInitialElements) {
 
         fElements = new LinkedList<> () ;
-        fPutValidator = pPutValidator ;
 
-        for (final ElementType lInitialElement : pInitialElements) {
-            put (lInitialElement) ;
+        for (final ElementType lElement : pInitialElements) {
+            fElements.add (lElement) ;
         }
+
     }
 
     /**
@@ -178,11 +154,8 @@ public class DefaultContext<ElementType> implements IReadableModifyableContext<E
     }
 
     @Override
-    public DefaultContext<ElementType> put (final ElementType pElement) throws IllegalArgumentException {
+    public DefaultContext<ElementType> put (final ElementType pElement) {
 
-        if (fPutValidator != null && !fPutValidator.test (pElement)) {
-            throw new IllegalArgumentException ("argument '" + pElement + "' invalid") ;
-        }
         fElements.add (pElement) ;
         return this ;
     }
@@ -208,32 +181,6 @@ public class DefaultContext<ElementType> implements IReadableModifyableContext<E
     public Iterator<ElementType> iterator () {
 
         return Collections.unmodifiableList (fElements).iterator () ;
-    }
-
-    /**
-     * Sets a new put validator. Note that elements currently in the list are
-     * not validated, only new one. So if you want to have a context with
-     * partially valid elements, make sure to put them into the context
-     * <i>before</i> setting a validator.
-     * 
-     * @param pPutValidator
-     *            New put validator.
-     */
-    public void setValidator (final Predicate<ElementType> pPutValidator) {
-
-        fPutValidator = pPutValidator ;
-
-    }
-
-    /**
-     * Returns the put validator currently in place.
-     * 
-     * @return Optionally <code>null</code>.
-     */
-    @Override
-    public Predicate<ElementType> getValidator () {
-
-        return fPutValidator ;
     }
 
 }

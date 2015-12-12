@@ -6,45 +6,63 @@ import java.util.function.Predicate ;
 public interface IReadableContext<ElementType> extends IContext<ElementType> , Iterable<ElementType> {
 
     /**
-     * Returns a new context that contains all elements matching given
-     * predicate.
+     * Iterates over elements and returns those who meet the
+     * predicates' condition in a {@link IReadableContext}.
      *
      * @param pPredicate
+     *            A functional (lambda) that defines if a specific element meets
+     *            the condition of this lookup.
      * @return a Context holding elements that match predicate.
      */
-    IModifyableContext<ElementType> lookup (Predicate<ElementType> pPredicate) ;
+    IReadableContext<ElementType> lookup (Predicate<ElementType> pPredicate) ;
 
     /**
-     * Add all elements matching given predicate into target.
+     * Iterates over elements and puts those who meet the predicates' condition
+     * in <code>pTarget</code>.
      *
      * @param pPredicate
-     *            The criteria with which the elements of context are selected.
-     * @return pTarget The target list to put matches in.
+     *            A functional (lambda) that defines if a specific element meets
+     *            the condition of this lookup.
+     * @param pTarget
+     *            The context to put matches in.
+     * @return pTarget
      */
     <TargetContextType extends IModifyableContext<ElementType>> TargetContextType lookup (Predicate<ElementType> pPredicate ,
             TargetContextType pTarget) ;
 
     /**
-     * Returns a new context that contains all elements matching given
-     * predicate.
+     * Iterates over at least <code>pMaxCount</code> elements and returns those
+     * who
+     * meet the predicates' condition in a {@link IReadableContext}. The method
+     * will terminate if either the end of elements is reached or
+     * <code>pMaxCount</code> elements have been collected.
      *
      * @param pPredicate
+     *            A {@link Predicate} (lambda) that returns true if a specific
+     *            element meets
+     *            the criteria of this lookup.
      * @param pMaxCount
-     *            maximum number of hits. If reached, search is ended
+     *            maximum number of hits collected. If reached, search is ended
      *            in-between.
      * @return a Context holding elements that match predicate.
      */
-    IModifyableContext<ElementType> lookup (Predicate<ElementType> pPredicate , int pMaxCount) ;
+    IReadableContext<ElementType> lookup (Predicate<ElementType> pPredicate , int pMaxCount) ;
 
     /**
-     * Add all elements matching given predicate into target.
+     * Iterates over at least <code>pMaxCount</code> elements and puts those who
+     * meet the predicates' condition into <code>pTarget</code>. The method
+     * will terminate if either the end of elements is reached or
+     * <code>pMaxCount</code> elements have been collected.
      *
      * @param pPredicate
-     *            The criteria with which the elements of context are selected.
+     *            A functional (lambda) that defines if a specific element meets
+     *            the condition of this lookup.
      * @param pMaxCount
-     *            maximum number of hits. If reached, search is ended
+     *            maximum number of hits collected. If reached, search is ended
      *            in-between.
-     * @return pTarget The target list to put matches in.
+     * @param pTarget
+     *            The context to put matches in.
+     * @return pTarget
      */
     <TargetContextType extends IModifyableContext<ElementType>> TargetContextType lookup (Predicate<ElementType> pPredicate ,
             int pMaxCount , TargetContextType pTarget) ;
