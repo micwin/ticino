@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.7
+
+- public (static) scopes (see _ticino-static_ class net.micwin.ticino.events.PublicScopes)
+
 ## 0.3.6 
 
 - removed some package issues
