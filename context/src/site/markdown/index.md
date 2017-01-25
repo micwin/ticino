@@ -20,13 +20,16 @@ instance of type _net.micwin.ticino.context.IModifyableContext_.
 Contexts where you can limit the element to a specific sort of common criteria 
 have to implement the interface _net.micwin.ticino.context.IValidatable_.
 
-Currently, there only is one type of context implementation - _net.micwin.ticino.context.DefaultContext_.
+Currently, there only is one type of context implementation - _net.micwin.ticino.context.GenericContext_.
 
-	DefaultContext <String> lCtx = new DefaultContext<>(Arrays.asList("A","b","C")) ;
+	GenericContext <String> lCtx = new GenericContext<>(Arrays.asList("A","b","C")) ;
 	
 	// find all capitals 
-	DefaultContext  lAllContainedCapitals = lCtx.lookup ((lElem)->{lElem.equals(lElem.toUpperCase()});  
+	GenericContext  lAllContainedCapitals = lCtx.lookup ((lElem)->{lElem.equals(lElem.toUpperCase()});  
 	
 	// find "A"
 	boolean lHasA = lCtx.lookup ((lElem) -> "A".equals(lElem) , 1).getCurrentCount ()== 1 ;
 	
+# Changelog
+
+0.3.7	Renamed DefaultContext to GenericContext

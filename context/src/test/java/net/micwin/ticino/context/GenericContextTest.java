@@ -7,14 +7,14 @@ import java.util.* ;
 
 import org.junit.* ;
 
-public class DefaultContextTest {
+public class GenericContextTest {
 
-    private DefaultContext<String> fCtx ;
+    private GenericContext<String> fCtx ;
 
     @Before
     public void before () {
 
-        fCtx = new DefaultContext<String> ("A" , "B" , "C") ;
+        fCtx = new GenericContext<String> ("A" , "B" , "C") ;
     }
 
     @Test
@@ -49,7 +49,7 @@ public class DefaultContextTest {
     @Test
     public void testLookupPredicateOfElementTypeIntTargetContextType () {
 
-        final DefaultContext<String> lTarget = new DefaultContext<> (Arrays.asList ()) ;
+        final GenericContext<String> lTarget = new GenericContext<> (Arrays.asList ()) ;
         final IModifyableContext<String> lLookup = fCtx.lookup (pElement -> true , 2 , lTarget) ;
         assertSame (lTarget , lLookup) ;
         assertEquals (2 , lLookup.getCurrentElementCount ()) ;
@@ -76,7 +76,7 @@ public class DefaultContextTest {
     @Test
     public void testPut () {
 
-        final DefaultContext<String> lPut = fCtx.put ("D") ;
+        final GenericContext<String> lPut = fCtx.put ("D") ;
         assertSame (fCtx , lPut) ;
         assertEquals (4 , fCtx.getCurrentElementCount ()) ;
         assertEquals (1 , fCtx.lookup ( (s) -> "D".equals (s)).getCurrentElementCount ()) ;
@@ -86,7 +86,7 @@ public class DefaultContextTest {
     @Test
     public void testPutAll () {
 
-        final DefaultContext<String> lNewElements = new DefaultContext<> (Arrays.asList ("X" , "Y" , "Z")) ;
+        final GenericContext<String> lNewElements = new GenericContext<> (Arrays.asList ("X" , "Y" , "Z")) ;
         fCtx.putAll (lNewElements) ;
 
         assertEquals (6 , fCtx.getCurrentElementCount ()) ;

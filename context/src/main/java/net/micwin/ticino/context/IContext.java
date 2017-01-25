@@ -6,7 +6,7 @@ import java.util.* ;
 /**
  * A context for some elements.
  * Implementors must overwrite inherited methods with their own, more specific
- * type as return type. See {@link DefaultContext} as example.
+ * type as return type. See {@link GenericContext} as example.
  */
 public interface IContext<ElementType> {
 
