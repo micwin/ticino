@@ -1,9 +1,9 @@
 package net.micwin.ticino.events;
 
-import java.lang.ref.SoftReference ;
-import java.lang.reflect.Method ;
-import java.util.* ;
-import java.util.regex.Pattern ;
+import java.lang.ref.SoftReference;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * A eventScope in which an event should get dispatched and receivers should
@@ -44,22 +44,18 @@ public class EventScope<T> {
 	 *
 	 * @author micwin
 	 */
-	private final class DispatchComparator implements
-			Comparator<ReceiverDescriptor> {
+	private final class DispatchComparator implements Comparator<ReceiverDescriptor> {
 
 		@Override
-		public int compare(final ReceiverDescriptor o1,
-				final ReceiverDescriptor o2) {
+		public int compare(final ReceiverDescriptor o1, final ReceiverDescriptor o2) {
 
 			// direct check descriptor
 			if (o1 == o2) {
 				return 0;
 			}
 
-			final boolean o1IsNull = o1 == null || o1.receiverReference == null
-					|| o1.receiverReference.get() == null;
-			final boolean o2IsNull = o2 == null || o2.receiverReference == null
-					|| o2.receiverReference.get() == null;
+			final boolean o1IsNull = o1 == null || o1.receiverReference == null || o1.receiverReference.get() == null;
+			final boolean o2IsNull = o2 == null || o2.receiverReference == null || o2.receiverReference.get() == null;
 
 			if (o1IsNull && o2IsNull) {
 				return 0;
@@ -95,8 +91,7 @@ public class EventScope<T> {
 			// so we assume: if two registration happen in the same
 			// millisecond, then they are anonymous adapters
 
-			final int classComparison = o1.receiverReference.get().getClass()
-					.getName()
+			final int classComparison = o1.receiverReference.get().getClass().getName()
 					.compareTo(o2.receiverReference.get().getClass().getName());
 
 			if (classComparison != 0) {
@@ -152,8 +147,7 @@ public class EventScope<T> {
 	 *            The receiver to get the event.
 	 * @return this to enable chaining.
 	 */
-	public synchronized EventScope<T> register(
-			final Class<? extends T> eventClass, final Object receiver) {
+	public synchronized EventScope<T> register(final Class<? extends T> eventClass, final Object receiver) {
 
 		return this.register(eventClass, receiver, (Pattern) null);
 
@@ -170,8 +164,7 @@ public class EventScope<T> {
 	 *            handler method to handle specified event.
 	 * @return this to enable chaining.
 	 */
-	public synchronized EventScope<T> register(
-			final Class<? extends T> eventClass, final Object receiver,
+	public synchronized EventScope<T> register(final Class<? extends T> eventClass, final Object receiver,
 			final Method handler) {
 
 		this.registerInternal(receiver, handler, eventClass);
@@ -190,12 +183,10 @@ public class EventScope<T> {
 	 *            a name pattern for the method used as handler.
 	 * @return this to enable chaining.
 	 */
-	public synchronized EventScope<T> register(
-			final Class<? extends T> eventClass, final Object receiver,
+	public synchronized EventScope<T> register(final Class<? extends T> eventClass, final Object receiver,
 			final Pattern namePattern) {
 
-		final Method method = this.detectReceiverMethod(receiver, eventClass,
-				namePattern);
+		final Method method = this.detectReceiverMethod(receiver, eventClass, namePattern);
 		this.registerInternal(receiver, method, eventClass);
 		return this;
 	}
@@ -207,8 +198,7 @@ public class EventScope<T> {
 	 * @param method
 	 * @param eventClass
 	 */
-	private void registerInternal(final Object receiver, final Method method,
-			final Class<? extends T> eventClass) {
+	private void registerInternal(final Object receiver, final Method method, final Class<? extends T> eventClass) {
 
 		List<ReceiverDescriptor> receivers = this.receiverMap.get(eventClass);
 		if (receivers == null) {
@@ -236,22 +226,20 @@ public class EventScope<T> {
 	 *            handler method.
 	 * @return
 	 */
-	private Method detectReceiverMethod(final Object receiver,
-			final Class<? extends T> eventClass, final Pattern namePattern) {
+	private Method detectReceiverMethod(final Object receiver, final Class<? extends T> eventClass,
+			final Pattern namePattern) {
 
 		final Method[] methods = receiver.getClass().getMethods();
 		final List<Method> results = new LinkedList<Method>();
 
 		for (final Method method : methods) {
 
-			if (method.getParameterTypes() == null
-					|| method.getParameterTypes().length != 1) {
+			if (method.getParameterTypes() == null || method.getParameterTypes().length != 1) {
 				// wrong amount of parameters -> try next
 				continue;
 			}
 
-			if (namePattern != null
-					&& !namePattern.matcher(method.getName()).find()) {
+			if (namePattern != null && !namePattern.matcher(method.getName()).find()) {
 				// wrong method name - try next
 				continue;
 			}
@@ -268,38 +256,47 @@ public class EventScope<T> {
 		}
 
 		if (results.size() > 1) {
-			throw new IllegalArgumentException(
-					"receiver '"
-							+ receiver
-							+ "' has more than one accessible method with a single parameter of type '"
-							+ eventClass.getName()
-							+ "' "
-							+ (namePattern != null ? " and name pattern '"
-									+ namePattern.pattern() + "' " : "") + ": "
-							+ results.toString());
+			throw new IllegalArgumentException("receiver '" + receiver
+					+ "' has more than one accessible method with a single parameter of type '" + eventClass.getName()
+					+ "' " + (namePattern != null ? " and name pattern '" + namePattern.pattern() + "' " : "") + ": "
+					+ results.toString());
 		}
 
 		// no hit _> exception
-		throw new IllegalArgumentException(
-				"receiver '"
-						+ receiver
-						+ "' does not have an accessible method with a single parameter of type '"
-						+ eventClass.getName()
-						+ "' "
-						+ (namePattern != null ? " and name pattern '"
-								+ namePattern.pattern() + "' " : ""));
+		throw new IllegalArgumentException("receiver '" + receiver
+				+ "' does not have an accessible method with a single parameter of type '" + eventClass.getName() + "' "
+				+ (namePattern != null ? " and name pattern '" + namePattern.pattern() + "' " : ""));
 
 	}
 
-	public boolean canHandle(final Method method,
-			final Class<? extends T> eventClass) {
+	public boolean canHandle(final Method method, final Class<? extends T> eventClass) {
 
-		return method.getParameterTypes()[0].isAssignableFrom(eventClass)
-				&& !"equals".equals(method.getName());
+		return method.getParameterTypes()[0].isAssignableFrom(eventClass) && !"equals".equals(method.getName());
 	}
 
 	/**
-	 * Dispatch an event to receivers synchronously.
+	 * Dispatch an event to receivers synchronously, but swallows all and errors
+	 * that come up. Make sure that you only call this when the result really
+	 * doesnt care.
+	 *
+	 * @param event
+	 *            The event object to dispatch.
+	 * 
+	 * @throws DispatchException
+	 *             as a wrapper of the first exception that comes up.
+	 * 
+	 * @return the throws event for convenience in case of chaining and events
+	 *         also holding results.
+	 * 
+	 */
+	public synchronized <Q extends T> Q dispatchNoMatterWhat(final Q event) {
+
+		return dispatch(event, false);
+	}
+
+	/**
+	 * Dispatch an event to receivers synchronously. Wrap upcoming exceptions in
+	 * a {@link DispatchException} and cancel dispatching.
 	 *
 	 * @param event
 	 *            The event object to dispatch.
@@ -312,21 +309,38 @@ public class EventScope<T> {
 	 * 
 	 */
 	public synchronized <Q extends T> Q dispatch(final Q event) {
+		return dispatch(event, true);
+	}
+
+	/**
+	 * Dispatch an event to receivers synchronously.
+	 *
+	 * @param event
+	 *            The event object to dispatch.
+	 * @param stopOnFirstException
+	 *            wether to wrap first exception that comes up in a
+	 *            {@link DispatchException} and then cancel execution.
+	 * 
+	 * @throws DispatchException
+	 *             if stopOnFirstException == true, then first exception that
+	 *             comes up wrapped in {@link DispatchException}.
+	 * 
+	 * @return the throws event for convenience in case of chaining and events
+	 *         also holding results.
+	 * 
+	 */
+	private <Q extends T> Q dispatch(final Q event, boolean stopOnFirstException) {
 
 		if (event == null) {
 			throw new IllegalArgumentException("event is null");
 		}
 
-		if (this.baseClass != null
-				&& !this.baseClass.isAssignableFrom(event.getClass())) {
-			throw new IllegalArgumentException("event of type "
-					+ event.getClass().getName()
-					+ " not dispatchable over this event scope of base type '"
-					+ this.baseClass.getName() + "'");
+		if (this.baseClass != null && !this.baseClass.isAssignableFrom(event.getClass())) {
+			throw new IllegalArgumentException("event of type " + event.getClass().getName()
+					+ " not dispatchable over this event scope of base type '" + this.baseClass.getName() + "'");
 		}
 
-		final Collection<ReceiverDescriptor> receivers = new TreeSet<ReceiverDescriptor>(
-				new DispatchComparator());
+		final Collection<ReceiverDescriptor> receivers = new TreeSet<ReceiverDescriptor>(new DispatchComparator());
 
 		this.collectReceiver(event.getClass(), receivers);
 
@@ -340,8 +354,7 @@ public class EventScope<T> {
 
 		try {
 			for (final ReceiverDescriptor receiverDescriptor : receivers) {
-				final Object receiver = receiverDescriptor.receiverReference
-						.get();
+				final Object receiver = receiverDescriptor.receiverReference.get();
 				if (receiver == null) {
 
 					defunct.add(receiverDescriptor);
@@ -351,8 +364,11 @@ public class EventScope<T> {
 					receiverDescriptor.method.setAccessible(true);
 					receiverDescriptor.method.invoke(receiver, event);
 				} catch (final Exception e) {
-					// wrap non runtime exception
-					throw new DispatchException(receiver, event, e);
+					if (stopOnFirstException) {
+
+						// wrap non runtime exception and throw up
+						throw new DispatchException(receiver, event, e);
+					}
 				}
 			}
 		} finally {
@@ -372,8 +388,7 @@ public class EventScope<T> {
 	 *            The postprocessor to call when the event doispatchment
 	 *            returns.
 	 */
-	public synchronized <Q extends T> void dispatchAsynchronous(final Q event,
-			final IPostProcessor<Q> pPostProcessor) {
+	public synchronized <Q extends T> void dispatchAsynchronous(final Q event, final IPostProcessor<Q> pPostProcessor) {
 
 		new Thread(new Runnable() {
 
@@ -403,14 +418,12 @@ public class EventScope<T> {
 	 * @param receiverCollection
 	 *            the collection receivers are put in.
 	 */
-	private void collectReceiver(final Class<?> eventClass,
-			final Collection<ReceiverDescriptor> receiverCollection) {
+	private void collectReceiver(final Class<?> eventClass, final Collection<ReceiverDescriptor> receiverCollection) {
 
 		if (this.receiverMap.get(eventClass) != null) {
 			receiverCollection.addAll(this.receiverMap.get(eventClass));
 		}
-		if (!eventClass.isInterface()
-				&& eventClass.getSuperclass() != Object.class) {
+		if (!eventClass.isInterface() && eventClass.getSuperclass() != Object.class) {
 			this.collectReceiver(eventClass.getSuperclass(), receiverCollection);
 		}
 		for (final Class interfaceClass : eventClass.getInterfaces()) {
@@ -445,15 +458,13 @@ public class EventScope<T> {
 
 		final List<Integer> toRemove = new ArrayList<Integer>();
 
-		for (final List<ReceiverDescriptor> listenerList : this.receiverMap
-				.values()) {
+		for (final List<ReceiverDescriptor> listenerList : this.receiverMap.values()) {
 
 			toRemove.clear();
 
 			for (int index = 0; index < listenerList.size(); index++) {
 
-				final ReceiverDescriptor receiverDescriptor = listenerList
-						.get(index);
+				final ReceiverDescriptor receiverDescriptor = listenerList.get(index);
 				final boolean isNull = receiverDescriptor.receiverReference == null
 						|| receiverDescriptor.receiverReference.get() == null;
 
