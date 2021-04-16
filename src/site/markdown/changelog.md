@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0 
+
+- moving over to io.metafence.ticino
+
 ## 0.3.7
 
 - public (static) scopes (see _ticino-static_ class net.micwin.ticino.events.PublicScopes)
