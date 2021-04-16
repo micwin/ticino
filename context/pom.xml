@@ -9,7 +9,6 @@
 	</parent>
 
 	<artifactId>ticino-context</artifactId>
-	<name>${artifactId} v${version}</name>
 	<description>a container framework</description>
 
 	<dependencies>

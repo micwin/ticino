@@ -65,7 +65,7 @@ public class EventScopeTest {
 
 	/**
 	 * This is a simple test with a mock event and mock receiver. It
-	 * demonstrates the default event work flow: registering, dsipatching,
+	 * demonstrates the default event work flow: registering, dispatching,
 	 * receiving.
 	 */
 	@Test
@@ -116,7 +116,7 @@ public class EventScopeTest {
 		eventScope.dispatch(4);
 		eventScope.dispatch(42);
 
-		// check that both integers have been put into the list (and hence rthe
+		// check that both integers have been put into the list (and hence the
 		// receivers have been processed).
 		assertEquals((Integer) 4, payload.get(0));
 		assertEquals((Integer) 42, payload.get(1));

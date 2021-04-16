@@ -13,8 +13,6 @@
 	<artifactId>ticino-events</artifactId>
 	<packaging>jar</packaging>
 
-	<name>${artifactId} v${version}</name>
-
 	<description>contains core classes EventScope, DispatchException and IPostProcessor</description>
 
 </project>
