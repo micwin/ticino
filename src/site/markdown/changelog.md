@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.0
+
+- removed *.context and *.global without replacement (yet)
+
 ## 0.4.0 
 
 - moving over to io.metafence.ticino

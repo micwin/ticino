@@ -10,7 +10,6 @@
         <menu name="Welcome!">
             <item name="ticino modules" href="index.html" />
             <item name="ticino events" href="ticino-events/index.html" />
-            <item name="ticino context" href="ticino-context/index.html" />
         </menu>
 
         <menu>
