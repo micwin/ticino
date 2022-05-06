@@ -1,18 +1,30 @@
 <?xml version="1.0" standalone="no"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>io.metafence.ticino</groupId>
-		<artifactId>ticino-modules</artifactId>
-		<version>0.9.0-SNAPSHOT</version>
-		<relativePath>..</relativePath>
-	</parent>
+    <parent>
+        <groupId>io.metafence.ticino</groupId>
+        <artifactId>ticino-modules</artifactId>
+        <version>0.9.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
 
-	<artifactId>ticino-events</artifactId>
-	<packaging>jar</packaging>
+    <artifactId>ticino-events</artifactId>
+    <packaging>jar</packaging>
 
-	<description>contains core classes EventScope, DispatchException and IPostProcessor</description>
+    <description>contains core classes EventScope, DispatchException and IPostProcessor</description>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <configuration>
+                    <skipDeploy>true</skipDeploy>
+                </configuration>
+            </plugin>
 
+        </plugins>
+    </build>
 </project>
