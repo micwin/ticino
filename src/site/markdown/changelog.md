@@ -4,6 +4,8 @@
 
 - moving over to io.metafence.ticino
 
+- removed *.context.IReadableContext and *.context.IModifyableContext without replacement (yet)
+
 ## 0.3.7
 
 - public (static) scopes (see _ticino-static_ class net.micwin.ticino.events.PublicScopes)

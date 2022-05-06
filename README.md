@@ -12,14 +12,6 @@ Sending events throughout your code without generating dependencies
 
 Site: [ticino-events](https://micwin.github.io/ticino/ticino-events/index.html)
 
-## ticino-context
-
-Managing item sets and collections more intuitively
-
-Site: [ticino-context](https://micwin.github.io/ticino/ticino-context/index.html)
-
-
-
 
 
  
