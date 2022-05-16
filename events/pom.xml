@@ -6,12 +6,12 @@
 
     <parent>
         <groupId>io.metafence.ticino</groupId>
-        <artifactId>ticino-modules</artifactId>
+        <artifactId>modules</artifactId>
         <version>0.9.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
 
-    <artifactId>ticino-events</artifactId>
+    <artifactId>events</artifactId>
     <packaging>jar</packaging>
 
     <description>contains core classes EventScope, DispatchException and IPostProcessor</description>

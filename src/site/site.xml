@@ -9,7 +9,7 @@
 
         <menu name="Welcome!">
             <item name="ticino modules" href="index.html" />
-            <item name="ticino events" href="ticino-events/index.html" />
+            <item name="ticino events" href="events/index.html" />
         </menu>
 
         <menu>

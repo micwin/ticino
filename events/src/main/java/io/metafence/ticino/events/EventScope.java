@@ -13,6 +13,41 @@ import java.util.regex.Pattern;
  */
 public class EventScope<T> {
 
+	// static context
+
+	static HashMap<Class, EventScope> fGlobalScopes;
+
+	/**
+	 * Returns the global event scope to handle given type of events.
+	 * There is no super or subtype check; you have to have the correct
+	 * event type to make this work.
+	 * @param pElementClass
+	 * @return
+	 * @param <U>
+	 */
+	public static <U> EventScope<U> getGlobalScope(Class<U> pElementClass) {
+
+		if (pElementClass == null) {
+			throw new IllegalArgumentException("argument 'elementClass' must not be null") ;
+		}
+
+		if (fGlobalScopes == null) {
+			fGlobalScopes = new HashMap<Class, EventScope>() ;
+		}
+
+		EventScope<U> lFound = fGlobalScopes.get(pElementClass) ;
+		if (lFound != null) {
+			return lFound ;
+		}
+
+		EventScope<U> lEventScope = new EventScope(pElementClass) ;
+		fGlobalScopes.put(pElementClass , lEventScope) ;
+		return  lEventScope ;
+	}
+
+	/**
+	 * The map of receivers for this scope
+	 */
 	Map<Class<? extends T>, List<ReceiverDescriptor>> receiverMap = new HashMap<Class<? extends T>, List<ReceiverDescriptor>>();
 
 	private final Class<T> baseClass;
